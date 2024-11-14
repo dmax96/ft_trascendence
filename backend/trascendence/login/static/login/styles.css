@@ -1,0 +1,69 @@
+
+/* FILEPATH: /path/to/styles.css */
+
+/* Global variables */
+
+@font-face {
+    font-family: 'font-Despairs';
+    src: url('srcs/Despairs-X3Wxo.ttf') format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+    font-family: 'font-Despairs', fallback-fonts;
+} 
+
+:root {
+	--primary-color: #000000;
+	--secondary-color: #ffffff;
+}
+
+
+/* Typography */
+body {
+	font-family: Arial, 'font-Despairs', sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	color: var(--primary-color);
+}
+
+/* Background */
+body {
+	background-color: #DFA100;
+}
+
+.title-login {
+	font-family: 'font-Despairs', fallback-fonts;
+	font-size : 10%;
+	color : #000000;
+}
+
+/* Buttons */
+.btn {
+	padding: 10px;
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1.2;
+	color: var(--primary-color);
+	background-color: var(--secondary-color);
+	border-width: 1px;
+	border-color: transparent;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+	border-color: var(--primary-color);
+}
+
+.btn:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}

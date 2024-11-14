@@ -1,0 +1,124 @@
+/* FILEPATH: /path/to/styles.css */
+
+/* Global variables */
+
+@font-face {
+	font-family: "font-Despairs";
+	src: url("Despairs-X3Wxo.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+  }
+  
+  :root {
+	--primary-color: #000000;
+	--secondary-color: #ffffff;
+  }
+  
+  /* Typography */
+  body {
+	font-family: "font-Despairs", fallback-fonts;
+	font-family: Arial, "font-Despairs", sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	color: var(--primary-color);
+	background-color: #dfa100;
+  }
+  
+  .title-login {
+	font-family: "font-Despairs", fallback-fonts;
+	font-size: 10%;
+	color: #000000;
+  }
+  
+  /* Buttons */
+  .btn {
+	padding: 10px;
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1.2;
+	color: var(--primary-color);
+	background-color: var(--secondary-color);
+	border-width: 1px;
+	border-color: transparent;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn:hover {
+	border-color: var(--primary-color);
+  }
+  
+  .btn:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px var(--primary-color);
+  }
+  
+  .btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+  }
+  
+  .btn-custom-brown {
+	background-color: #4f4537;
+	/* Change this to your preferred color */
+	color: #ffffff;
+	/* Change this to your preferred color */
+  }
+  
+  .btn-custom-white {
+	background-color: #b6a999;
+	/* Change this to your preferred color */
+	color: #4f4537;
+	/* Change this to your preferred color */
+  }
+  
+  .btn-custom-42 {
+	background-color: #2c2c34;
+	/* Change this to your preferred color */
+	color: #00babc;
+	/* Change this to your preferred color */
+  }
+  
+  .div-login {
+	position: absolute;
+	right: 18%;
+	/* Change this to move the div horizontally */
+	top: 35%;
+	/* Change this to move the div vertically */
+	width: 18%;
+	/* Adjust this value to make the div as wide as you want */
+	margin: 0 auto;
+	/* This will center the div */
+	text-align: left;
+	/* This will center the text inside the div */
+  }
+  
+  .div-login-title {
+	font-family: "font-Despairs";
+	font-size: 800%;
+	/* Change this to move the div horizontally */
+	position: absolute;
+	left: 18%;
+	/* Change this to move the div horizontally */
+	top: 37%;
+	/* Change this to move the div vertically */
+  }
+  
+  .white {
+	color: #ffffff;
+	/* This sets the color to white */
+  }
+  
+  .title-login {
+	font-family: "font-Despairs", fallback-fonts;
+	font-size: 10%;
+  }
+  
+  .font-Despairs {
+	font-family: "Despairs";
+  }
+  
+  .modal-content {
+	background-color: #dfa100;
+  }

@@ -1,0 +1,612 @@
+<html>
+  <head>
+    <title>PONG</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Black screen */
+            /* Black screen */
+			.gameDashboard {
+        border-radius: 16px;
+        background: black;
+        position: relative;
+		margin-top: 10%;
+        width: 100%;
+        height: 85%;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        color: white;
+      }
+
+      .tris-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        height: 80%;
+        width: 80%;
+        margin-top: 5%;
+      }
+
+      .cell {
+        border: 1px solid #000;
+        padding: 20px;
+        text-align: center;
+        font-size: 1.5em;
+        border-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 50;
+      }
+
+      .alert-box {
+        color: black;
+        position: fixed;
+        top: 30vh;
+        left: 30vw;
+        width: 40vw;
+        padding: 16px;
+        z-index: 100;
+        background: #dfa100;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+      }
+
+      .alert-box-actions {
+        text-align: right;
+      }
+
+	  .avatar {
+		width: 125px;
+		height: 125px;
+		border-radius: 50%;
+		font-weight: lighter;
+		font-size :110%;
+		color: #ffffff;
+		position: absolute;
+		left: 2%;
+		top: 0.3%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.userleft{
+		position: absolute;
+		left: 5%;
+		top: 2.5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: center;
+	}
+	.div-title {
+		font-family: 'font-Despairs';
+		font-size: 420%;
+		position: absolute;
+		left: 45.69%; /* Change this to move the div horizontally */
+		right: 2%;
+		top: 0%; /* Change this to move the div vertically */
+		width: 15%;
+		padding : 1%;
+		color: black;
+		}
+    </style>
+  </head>
+
+  <body>
+	<img src="download.jpeg" alt="Avatar" class="avatar" id = "go_to_profile">
+    <h5 id = "userleft" style = "margin-left: 1%" class = "userleft">User1</h5>
+    <h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
+    </div>
+
+    <div class="container">
+      <div class="gameDashboard">
+        <!-- insert other player nick -->
+        <div id="insertNick">
+          <div class="d-flex flex-column" style="height: 80vh">
+            <div
+              class="d-flex flex-column justify-content-end align-items-center"
+              style="flex: 1"
+            >
+              <input
+                id="User1"
+                style="max-width: 150px; margin-bottom: 20px"
+                type="text"
+                placeholder="User1"
+                maxlength="8"
+              />
+              <input
+                id="User2"
+                style="max-width: 150px; margin-bottom: 20px"
+                type="text"
+                placeholder="User2"
+                maxlength="8"
+              />
+              <input
+                id="User3"
+                style="max-width: 150px; margin-bottom: 20px"
+                type="text"
+                placeholder="User3"
+                maxlength="8"
+              />
+              <input
+                id="User4"
+                style="max-width: 150px; margin-bottom: 20px"
+                type="text"
+                placeholder="User4"
+                maxlength="8"
+              />
+            </div>
+            <div
+              class="d-flex flex-column justify-content-start align-items-center"
+              style="flex: 1"
+            >
+              <button
+                id="playButton"
+                type="button"
+                class="btn btn-dark"
+                style="margin-bottom: 30px"
+              >
+                Play
+              </button>
+              <!-- <button type="button" class="btn btn-dark">Back</button> -->
+            </div>
+          </div>
+        </div>
+
+        <!-- tournament grafic page -->
+        <div id="tournament" style="display: none">
+          <div class="d-flex flex-column" style="height: 80vh">
+            <div id = "semifinal"
+              class="d-flex flex-column justify-content-center align-items-center"
+              style="flex: 1"
+            >
+              <p id = "semifinalgame">semifinale</p>
+              <p id="firstMatch">??? Vs ???</p>
+              <p id="secondMatch">??? Vs ???</p>
+            </div>
+            <div id = "finalgame" 
+              class="d-flex flex-column justify-content-center align-items-center"
+              style="flex: 1"
+            >
+              <p id = "finalGame">finale</p>
+              <p id="final">??? Vs ???</p>
+            </div>
+            <div
+              class="d-flex flex-column justify-content-start align-items-center"
+              style="flex: 1"
+            >
+              <button id="playMatch" class="btn btn-dark">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- tetris game page -->
+        <div id="game" style="height: 100vh; display: none">
+          <div class="d-flex justify-content-between h-100">
+            <div
+              class="player1 w-100 d-flex flex-column justify-content-center align-items-center"
+              style="flex: 1"
+            >
+              <h1 id="nickPlayer1"></h1>
+              <p>X</p>
+            </div>
+
+            <div class="tris-grid" style="flex: 3">
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+            </div>
+
+            <div
+              class="player2 d-flex flex-column justify-content-center align-items-center"
+              style="flex: 1"
+            >
+              <h1 id="nickPlayer2"></h1>
+              <p>O</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alert win/lose/draw -->
+        <div id="alert" class="backdrop" style="display: none">
+          <div class="alert-box">
+            <h1 id="aler-message"></h1>
+            <div class="alert-box-actions">
+              <button
+                id="go-to-main"
+                class="go-to-main btn btn-dark"
+                style="display: none"
+              >
+                Go To Main Menu
+              </button>
+              <button
+                id="playAgain"
+                class="go-to-main btn btn-dark"
+                style="display: none"
+              >
+                Play Again
+              </button>
+              <button
+                id="nextMatch"
+                class="go-to-main btn btn-dark"
+                style="display: none"
+              >
+                Next Match
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <script src="tris-torneo.js"></script> -->
+    <script>
+      function updateLanguage(savedLanguage){
+      if (savedLanguage === "IT")
+      {
+        document.getElementById("playButton").innerText = "Gioca";
+        document.getElementById("semifinal").value = "semifinale";
+        document.getElementById("firstMatch").value = "??? contro ???";
+        document.getElementById("secondMatch").value = "??? contro ???";
+        document.getElementById("final").value = "??? contro ???";
+        document.getElementById("playAgain").innerText = "Gioca di nuovo";
+        document.getElementById("nextMatch").innerText = "Prossima partita";
+        document.getElementById("User1").placeholder = "Giocatore1";
+        document.getElementById("User2").placeholder = "Giocatore2";
+        document.getElementById("User3").placeholder = "Giocatore3";
+        document.getElementById("User4").placeholder = "Giocatore4";
+        document.getElementById("go-to-main").innerText = "Torna al menu principale";
+        document.getElementById("semifinalgame").value = "semifinale";
+        document.getElementById("finalGame").innerText = "finale";
+        document.getElementById("finalGame").innerText = "final";
+        document.getElementById("playMatch").innerText = "Gioca";
+  
+      }
+      else if (savedLanguage === "EN")
+      {
+        document.getElementById("playButton").innerText = "Play";;
+        document.getElementById("semifinal").value = "semifinal";
+        document.getElementById("firstMatch").value = "??? vs ???";
+        document.getElementById("secondMatch").value = "??? vs ???";
+        document.getElementById("final").value = "??? vs ???";
+        document.getElementById("playAgain").innerText = "Play Again";
+        document.getElementById("nextMatch").innerText = "Next Match";
+        document.getElementById("User1").placeholder = "Player1";
+        document.getElementById("User2").placeholder = "Player2";
+        document.getElementById("User3").placeholder = "Player3";
+        document.getElementById("User4").placeholder = "Player4";
+        document.getElementById("go-to-main").innerText = "Go To Main Menu";
+        document.getElementById("semifinalgame").innerText = "semifinal";
+        document.getElementById("finalGame").innerText = "final";
+        document.getElementById("playMatch").innerText = "Play";
+    
+       
+      }
+      else if (savedLanguage === "ES")
+      {
+        document.getElementById("playButton").innerText = "Jugar";;
+        document.getElementById("semifinal").value = "semifinal";
+        document.getElementById("firstMatch").value = "??? contra ???";
+        document.getElementById("secondMatch").value = "??? contra ???";
+        document.getElementById("final").value = "??? contra ???";
+        document.getElementById("playAgain").innerText = "Jugar de nuevo";
+        document.getElementById("nextMatch").innerText = "Próximo partido";
+        document.getElementById("User1").placeholder = "Jugador1";
+        document.getElementById("User2").placeholder = "Jugador2";
+        document.getElementById("User3").placeholder = "Jugador3";
+        document.getElementById("User4").placeholder = "Jugador4";
+        document.getElementById("go-to-main").innerText = "Ir al menú principal";
+        document.getElementById("semifinalgame").innerText = "semifinal";
+        document.getElementById("finalGame").innerText = "final";
+        document.getElementById("playMatch").innerText = "Jugar";
+  
+     
+    }
+  };
+      if (window.parent.userInstance && window.parent.userInstance.username) {
+			console.log('User data already loaded');
+			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
+			document.getElementById('userleft').textContent = window.parent.userInstance.player;
+      document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+      var savedLanguage = window.parent.userInstance.language;
+      updateLanguage(savedLanguage);
+		}
+
+      document.addEventListener("DOMContentLoaded", function () {
+        //resetTris();
+        document.getElementById("go-to-main").addEventListener("click", function () {
+            localStorage.setItem("lastPage", "main-page");
+            window.parent.goToMain();
+          });
+      document.getElementById("go_to_main").addEventListener("click", function () {
+            localStorage.setItem("lastPage", "main-page");
+            window.parent.goToMain();
+          });
+        });
+
+      function getId(id) {
+        return document.getElementById(id);
+      }
+
+      let player1 = "";
+      let player2 = "";
+      let player3 = "";
+      let player4 = "";
+
+      // parte torneo
+      let firstMatch = getId("firstMatch");
+      let secondMatch = getId("secondMatch");
+      let finalMatch = getId("final");
+
+      let players = [player1, player2, player3, player4];
+      let match1 = [];
+      let match2 = [];
+      let final = [];
+
+      // all button
+      let playButton = getId("playButton");
+      let playMatch = getId("playMatch");
+      let nextMatch = getId("nextMatch");
+      let playAgain = getId("playAgain");
+      let goToMain = getId("go-to-main");
+
+      // Move in the page
+      let path = ["insertNick", "tournament", "game"];
+
+      function moveArround(where) {
+        for (let i = 0; i < path.length; i++) {
+          if (path[i] === where) {
+            getId(where).style.display = "block";
+          } else {
+            getId(path[i]).style.display = "none";
+          }
+        }
+      }
+
+      // parte inserisci input
+      let input = getId("User1");
+      let input2 = getId("User2");
+      let input3 = getId("User3");
+      let input4 = getId("User4");
+      let button = getId("playButton");
+      button.disabled = true;
+
+      input.addEventListener("input", checkInputs);
+      input2.addEventListener("input", checkInputs);
+      input3.addEventListener("input", checkInputs);
+      input4.addEventListener("input", checkInputs);
+
+      function checkInputs() {
+        if (
+          input.value.trim() !== "" &&
+          input2.value.trim() !== "" &&
+          input3.value.trim() !== "" &&
+          input4.value.trim() !== ""
+        ) {
+          button.disabled = false;
+        } else {
+          button.disabled = true;
+        }
+      }
+
+      playButton.addEventListener("click", function () {
+        player1 = input.value;
+        player2 = input2.value;
+        player3 = input3.value;
+        player4 = input4.value;
+        input.value = "";
+        input2.value = "";
+        input3.value = "";
+        input4.value = "";
+
+        players = [player1, player2, player3, player4];
+
+        console.log(
+          "player1: ",
+          player1,
+          "player2: ",
+          player2,
+          "player3: ",
+          player3,
+          "player4: ",
+          player4
+        );
+        createMatch();
+
+        moveArround("tournament");
+      });
+
+      // parte torneo
+      function createMatch() {
+        let playersCopy = [...players];
+        match1 = [];
+        match2 = [];
+
+        for (let i = 0; i < 4; i++) {
+          let random = Math.floor(Math.random() * playersCopy.length);
+          let player = playersCopy[random];
+          playersCopy.splice(random, 1);
+          if (i < 2) {
+            match1.push(player);
+          } else {
+            match2.push(player);
+          }
+        }
+        firstMatch.textContent = `${match1[0]} vs ${match1[1]}`;
+        firstMatch.style.color = "green";
+        secondMatch.textContent = `${match2[0]} vs ${match2[1]}`;
+        console.log("match1: ", match1, "match2: ", match2);
+      }
+
+      let currentGame = 1;
+      playMatch.addEventListener("click", function () {
+        resetMatchVariable();
+        moveArround("game");
+      });
+
+      // game
+      let currentPlayer = Math.random() < 0.5 ? "X" : "O";
+      const cells = document.querySelectorAll(".cell");
+
+      function resetMatchVariable() {
+        currentPlayer = Math.random() < 0.5 ? "X" : "O";
+        cells.forEach((cell) => {
+          cell.textContent = "";
+          cell.addEventListener("click", handleClick, { once: true });
+        });
+        getId("alert").style.display = "none";
+        nickPlayerText();
+        getId("nextMatch").style.display = "none";
+        getId("playAgain").style.display = "none";
+        getId("go-to-main").style.display = "none";
+        highlightPlayer();
+      }
+
+      function handleClick(e) {
+        if (e.target.textContent !== "") return;
+        e.target.textContent = currentPlayer;
+        if (checkWin(currentPlayer)) {
+          getId("alert").style.display = "block";
+          getId("aler-message").textContent = `${playerWins()} W!`;
+          if (currentGame === 1) {
+            currentGame++;
+            nextMatch.style.display = "block";
+            nextMatch.addEventListener("click", handleNextMatch);
+          } else if (currentGame === 2) {
+            currentGame++;
+            nextMatch.style.display = "block";
+            nextMatch.removeEventListener("click", handleNextMatch);
+            nextMatch.addEventListener("click", handleFinalMatch);
+          } else {
+            getId("go-to-main").style.display = "block";
+          }
+        } else if (Array.from(cells).every((cell) => cell.textContent !== "")) {
+          getId("alert").style.display = "block";
+          getId("aler-message").textContent = `T!`;
+          playAgain.style.display = "block";
+          playAgain.addEventListener("click", function () {
+            resetMatchVariable();
+          });
+        } else {
+          currentPlayer = currentPlayer === "X" ? "O" : "X";
+        }
+        highlightPlayer();
+      }
+
+      function handleNextMatch() {
+        final[0] = playerWins();
+        finalMatch.textContent = `${final[0]} vs ???`;
+        firstMatch.style.color = "white";
+        secondMatch.style.color = "green";
+        resetMatchVariable();
+        moveArround("tournament");
+      }
+
+      function handleFinalMatch() {
+        secondMatch.style.color = "white";
+        finalMatch.style.color = "green";
+        final[1] = playerWins();
+        finalMatch.textContent = `${final[0]} vs ${final[1]}`;
+        resetMatchVariable();
+        moveArround("tournament");
+      }
+
+      // utils
+      function highlightPlayer() {
+        getId("nickPlayer1").style.color =
+          currentPlayer === "X" ? "green" : "white";
+        getId("nickPlayer2").style.color =
+          currentPlayer === "O" ? "green" : "white";
+      }
+
+      function playerWins() {
+        return currentPlayer === "X"
+          ? getId("nickPlayer1").textContent
+          : getId("nickPlayer2").textContent;
+      }
+
+      function checkWin(player) {
+        const winningCombinations = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+
+        return winningCombinations.some((combination) =>
+          combination.every((index) => cells[index].textContent === player)
+        );
+      }
+
+      function nickPlayerText() {
+        if (currentGame === 1) {
+          getId("nickPlayer1").textContent = match1[0];
+          getId("nickPlayer2").textContent = match1[1];
+        } else if (currentGame === 2) {
+          getId("nickPlayer1").textContent = match2[0];
+          getId("nickPlayer2").textContent = match2[1];
+        } else {
+          getId("nickPlayer1").textContent = final[0];
+          getId("nickPlayer2").textContent = final[1];
+        }
+      }
+  window.addEventListener('message', function(event) {
+		if (event.data.type === 'loadProfile') {
+			document.getElementById("nickPlayer1").innerText = window.parent.userInstance.player;
+      document.getElementById("userleft").innerText  = window.parent.userInstance.player;
+			document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
+      var savedLanguage = window.parent.userInstance.language;
+      updateLanguage(savedLanguage)
+    }
+	});
+      // function resetTris() {
+      //   getId("insertNick").style.display = "block";
+      //   getId("alert").style.display = "none";
+      //   getId("nextMatch").style.display = "none";
+      //   getId("playAgain").style.display = "none";
+      //   getId("go-to-main").style.display = "none";
+      //   getId("tournament").style.display = "none";
+      //   getId("game").style.display = "none";
+      //   player1 = "";
+      //   player2 = "";
+      //   player3 = "";
+      //   player4 = "";
+      //   match1 = [];
+      //   match2 = [];
+      //   final = [];
+      //   players = [player1, player2, player3, player4];
+      //   currentGame = 1;
+      //   currentPlayer = Math.random() < 0.5 ? "X" : "O";
+      //   cells.forEach((cell) => {
+      //     cell.textContent = "";
+      //     cell.removeEventListener("click", handleClick);
+      //   });
+      // }
+    </script>
+  </body>
+</html>

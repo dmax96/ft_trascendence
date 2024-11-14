@@ -1,0 +1,593 @@
+<html lang="en">
+  <head>
+    <!-- Bootstrap CSS -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <title>PONG</title>
+    <style>
+      .select-language{
+        background-color: #B6A999;
+        color: #000000;
+        position: absolute;
+        right: 2%;
+        top: 2%;
+        width: 4%;
+        padding : 0.5%;
+        margin: 0 auto;
+        text-align: left;
+      }
+      .div-friends{
+        position: absolute;
+        right: 3%;
+        bottom: 5%;
+        width: 20%;
+        padding : 0.5%;
+        margin: 0 auto;
+        text-align: center;
+      
+      }
+      .div-title {
+          font-family: 'font-Despairs';
+          font-size: 500%; /* Change this to move the div horizontally */
+          position: absolute;
+          left: 45%; /* Change this to move the div horizontally */
+          right: 2%;
+          top: 3%; /* Change this to move the div vertically */
+          width: 15%;
+          padding : 1%;
+          color: black;
+        }
+      .div-friendsmenu {
+        position: absolute;
+        right: 5%;
+        bottom: 3%;
+        width: 15%;
+        height: 40%;
+        padding : 1%;
+        margin: 0 auto;
+        text-align: center;
+        background-color: #B6A999;
+      }
+      .game 
+      {
+        position: absolute;
+        width: 96%;
+        height: 75%;
+        left: 2%;
+        right: 2%;
+        top: 20%;
+        bottom: 10%;
+        background-color: #000000;
+        color: #ffffff;
+      }
+      .btn-primary {
+        font-weight: lighter;
+        font-size :110%;
+        background-color: #000000;
+        color: #ffffff;
+        position: absolute;
+        left: 40%;
+        top: 45%;
+        width: 20%;
+        padding : 0.5%;
+        margin: 0 auto;
+        text-align: center;
+        border-color: #ffffff;
+      }
+      .open_text {
+        font-size: 200%;
+        text-align: center;
+        position: absolute;
+        width: 60%;
+        height: 75%;
+        left: 20%;
+        right: 2%;
+        top: 20%;
+        bottom: 10%;
+        background-color: #000000;
+        color: #ffffff;
+      }
+      .select {
+        background-image: url('download.jpeg');
+        border-radius: 50%;
+        color: #000000;
+        position: absolute;
+        left: 3%;
+        top: 5%;
+        padding : 0.5%;
+        margin: 0 auto;
+        text-align: left;
+      }
+	  .navbar {
+		padding: 10px;
+		background: transparent;
+		position: fixed;
+		top: 30px;
+		left: 30px;
+		z-index: 90;
+		cursor: pointer;
+	}
+	  .icon-bar {
+		background-image: url('media/hamburger.png');
+		background-size: cover;  /* Resize the background image to cover the entire container */
+		width: 50px;  /* Specify a width */
+		height: 50px;  /* Specify a height */
+		border-radius: 50%;
+		position: absolute;
+		left: 3%;
+		top: 5%;
+		padding : 0.5%;
+		margin: 0 auto;
+		text-align: left;
+	}
+	  /* Style the navigation menu 
+	 	Possible color palette : 
+		#DFA100 Main Yellow/Orange Color rgba(223, 161, 0, 1)
+		#f4dc9e light yellow/orange Color rgba(244, 220, 158, 1)
+		#c68f00 Light Yellow/Orange Color rgba(198, 143, 0, 1)
+		#ac7c00 Dark Yellow/Orange Color rgba(172, 124, 0, 1)
+		#936a00 Darker Yellow/Orange Color rgba(147, 106, 0, 1)
+		#B6A999 Light Gray Color rgba(182, 169, 153, 1)
+		#4F4537 Dark Brown Color rgba(79, 69, 55, 1)
+		#ffffff White Color rgba(255, 255, 255, 1)
+		#000000 Black Color (0, 0, 0, 1)
+	  */
+	  nav {
+		width: 20%;
+		height: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		background: linear-gradient(to right, rgba(198, 143, 0, 1), rgba(198, 143, 0, 0.94)), url('your-background-image.jpg');
+		background-size: cover;
+		z-index: 69;
+		transition: .3s;
+		transform: translateX(-100%);
+		border-right: 1px solid #000;
+	}
+      .wide{
+        transform: translateX(0);
+      }
+      nav ul {
+        list-style: none;
+        padding: 60px;		
+      }
+      nav li {
+        font-size: 30px;
+        color: #ffffff;
+      }
+	  .online, .offline {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+	}
+
+	.online {
+		background-color: rgb(3, 194, 3);
+	}
+
+	.offline {
+		background-color: rgb(248, 26, 26);
+	}
+	/* Modal Content/Box */
+	.modal-content {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 9999; /* Sit on top of everything else */
+		left: 50%; /* Center horizontally */
+		top: 5%; /* Position from the top */
+		transform: translate(-50%, -10%); /* Adjust for modal width and height */
+		width: 15%; /* Width */
+		height: 10%; /* Height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: #f4dc9e; /* Fallback color */
+		padding: 20px;
+		border: 1px solid #888;
+	}
+
+	/* The Close Button */
+	.close {
+		color: #aaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+		color: black;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	#friendUsername {
+		left: 50%;
+		width: 50%; /* Adjust as needed */
+		padding: 10px;
+		border: none;
+		border-radius: 5px; /* Rounded corners */
+		background-color: #f8f8f8; /* Light grey background */
+		color: #333; /* Dark grey text */
+		font-size: 16px; /* Larger text */
+	}
+
+	/* Style the username input field on focus */
+	#friendUsername:focus {
+		outline: none;
+		box-shadow: 0 0 5px #dfa100; /* Orange glow */
+	}
+	#friendUsername {
+		left: 50%;
+		width: 50%; /* Adjust as needed */
+		padding: 10px;
+		border: none;
+		border-radius: 5px; /* Rounded corners */
+		background-color: #f8f8f8; /* Light grey background */
+		color: #333; /* Dark grey text */
+		font-size: 16px; /* Larger text */
+	}
+
+	/* Style the username input field on focus */
+	#friendUsername:focus {
+		outline: none;
+		box-shadow: 0 0 5px #dfa100; /* Orange glow */
+	}
+	#confirmButton {
+		padding: 10px;
+		border: none;
+		border-radius: 5px; /* Rounded corners */
+		background-color: #4F4537; /* Orange background */
+		color: #fff; /* White text */
+		font-size: 16px; /* Larger text */
+		cursor: pointer; /* Hand cursor on hover */
+	}
+
+	/* Style the confirm button on hover */
+	#confirmButton:hover {
+		background-color: #4F4537; /* Darker orange */
+	}
+
+	/* Style the confirm button on focus */
+	#confirmButton:focus {
+		outline: none;
+		box-shadow: 0 0 5px #dfa100; /* Orange glow */
+	}
+		</style>
+    <!-- Bootstrap JS -->
+  </head>
+  <body>
+    <div class="navbar">
+		<div class="icon-bar"></div>
+	</div>
+    <nav class="nav">
+		<ul>
+			<li id="Username" style="margin-top: 10%; font-size: 50px;">User</li>
+			<li id="go_to_profile" style="margin-top: 5%;">Profile</li>
+			<li style="margin-top: 5%; display: flex; align-items: center;">
+				<span id="amici">Friends</span>
+				<button id="addFriend" class="btn" style="font-size: 15px; margin-left: 25%; background-color: #000; color:#ffffff">addFriend</button>
+			</li>
+			<li id="noFriends" style = "display: none; margin-top:5%; font-size: 22px;">No friends to display yet</li>
+			<li id="friendsList" style="margin-top: 5%;"></li> <!-- New element for the friends list -->
+			<li id = "go_to_login"style="margin-top: 250%;">Logout</li>
+		</ul>
+    </nav>
+    <h2 class="div-title">PONG</h2>
+	<select id = "select-language"class="select-language rounded-pill">
+	<option value="EN">EN</option>
+	<option value="IT">IT</option>
+	<option value="ES">ES</option>
+	</select>
+	<div id="myModal" class="modal-content rounded">
+		<span class="close">&times;</span>
+		<p>Add a friend</p>
+		<input type="text" id="friendUsername" placeholder="Enter friend's username">
+		<button id="confirmButton">Confirm</button>
+	</div>
+    <div class="game">
+      <button id = "go_to_game" type="button" class="btn btn-primary btn-lg btn-block">Play</button>
+    </div>
+  </body>
+  <script>
+	var friends;
+	if (window.parent.userInstance && window.parent.userInstance.username) {
+		console.log('User data already loaded');
+		document.getElementById('Username').textContent = window.parent.userInstance.username;
+		friends = window.parent.userInstance.friendlist;
+		if (friends) {
+			console.log('Friends list:', friends);
+			populateFriendsList();
+		}
+	}
+	window.addEventListener('message', function(event) {
+		if (event.data.type === 'userDataLoaded') {
+			console.log('userDataLoaded event triggered');
+			document.getElementById('Username').textContent = window.parent.userInstance.username;
+			var languageSelect = document.getElementById('select-language');
+			languageSelect.value = window.parent.userInstance.language;
+			updateText();
+			friends = window.parent.userInstance.friendlist;
+			if (friends) {
+            	populateFriendsList();
+	        }
+		}
+	});
+	function populateFriendsList() {
+			var container = document.getElementById('friendsList');
+			container.innerHTML = ''; // Clear the container
+
+			if (friends && friends.length > 0) {
+				document.getElementById('noFriends').style.display = 'none';
+				var maxFriends = 10;
+				friends = friends.slice(0, maxFriends);
+
+				for (let i = 0; i < friends.length; i++) {
+					var friendElement = document.createElement('p');
+					friendElement.textContent = friends[i].username;
+
+					var statusIndicator = document.createElement('span');
+					statusIndicator.className = friends[i].status ? 'online' : 'offline';
+					statusIndicator.style.marginLeft = '10px';
+
+					friendElement.appendChild(statusIndicator);
+
+					friendElement.addEventListener('click', (function(i) {
+						return function() {
+							console.log("Friend clicked: " + friends[i].username);
+							localStorage.setItem('lastPage', "friend-profile");
+							window.parent.goToFriendProfile(i);
+						};
+					})(i));
+					container.appendChild(friendElement);
+				}
+			} else {
+				document.getElementById('noFriends').style.display = 'block';
+			}
+		}
+  	document.addEventListener('DOMContentLoaded', (event) => {
+		var token = localStorage.getItem('userToken');
+		// Get the user's language
+		var userLanguage = window.parent.userInstance.language;
+		selectLanguage = document.querySelector('.select-language');
+		updateText();
+		// Select the option that matches the user's language
+		selectLanguage.value = userLanguage;
+		// Seleziona l'elemento select
+		var selectLanguage = document.querySelector('.select-language');
+
+		// Aggiungi un event listener per l'evento 'change'
+		selectLanguage.addEventListener('change', function() {
+		// Quando l'utente seleziona una nuova lingua, salvala nel localStorage
+		localStorage.setItem('language', this.value);
+		console.log('Language changed to:', this.value);
+		window.parent.userInstance.changeLanguage(this.value);
+		console.log("User language = "+window.parent.userInstance.language);
+		var language = JSON.stringify( {language: this.value})
+
+		fetch('http://localhost:8001/main/language/', {
+				method: 'POST',
+				headers: {
+					'Authorization' : 'Token ' + token,
+					'Content-Type': 'application/json'
+				},
+				body: language,
+			}).then(response => {
+				if (response.ok) {
+					console.log('Language change sent successfully');
+				} else {
+					console.error('Error sending language change:', response.statusText);
+				}
+			}).catch(error => {
+				console.error('Network error:', error);
+			});
+		// Aggiorna il testo sulla pagina
+		updateText();
+  	});
+	  async function fetchWithRetry(url, options, retries = 3) {
+			for (let i = 0; i < retries; i++) {
+				try {
+					const response = await fetch(url, options);
+					if (!response.ok) { // check if HTTP-status is 2xx
+						throw new Error(`HTTP status ${response.status}`);
+					}
+					return response;
+				} catch (error) {
+					if (i === retries - 1) { // if last retry
+						throw error;
+					}
+					await new Promise(resolve => setTimeout(resolve, 1000)); // wait before retrying
+				}
+			}
+		}
+		let loadUserClassPromise = null;
+				// Load the user class
+				async function loadUserClass() {
+					if (loadUserClassPromise) {
+						// If loadUserClass is already running, wait for it to finish
+						return loadUserClassPromise;
+					}
+
+					loadUserClassPromise = new Promise(async (resolve, reject) => {
+				try {
+					window.User = User;
+					window.userInstance = new window.parent.User();
+
+					const tokenData = {
+						token: localStorage.getItem('userToken'),
+					};
+
+					const response = await fetchWithRetry('http://127.0.0.1:8001/login/info/', {
+						method: 'POST',
+						headers: {
+							'Authorization' : 'Token ' + localStorage.getItem('userToken'),
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(tokenData),
+					});
+
+					const data = await response.json(); // Parse the JSON response
+
+					if(data.token) {
+						window.userInstance.fillData(data);
+						console.log("User.js loaded", window.userInstance.username);
+						resolve(); // Resolve the Promise
+					} else {
+						reject('Token not found in response'); // Reject the Promise
+					}
+				} catch (error) {
+					console.log("Error loading User.js:", error);
+					reject(error); // Reject the Promise
+				}
+			});
+			try {
+				await loadUserClassPromise;
+			} catch (error) {
+				console.error('Error:', error);
+			} finally {
+				loadUserClassPromise = null;
+			}
+
+			return loadUserClassPromise;
+		}
+		});
+
+	function updateText() {
+		language = window.parent.userInstance.language;
+		localStorage.setItem('language', language);
+		if (language == 'IT') {
+		document.getElementById('addFriend').innerText = 'Aggiungi Amico';
+		document.getElementById('go_to_profile').innerText = 'Profilo';
+		document.getElementById('amici').innerText = 'Amici';
+		document.getElementById('go_to_login').innerText = 'Esci';
+		document.getElementById('go_to_game').innerText = 'Gioca';
+		document.getElementById('noFriends').innerText = 'Non hai ancora nessun amico :\(';
+		} else if (language == 'EN') {
+		document.getElementById('addFriend').innerText = 'Add Friend';
+		document.getElementById('go_to_profile').innerText = 'Profile';
+		document.getElementById('amici').innerText = 'Friends';
+		document.getElementById('go_to_login').innerText = 'Logout';
+		document.getElementById('go_to_game').innerText = 'Play';
+		document.getElementById('noFriends').innerText = 'No friends to display yet :\(';
+		} else if (language == 'ES') {
+		document.getElementById('addFriend').innerText = 'Añadir Amigo';
+		document.getElementById('go_to_profile').innerText = 'Perfil';
+		document.getElementById('amici').innerText = 'Amigos';
+		document.getElementById('go_to_login').innerText = 'Salir';
+		document.getElementById('go_to_game').innerText = 'Jugar';
+		document.getElementById('noFriends').innerText = 'Aún no tienes amigos :\(';
+		}
+	}
+    document.getElementById("go_to_login").addEventListener("click", function() {
+		window.parent.userInstance.resetData();
+		token = localStorage.getItem('userToken');
+		fetch('http://localhost:8001/login/logout/', {
+				method: 'POST',
+				headers: {
+					'Authorization' : 'Token ' + token,
+					'Content-Type': 'application/json'
+				},
+			}).then(response => {
+				if (response.ok) {
+					console.log('Logout sent successfully');
+				} else {
+					console.error('Error sending language change:', response.statusText);
+				}
+			}).catch(error => {
+				console.error('Network error:', error);
+			});
+        localStorage.setItem('lastPage', "login");
+		localStorage.setItem('userToken', '');
+        window.parent.goToLogin();
+        });
+	document.getElementById("go_to_profile").addEventListener("click", function() {
+        localStorage.setItem('lastPage', "profile");
+        window.parent.goToProfile();
+      });
+	document.getElementById("go_to_game").addEventListener("click", function() {
+	  localStorage.setItem('lastPage', "game-page");
+	  window.parent.goToGame();
+	});
+	//Aggiungere qui la chiamata al backend per l'aggiunta di un amico
+	document.getElementById("addFriend").addEventListener("click", function() {
+	});
+
+
+		// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("addFriend");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal 
+		btn.onclick = function() {
+			modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			document.getElementById("friendUsername").value = "";
+			modal.style.display = "none";
+		}
+
+		// Get the confirm button
+		var confirmButton = document.getElementById("confirmButton");
+
+		document.getElementById("confirmButton").addEventListener("click", function() {
+			var token = localStorage.getItem('userToken');
+			var friendUsername = document.getElementById("friendUsername").value;
+			const addFriendData = {
+				friend_username: friendUsername
+			};
+			console.log("Friend request sent to: " + friendUsername);
+			fetch('http://localhost:8001/main/add_friends/', {
+				method: 'POST',
+				headers: {
+					'Authorization' : 'Token ' + token,
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(addFriendData),
+			}).then(response => {
+				if (response.ok) {
+					console.log('Friend request sent successfully');
+				} else {
+					console.error('Error sending friend request:', response.statusText);
+				}
+			}).catch(error => {
+				console.error('Network error:', error);
+			});
+		});
+  </script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.navbar').click(function(){
+        $('.nav').toggleClass('wide');
+      });
+    });
+    let variabileBooleana = false;
+  
+    document.getElementById('amici').addEventListener('click', function() {
+      variabileBooleana = !variabileBooleana;
+  });
+    </script>
+</html>

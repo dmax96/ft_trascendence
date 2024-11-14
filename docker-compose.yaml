@@ -1,0 +1,28 @@
+version: '3'
+services:
+  frontend:
+    build: ./front_end/
+    ports:
+      - "8080:80"
+      - "8443:443"
+  backend:
+    depends_on:
+      - db
+    build: ./backend/
+    ports:
+      - "8001:8001"
+    environment:
+      DJANGO_SETTINGS_MODULE: trascendence.settings
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+    env_file:
+      - .env
+  db:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+    env_file:
+      - .env

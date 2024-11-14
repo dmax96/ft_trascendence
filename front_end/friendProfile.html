@@ -1,0 +1,347 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <title>PONG-profile</title>
+  </head>
+  <style>
+    /* Stile base per dispositivi con schermo di larghezza inferiore a 600px */
+    body {
+      background-color: #dfa100;
+    }
+
+    /* Stile per dispositivi con schermo di larghezza compresa tra 600px e 900px */
+    @media screen and (min-width: 600px) {
+      body {
+        background-color: #dfa100;
+      }
+      .div-title {
+        font-family: "font-Despairs";
+        font-size: 400%;
+        position: absolute;
+        left: 42%;
+        right: 2%;
+        top: 3%;
+        padding: 1%;
+        color: black;
+      }
+      .img-fluid {
+        width:20%;
+        height:20%;
+        position: relative;
+        top: 20%;
+        left: 2%;
+      }
+      .image {
+        width: 700px;
+        height: 500px;
+      }
+      .nickname {
+        font-family: "";
+        font-size: 200%;
+        position: absolute;
+        top: 140%;
+        left: 35%;
+      }
+      .statistics {
+        width: 30%;
+        height: 30%;
+        position: absolute;
+        left: 60%;
+      }
+    }
+
+    /* Stile per dispositivi con schermo di larghezza superiore a 900px */
+    @media screen and (min-width: 900px) {
+      body {
+        background-color: #dfa100;
+      }
+      .div-title {
+        font-family: "font-Despairs";
+        font-size: 400%;
+        position: absolute;
+        left: 42%;
+        right: 2%;
+        top: 3%;
+        padding: 1%;
+        color: black;
+      }
+      .profile {
+        display: flex;
+        position: relative;
+        top: 200px;
+      }
+      .img-fluid {
+        width: 50%;
+        height: 50%;
+        position: relative;
+        top: 200px;
+        left: 2%;
+        min-height: 800px;
+      }
+      .image {
+        width: 100%;
+        height: 100%;
+      }
+      .nickname {
+        font-family: "";
+        font-size: 240%;
+        position: relative;
+        left: 40%;
+        top: 5%;
+        display: flex;
+      }
+      .game_title {
+        font-family: "";
+        font-size: 300%;
+        position: relative;
+        left: 42%;
+        margin-bottom: 8%;
+      }
+      .statistics {
+        height: 50%;
+        width: 30%;
+      }
+      .data {
+        font-size: 200%;
+      }
+      .history {
+        font-size: 200%;
+      }
+      .pong {
+        margin-bottom: 10%;
+      }
+      .tris {
+        margin-top: 9%;
+      }
+      .nick {
+        font-size: 143%;
+        position: relative;
+      }
+      .modify {
+        position: relative;
+        left: 44%;
+        cursor: pointer;
+      }
+      .image-container {
+        position: relative;
+        width: 40%; /* Adatta a seconda delle tue esigenze */
+        height: 50%; /* Adatta a seconda delle tue esigenze */
+        min-height: 1px;
+      }
+
+      .image-container img {
+        max-width: 1000px;
+        max-height: 1000px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .edit-icon {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        font-size: 24px;
+        cursor: pointer;
+      }
+	  .modal {
+		display: none;
+		position: fixed;
+		z-index: 1;
+		padding-top: 100px;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgb(0,0,0);
+		background-color: rgba(0,0,0,0.4);
+		}
+
+		.modal-content {
+		background-color: #f4dc9e;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 50%;
+		height: 40%;
+		}
+
+		.close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+		}
+
+		.image-preview img {
+		width: 200px; /* Increase the width */
+		height: 200px; /* Increase the height */
+		margin: 5px;
+		cursor: pointer; 
+	}
+    }
+  </style>
+ <body>
+    <h2 id = "go_to_main" class="div-title">PONG</h2>
+    <div class="profile">
+      <div class="img-fluid">
+        <div class="image-container">
+          <img id="profile-image" src="" alt="Your Image" />
+        </div>
+        <div class="nickname">
+          <div>
+            <h2 id="player">Player</h2>
+          </div>
+        </div>
+      </div>
+      <div class="statistics">
+        <div class="pong">
+          <h2 class="game_title">Pong</h2>
+          <h6 class="history">
+          </h6>
+          <h6 class="history">
+          </h6>
+          <h6 class="history">
+          </h6>
+          <h6 class="history">
+          </h6>
+          <h6 class="history">
+          </h6>
+		  <h6 class="data wins">Wins: </h6>
+		  <h6 class="data losses">Losses: </h6>
+		  <h6 class="data winratePong">	Winrate: </h6>
+        </div>
+        <hr />
+        <div class="tris">
+          <h2 class="game_title">Tris</h2>
+          <h6 class="history">
+          </h6>
+          <h6 class="history">
+          </h6>
+          <h6 class="history">
+	      </h6>
+          <h6 class="history">
+          </h6>
+          <h6 class="history">
+          </h6>
+		  <h6 class="data wins">Wins: </h6>
+		  <h6 class="data losses">Losses: </h6>
+      <h6 class="data ties">Ties:</h6>
+		  <h6 class="data winrateTris">	Winrate: </h6>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+
+function loadFriendProfile(){
+    var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
+    var pongHistory = friend.matchistory_pong;
+    var trisHistory = friend.matchistory_tictactoe;
+
+    var pongHistoryElements = document.querySelectorAll('.pong .history');
+    var trisHistoryElements = document.querySelectorAll('.tris .history');
+
+    var startPongIndex = pongHistory.length > 5 ? pongHistory.length - 5 : 0;
+    for (var i = startPongIndex, j = 0; i < pongHistory.length; i++, j++) {
+        var match = pongHistory[i];
+        var result;
+        if (match.win === "true") {
+            result = 'W';
+        } else if (match.win === "false"){
+            result = 'L';
+        }
+        var date = match.date.slice(0, -1);
+        pongHistoryElements[j].textContent = `${date}  vs ${match.player2} : ${result} (${match.score} - ${match.scoreplayer2})`;
+    }
+
+    var startTrisIndex = trisHistory.length > 5 ? trisHistory.length - 5 : 0;
+    for (var i = startTrisIndex, j = 0; i < trisHistory.length; i++, j++) {
+        var match = trisHistory[i];
+        var result;
+        if (match.win === "win") {
+            result = 'W';
+        } else if (match.win === "lose"){
+            result = 'L';
+        } else if (match.win === "draw"){
+            result = 'T';
+        }
+        trisHistoryElements[j].textContent = `${match.date}  vs ${match.player2} : ${result}`;
+    }
+
+    var pongWins = document.querySelector('.pong .data.wins');
+    var pongLosses = document.querySelector('.pong .data.losses');
+    var pongWinrate = document.querySelector('.pong .data.winratePong');
+    pongWins.textContent = 'W: ' + friend.wins_pong;
+    pongLosses.textContent = 'L: ' + friend.loses_pong;
+    var winrate = parseFloat(friend.winrate_pong).toFixed(2);
+    pongWinrate.textContent = 'Winrate: ' + winrate + '%';
+
+    var trisWins = document.querySelector('.tris .data.wins');
+    var trisLosses = document.querySelector('.tris .data.losses');
+    var trisTies = document.querySelector('.tris .data.ties');
+    var trisWinrate = document.querySelector('.tris .data.winrateTris');
+    trisWins.textContent = 'W: ' + friend.wins_tictactoe;
+    trisLosses.textContent = 'L: ' + friend.loses_tictactoe;
+    trisTies.textContent = 'T: ' + (trisHistory.length - friend.wins_tictactoe - friend.loses_tictactoe);
+    var winrateTris = parseFloat(friend.winrate_tictactoe).toFixed(2);
+    trisWinrate.textContent = 'Winrate: ' + winrateTris + '%';
+}
+	// Use the friend's data
+  document.addEventListener('DOMContentLoaded', (event) => {
+  let friendIndex = localStorage.getItem('friendIndex');
+  console.log('friendIndex:', friendIndex);  // Log the friendIndex
+  if (window.parent.userInstance && window.parent.userInstance.username && window.parent.userInstance.friendlist && window.parent.userInstance.friendlist[friendIndex]) {
+    console.log("boia dio User data already loaded");
+    var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
+    document.getElementById('player').textContent = friend.player;
+    document.getElementById("profile-image").src = friend.profile_image;
+    loadFriendProfile();
+  }
+});
+	window.addEventListener('message', function(event) {
+		// Check the type of the message
+		if (event.data.type === 'loadProfile') {
+      var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
+      console.log(window.parent.userInstance.username + " is viewing " + friend.username + "'s profile");
+			document.getElementById("player").innerText  = friend.player;
+			document.getElementById("profile-image").src = friend.profile_image;
+			console.log ("user image: " + friend.profile_image);
+			console.log ("User : " + friend.player);
+      loadFriendProfile();
+    }
+	});
+	document.getElementById("go_to_main").addEventListener("click", function() {
+			localStorage.setItem('lastPage', "main-page");
+            window.parent.goToMain();
+        });
+  </script>
+</html>

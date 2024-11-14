@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>PONG</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+		<link rel="stylesheet" href="styles.css">
+		<script src="User.js" type="module"></script>
+	</head>
+	<body style="height: 100vh;"> <!-- Set the body height to 100vh -->
+        <iframe id="login" src="login.html" style="height: 100%; width: 100%; border: none;"></iframe>
+        <iframe id="main-page" src="main-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+        <iframe id ="profile" src="profile.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<iframe id ="game-page" src="game-page.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<iframe id ="404" src="404.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<iframe id = "tris-game" src="tris-game.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<iframe id = "tris-tournament" src="tris-torneo.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<iframe id = "friend-profile" src="friendProfile.html" style="height: 100%; width: 100%; border: none; display: none;"></iframe>
+		<script>
+		var loginIframe = document.getElementById('login');
+		var mainPageIframe = document.getElementById('main-page');
+		var profileIframe = document.getElementById('profile');
+		var gamePageIframe = document.getElementById('game-page');
+		var notFoundIframe = document.getElementById('404');
+		var trisGameIframe = document.getElementById('tris-game');
+		var trisTournamentIframe = document.getElementById('tris-tournament');
+		var friendProfileIframe = document.getElementById('friend-profile');
+		let loginWindow = loginIframe.contentWindow;
+		let mainPageWindow = mainPageIframe.contentWindow;
+		let profileWindow = profileIframe.contentWindow;
+		let gamePageWindow = gamePageIframe.contentWindow;
+		let notFoundWindow = notFoundIframe.contentWindow;
+		let trisGameWindow = trisGameIframe.contentWindow;
+		let trisTournamentWindow = trisTournamentIframe.contentWindow;
+		let friendProfileWindow = friendProfileIframe.contentWindow;
+		console.log("Script loaded");
+		document.addEventListener('DOMContentLoaded', (event) => {
+		console.log("Window loaded");
+		let pippo = new URL(window.location.href);
+		let code = pippo.searchParams.get("code")
+		if (code) {
+			login42(code);
+		}
+		});
+		window.addEventListener('message', function(event) {
+		if (event.data.type === 'userDataLoaded') {
+			console.log('userDataLoaded event triggered');
+			goToMain();
+			if (friends) {
+            	populateFriendsList();
+	        }
+		}
+	});
+		function sendUserDataLoadedMessage() {
+			friendProfileWindow.postMessage({ type: 'loadProfile' }, '*');
+			mainPageWindow.postMessage({ type: 'userDataLoaded' }, '*');
+			gamePageWindow.postMessage({ type: 'loadProfile' }, '*');
+			profileWindow.postMessage({ type: 'loadProfile' }, '*');
+			trisGameWindow.postMessage({ type: 'loadProfile' }, '*');
+			trisTournamentWindow.postMessage({ type: 'loadProfile' }, '*');
+		}
+		var validPaths = ['profile', 'game-page', 'login', 'main-page', 'tris-game', 'spa-manager', 'tris-tournament', 'friend-profile'];
+		// Handle the back and forward navigation
+		window.onpopstate = function(event) {
+			// Hide all iframes
+			hidePages();
+
+			// Get the current path
+			var currentPath = window.location.pathname.slice(1);
+
+			// Check if the current path is in the list of valid paths
+			if (validPaths.includes(currentPath)) {
+				// If it is, show the iframe of the current page
+				if (event.state) {
+					document.getElementById(event.state.page).style.display = "block";
+				}
+			} else {
+				// If it's not, show the 404 page
+				goTo404();
+			}
+		
+		// If the user navigates back to the 'spa-manager' page, change the URL to '/login' and display the login page
+		if (!event.state || event.state.page === 'spa-manager') {
+			history.replaceState({page: 'login'}, null, '/login');
+			document.getElementById("login").style.display = "block";
+		}
+		console.log('onpopstate event triggered');
+			console.log(event.state);
+        	if (event.state) {
+            	// If the user navigates back to the 'spa-manager' page, change the URL to 'login.html'
+            	if (event.state.page === 'spa-manager') {
+                	history.replaceState({page: 'spa-manager'}, null, 'login');
+            	}
+				// Hide all pages
+				hidePages();
+
+				// Show the page based on the state object
+				if (event.state && event.state.page === 'spa-manager') {
+					document.getElementById("login").style.display = "block";
+   					window.history.pushState({page: 'login'}, "", "/login");
+				} else if (event.state.page === 'profile') {
+					document.getElementById("profile").style.display = "block";
+				} else if (event.state.page === 'game-page') {
+					gamePageWindow.postMessage({ type: 'reset' }, '*');
+					document.getElementById("game-page").style.display = "block";
+				} else if (event.state.page === 'login') {
+					document.getElementById("login").style.display = "block";
+				} else if (event.state.page === 'main-page') {
+					document.getElementById("main-page").style.display = "block";
+				} else if (event.state.page === 'tris-game') {
+					document.getElementById("tris-game").style.display = "block";
+				} else if (event.state.page === 'tris-tournament') {
+					document.getElementById("tris-tournament").style.display = "block";
+				} else if (event.state.page === 'friend-profile') {
+					document.getElementById("friend-profile").style.display = "block";
+				} else if (event.state.page === '404') {
+					document.getElementById("404").style.display = "block";
+				}
+			}
+			setPageBasedOnState(event.state);
+		};
+	async function loadUserClass() {
+    return new Promise((resolve, reject) => {
+        window.onload = async function() {
+            try {
+                const module = await import("./User.js");
+                const User = module.default;
+                window.User = User;
+                window.userInstance = new User();
+
+                const tokenData = {
+                    token: localStorage.getItem('userToken'),
+                };
+
+                fetch('http://127.0.0.1:8001/login/info/', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization' : 'Token ' + localStorage.getItem('userToken'),
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(tokenData),
+                })
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => {
+                    console.log('Success:', data);
+                    if(data.token) {
+                        try {
+                            window.userInstance.fillData(data);
+                            sendUserDataLoadedMessage();
+                            resolve(); // Resolve the promise
+                        } catch (error) {
+                            console.error('Error calling fillData:', error);
+                            reject(error); // Reject the promise
+                        }
+                    } else if(data.detail) {
+                        console.error('Error:', data.detail);
+                        reject(new Error(data.detail)); // Reject the promise
+                    } else {
+                        console.error('Token not found in response');
+                        reject(new Error('Token not found in response')); // Reject the promise
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    reject(error); // Reject the promise
+                });
+            } catch (error) {
+                console.log("Error loading User.js:", error);
+                reject(error); // Reject the promise
+            }
+        }
+    });
+}
+		function goToMain(){
+			mainPageIframe.src = "main-page.html";
+			mainPageIframe.onload = function() {
+				hidePages();
+				mainPageIframe.style.display = "block";
+				history.pushState({page: 'main-page'}, null, 'main-page');
+			}
+		}
+		function goTo404() {
+			hidePages();
+			notFoundIframe.style.display = "block";
+			notFoundWindow.src = "404.html";
+			history.replaceState({page: '404'}, null, '404');
+		}
+		function goToProfile() {
+			profileIframe.src = "profile.html";
+			profileIframe.onload = function() {
+				profileIframe.contentWindow.postMessage({ type: 'loadProfile' }, '*');
+			}
+			hidePages();
+			profileIframe.style.display = "block";
+			history.pushState({page: 'profile'}, null, 'profile');
+			window.location.reload();
+  		}
+		  function goToGame() {
+			gamePageIframe.src = "game-page.html";
+			gamePageIframe.onload = function() {
+				gamePageIframe.contentWindow.postMessage({ type: 'loadProfile' }, '*');
+			}
+    		hidePages();
+			gamePageIframe.style.display = "block";
+			history.pushState({page: 'game-page'}, null, 'game-page');
+		}
+		function goToLogin() {
+			loginIframe.src = "login.html";
+			hidePages();
+			loginIframe.style.display = "block";
+			history.pushState({page: 'login'}, null, 'login');
+		}
+		function goToTris() {
+			trisGameIframe.src = "tris-game.html";
+			hidePages();
+			trisGameIframe.style.display = "block";
+			history.pushState({page: 'tris-game'}, null, 'tris-game');
+		}
+
+		function goToTrisTournament(){
+			trisTournamentIframe.src = "tris-torneo.html";
+			hidePages();
+			trisTournamentIframe.style.display = "block";
+			history.pushState({page: 'tris-tournament'}, null, 'tris-tournament');
+		}
+
+		function goToFriendProfile(i){
+			localStorage.setItem('friendIndex', i);
+			console.log("username : " + window.userInstance.friendlist[i].username);
+			window.userInstance.currentFriend = window.userInstance.friendlist[i];
+			friendProfileIframe.src = "friendProfile.html";
+			hidePages();
+			friendProfileIframe.style.display = "block";
+			history.pushState({page: 'friend-profile'}, null, 'friend-profile');
+		}
+
+		function login42(code){
+				console.log("Login42 function called");
+				fetch(`http://localhost:8001/login/token42/?code=${code}`, {
+					method: 'GET',
+				})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					return response.json();
+				})
+				.then(data => {
+					console.log('Success:', data); // Debugging: Log the data to see its structure
+					if(data.token) {
+						localStorage.setItem('userToken', data.token); // Correctly access and store the token
+						console.log('Login successful');
+						localStorage.setItem('lastPage', "main-page");
+						window.fillUserData(data);
+						console.log("Login :"+ window.userInstance.username);
+						window.goToMain();
+					} else if(data.detail) {
+						console.error('Error:', data.detail); // Handle error (e.g., invalid credentials)
+					} else {
+						console.error('Token not found in response');
+					}
+				})
+				.catch(error => console.error('Error:', error));
+		}
+
+	window.onload = async function() {
+		try {
+			const module = await import("./User.js");
+			const User = module.default;
+			window.User = User;
+			window.userInstance = new User();
+		} catch (error) {
+			console.log("Error loading User.js:", error);
+		}
+
+		const tokenData = {
+			token: localStorage.getItem('userToken'),
+		};
+
+		fetch('http://127.0.0.1:8001/login/info/', {
+			method: 'POST',
+			headers: {
+				'Authorization' : 'Token ' + localStorage.getItem('userToken'),
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(tokenData),
+		})
+		.then(response => response.json()) // Parse the JSON response
+		.then(data => {
+			console.log('Success:', data);
+			if(data.token) {
+				try {
+					window.userInstance.fillData(data);
+					sendUserDataLoadedMessage();
+				} catch (error) {
+					console.error('Error calling fillData:', error);
+				}
+			} else if(data.detail) {
+				console.error('Error:', data.detail);
+			} else {
+				console.error('Token not found in response');
+			}
+		})
+		.catch(error => console.error('Error:', error));
+		mainPageIframe.src = "main-page.html";
+		profileIframe.src = "profile.html";
+		gamePageIframe.src = "game-page.html";
+		notFoundIframe.src = "404.html";
+		trisGameIframe.src = "tris-game.html";
+		loginIframe.src = "login.html";
+		trisTournamentIframe.src = "tris-torneo.html";
+		friendProfileIframe.src = "friendProfile.html";
+		
+			// Attempt to get the lastPage from localStorage
+			var lastPage = localStorage.getItem('lastPage');
+			// Function to show the page based on id
+			function showPage(pageId) {
+				// Hide all pages
+				hidePages();
+
+				// Show the requested page
+				document.getElementById(pageId).style.display = "block";
+
+				// If the game page is being shown, reset the game
+				if (pageId === 'game-page') {
+					gamePageWindow.postMessage({ type: 'reset' }, '*');
+				}
+			}
+
+			// If lastPage exists in localStorage, show it
+			if (lastPage && document.getElementById(lastPage)) {
+				showPage(lastPage);
+			} else {
+				// Default behavior based on URL
+				var url = window.location.href;
+				if (url.includes('spa-manager')) {
+					showPage("login"); // Default to login if 'spa-manager' is in the URL but no lastPage is saved
+				} else if (url.include('friend-profile')){
+					showPage("friend-profile");
+				} else if (url.includes('profile')) {
+					showPage("profile");
+				} else if (url.includes('game-page')) {
+					gamePageWindow.postMessage({ type: 'reset' }, '*');
+					showPage("game-page");
+				} else if (url.includes('login')) {
+					showPage("login");
+				} else if (url.includes('main-page')) {
+					showPage("main-page");
+				} else if (url.includes('tris-game')) {
+					showPage("tris-game");
+				} else if (url.includes('tris-tournament')) {
+					showPage("tris-tournament"); 
+				} else if (url.includes('404')){
+					showPage("404")
+				}
+			}
+		};
+
+
+	document.addEventListener('DOMContentLoaded', function() {
+    const userToken = localStorage.getItem('userToken');
+    const lastPage = localStorage.getItem('lastPage') || 'login';
+
+    if (userToken && lastPage !== 'login') {
+        console.log('User token found:', userToken);
+        // Assuming setPageBasedOnState does the actual page showing
+        setPageBasedOnState({page: lastPage});
+    } else {
+        console.log('No user token found, please log in');
+        setPageBasedOnState({page: 'login'});
+    }
+});
+
+function setPageBasedOnState(state) {
+    const pageIds = ["login", "profile", "main-page", "game-page", "tris-game", "tris-tournament", "spa-manager", "friend-profile" ,"404"];
+    pageIds.forEach(id => {
+        const pageElement = document.getElementById(id);
+        if (pageElement) {
+            pageElement.style.display = "none";
+        }
+    });
+    if (state && state.page && document.getElementById(state.page)) {
+        console.log("Showing page:", state.page);
+        if (state.page === 'spa-manager') {
+            window.history.replaceState({page: 'login'}, "", "/login");
+            document.getElementById("login").style.display = "block";
+            localStorage.setItem('lastPage', 'login'); // Correctly update localStorage
+        } else {
+            document.getElementById(state.page).style.display = "block";
+            localStorage.setItem('lastPage', state.page); // Correctly update localStorage
+        }
+    } else {
+        console.log("No page specified, showing login");
+        document.getElementById("login").style.display = "block";
+    }
+}
+
+	function hidePages(){
+		document.getElementById("game-page").style.display = "none";
+		document.getElementById("main-page").style.display = "none";
+		document.getElementById("profile").style.display = "none";
+		document.getElementById("login").style.display = "none";
+		document.getElementById("404").style.display = "none";
+		document.getElementById("tris-game").style.display = "none";
+		document.getElementById("tris-tournament").style.display = "none";
+		document.getElementById("friend-profile").style.display = "none";
+	}
+		
+		(async function() {
+			try {
+				const module = await import("./User.js");
+				const User = module.default;
+				window.User = User;
+				window.userInstance = new User();
+			} catch (error) {
+				console.log("Error loading User.js:", error);
+			}
+		})();
+
+        window.fillUserData = function(data){
+            if (data.user) {
+                window.userInstance.fillData(data.user);
+				console.log("User.js loaded", window.userInstance.username);
+				sendUserDataLoadedMessage();
+            } else {
+				console.error('Error:', data.detail);
+                window.userInstance.fillData(data);
+				sendUserDataLoadedMessage();
+            }
+        };
+	</script>
+	<!-- <script>
+		$(document).onload(function () {
+			function change_iframe() {
+				let url = window.location.href;
+				let param = url.split('?')[0];
+				let param_clean = param.split('/').pop();
+
+				if (param_clean === "status=42") {
+					localStorage.setItem('lastPage', "main-page");
+					window.fillUserData(data);
+					goToMain();
+				}
+			}
+		});
+	</script> -->
+
+	</body>
+</html>

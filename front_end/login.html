@@ -1,0 +1,370 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>PONG-login</title>
+    <style>
+      body {
+        background-color: #dfa100;
+      }
+      .btn-custom-brown {
+        background-color: #4f4537; /* Change this to your preferred color */
+        color: #ffffff; /* Change this to your preferred color */
+      }
+      .btn-custom-white {
+        background-color: #b6a999; /* Change this to your preferred color */
+        color: #4f4537; /* Change this to your preferred color */
+      }
+      .btn-custom-42 {
+        background-color: #2c2c34; /* Change this to your preferred color */
+        color: #00babc; /* Change this to your preferred color */
+      }
+      .div-login {
+        position: absolute;
+        right: 18%; /* Change this to move the div horizontally */
+        top: 39%; /* Change this to move the div vertically */
+        width: 13%; /* Adjust this value to make the div as wide as you want */
+        margin: 0 auto; /* This will center the div */
+        text-align: left; /* This will center the text inside the div */
+      }
+      .div-login-title {
+        font-family: "font-Despairs";
+        font-size: 1000%; /* Change this to move the div horizontally */
+        position: absolute;
+        left: 18%; /* Change this to move the div horizontally */
+        top: 39%; /* Change this to move the div vertically */
+      }
+      .white {
+        color: #ffffff; /* This sets the color to white */
+      }
+      .title-login {
+        font-family: "font-Despairs", fallback-fonts;
+        font-size: 10%;
+      }
+      .font-Despairs {
+        font-family: "Despairs";
+      }
+      .modal-content {
+        background-color: #dfa100;
+      }
+      /* 
+		Possible color palette : 
+		#DFA100 Main Yellow/Orange Color
+		#B6A999 Light Gray Color
+		#4F4537 Dark Brown Color
+		#ffffff White Color
+		#000000 Black Color
+		42 colors :
+		#00babc Light Blue Color
+		#292D39 Middle Blue Color
+		#2c2c34 Dark Blue Color
+		*/
+    </style>
+  </head>
+  <body>
+    <div class="div-login-title">
+      <p><strong>P O N G</strong></p>
+    </div>
+    <div class="div-login rounded border">
+      <input id = "nickInput" class="px-1 mt-4 mb-2 ms-3 me-5" type="text" placeholder="Nick" maxlength="16"/><br>
+	  <script>
+		const nickInput = document.getElementById('nickInput');
+	
+		nickInput.addEventListener('input', (event) => {
+			const nickValue = event.target.value;
+			console.log(nickValue);
+		});
+	</script>
+      <input
+	  	id = "passwordInput"
+        class="px-1 mt-2 ms-3 me-5 mb-2"
+        type="password"
+        placeholder="Password"
+        maxlength="16"
+      /><br>
+	  <script>
+			const passwordInput = document.getElementById('passwordInput');
+	
+			passwordInput.addEventListener('input', (event) => {
+			const passwordValue = event.target.value;
+			console.log(passwordValue);
+		});
+	  </script>
+      <button id = "go_to_main" class="btn btn-custom-brown mb-0 ms-3 me-5" type="button">
+        Login
+      </button>
+	  <script type="module">import User from './User.js';
+		document.getElementById("go_to_main").addEventListener("click", function() {
+		const nickInput = document.getElementById('nickInput').value;
+		const passwordInput = document.getElementById('passwordInput').value;
+
+		const data = {
+		username: nickInput,
+		password: passwordInput
+		};
+		//SET 8001 as a default port
+		fetch('http://127.0.0.1:8001/login/login/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+		.then(response => response.json()) // Parse the JSON response
+		.then(data => {
+			console.log('Success:', data);
+			if(data.token) {
+				localStorage.setItem('userToken', data.token);
+				console.log('Login successful');
+				localStorage.setItem('lastPage', "main-page");
+				document.getElementById('nickInput').value = '';
+				document.getElementById('passwordInput').value = '';
+				document.getElementById('Registerpassword').value = '';
+				document.getElementById('repeatPassword').value = '';
+				document.getElementById('Registernick').value = '';
+				window.parent.fillUserData(data);
+				console.log("Login :"+ window.parent.userInstance.username); // Access the User instance
+				window.parent.goToMain();
+			} else if(data.detail) {
+				console.error('Error:', data.detail);
+			} else {
+				console.error('Token not found in response');
+			}
+		})
+		.catch(error => console.error('Error:', error));
+	});
+    </script>
+
+	  <button
+        id="Register"
+        type="button"
+        class="btn btn-custom-brown mb-0 ms-3"
+        data-bs-toggle="modal"
+        data-bs-target="#registerModal"
+      >
+        Register
+      </button>
+      <div id="login-error" style="display: none; color: red; font-size: 12px;  height: 1%;">Login unsuccessful. Please try again.</div> 
+      <!-- Register Modal -->
+      <div
+        class="modal fade"
+        id="registerModal"
+        tabindex="-1"
+        aria-labelledby="registerModalLabel"
+        aria-hidden="true"
+		style="--bs-modal-header-border-color: #dfa100;--bs-modal-footer-border-color:  #dfa100;"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="registerModalLabel">Register</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <input
+                id="Registernick"
+                class="px-1 mt-2 ms-3 me-5 mb-2"
+                type="text"
+                placeholder="Nick"
+                maxlength="16"
+              />
+              <input
+                id="Registerpassword"
+                class="px-1 mt-2 ms-3 me-5 mb-2"
+                type="password"
+                placeholder="Password"
+                maxlength="16"
+              />
+              <input
+                id="repeatPassword"
+                class="px-1 mt-2 ms-3 me-5 mb-2"
+                type="password"
+                placeholder="Repeat Password"
+                maxlength="16"
+              />
+			  <p id="RegisterError" style="display: none; color: red">
+                The Username can't contain a '#'.
+              </p>
+              <p id="successMessage" style="display: none; color: green">
+                Registration successful.
+              </p>
+              <p id="passwordError" style="display: none; color: red">
+                Passwords do not match.
+              </p>
+              <p id="passwordInvalid" style="display: none; color: red">
+                Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button
+                id="closeButton"
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button id="registerButton" type="button" class="btn btn-primary">
+                Register
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function validatePassword(password) {
+            const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+            return re.test(password);
+        }
+        document.getElementById("registerButton").onclick = function () {
+          const Registerpassword = document.getElementById("Registerpassword").value;
+          const repeatPassword = document.getElementById("repeatPassword").value;
+          const RegisterNick = document.getElementById("Registernick").value;
+          document.getElementById("passwordError").style.display = "none";
+          document.getElementById("passwordInvalid").style.display = "none";
+          document.getElementById("successMessage").style.display = "none";
+		  document.getElementById("RegisterError").style.display = "none";
+          if (RegisterNick.includes('#')) {
+			document.getElementById("RegisterError").style.display = "block";
+		  } else if (!validatePassword(Registerpassword)) {
+                document.getElementById("passwordInvalid").style.display = "block";  
+          }
+          else if (Registerpassword !== repeatPassword) {
+            document.getElementById("passwordError").style.display = "block";
+          } else {
+            const RegisterData = {
+                username: RegisterNick,
+                password: Registerpassword
+            };
+            fetch('http://127.0.0.1:8001/login/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(RegisterData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Check if register is successful
+                if (data.response === 'successful') {
+                  document.getElementById("successMessage").style.display = "block";
+                  document.getElementById("Registerpassword").value = '';
+                  document.getElementById("repeatPassword").value = '';
+                  document.getElementById("Registernick").value = '';
+                }
+                else if (data.response === 'user with this username already exists.') {
+                    alert("Username already exists.");
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+          }
+        };
+      </script>
+      <br />
+      <a id = "Login42" href="https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-a8a7afc615b7c393b1a141953798a4f72bfd49e80f8464df3f2ac1838557eefe&redirect_uri=https%3A%2F%2Flocalhost%3A8443%2Fspa-manager.html&response_type=code" target="_parent" class="btn btn-custom-42 mt-2 ms-3 mb-3" type="button"><span class="white">Login with </span>42</a>
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<script>
+		var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+		var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+	</script>
+   <script>
+    document.getElementById("Login42").addEventListener("click", function() {
+        document.getElementById('nickInput').value = '';
+				document.getElementById('passwordInput').value = '';
+				document.getElementById('Registerpassword').value = '';
+				document.getElementById('repeatPassword').value = '';
+				document.getElementById('Registernick').value = '';
+    });
+    // se non cé'una lingua nel local storage mettere EN di default
+    if (localStorage.getItem('language') === null) {
+    localStorage.setItem('language', 'EN');
+  }
+  // function changeLanguage() {
+	const savedLanguage = localStorage.getItem('language');
+  if (savedLanguage== 'IT') {
+	document.getElementById('RegisterError').innerText = 'Il nome utente non può contenere un \'#\'.';    
+    document.getElementById('go_to_main').innerText = 'Accedi';
+    document.getElementById('Register').innerText = 'Registrati';
+    document.getElementById('login-error').innerText = 'Accesso non riuscito. Per favore riprova.'
+    document.getElementById('registerModalLabel').innerText = 'Registrati';
+    document.getElementById('successMessage').innerText = 'Registrazione completata.';
+    document.getElementById('passwordError').innerText = 'Le password sono diverse.';
+    document.getElementById('passwordInvalid').innerText = 'La password devono contenere almeno 8 lettere, una lettera maiuscola, una minuscola e un numero.';
+    document.getElementById('closeButton').innerText = 'Chiudi';
+    document.getElementById('registerButton').innerText = 'Registrati';
+    document.getElementById('passwordError').innerText = 'Le password sono diverse.';
+    document.getElementById('closeButton').innerText = 'Chiudi';
+    document.getElementById('Registernick').placeholder = 'nome utente';
+    document.getElementById('Registerpassword').placeholder = 'Password';
+    document.getElementById('repeatPassword').placeholder = 'Ripeti Password';
+    document.getElementById('Login42').placeholder = 'Accedi con 42';
+    document.getElementById('nickInput').placeholder = 'Nome Utente';
+    
+  } else if (savedLanguage == 'EN') {
+	document.getElementById('RegisterError').innerText = 'The Username can\'t contain a \'#\'.';
+    document.getElementById('go_to_main').innerText = 'Login';
+    document.getElementById('Register').innerText = 'Register';
+    document.getElementById('login-error').innerText = 'Login unsuccessful. Please try again.'
+    document.getElementById('registerModalLabel').innerText = 'Register';
+    document.getElementById('successMessage').innerText = 'Registration successful.';
+    document.getElementById('passwordError').innerText = 'Passwords do not match.';
+    document.getElementById('passwordInvalid').innerText = 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number.';
+    document.getElementById('closeButton').innerText = 'Close';
+    document.getElementById('registerButton').innerText = 'Register';
+    document.getElementById('passwordError').innerText = ' Passwords do not match.';
+    document.getElementById('closeButton').innerText = 'Close';
+    document.getElementById('Registernick').placeholder = 'Nick';
+    document.getElementById('Registerpassword').placeholder = 'Password';
+    document.getElementById('repeatPassword').placeholder = 'Repeat Password';
+    document.getElementById('Login42').placeholder = 'Login with 42';
+    document.getElementById('nickInput').placeholder = 'Nick';
+   
+    
+    
+  } else if (savedLanguage == 'ES') {
+	document.getElementById('RegisterError').innerText = 'El nombre de usuario no puede contener un \'#\'.';
+    document.getElementById('go_to_main').innerText = 'Acceder';
+    document.getElementById('Register').innerText = 'Registrarse';
+    document.getElementById('login-error').innerText = 'No se ha podido iniciar sesión. Inténtalo de nuevo.'
+    document.getElementById('registerModalLabel').innerText = 'Registrarse';
+    document.getElementById('successMessage').innerText = 'Registro exitoso.';
+    document.getElementById('passwordError').innerText = 'La contraseña no coincide.';
+    document.getElementById('passwordInvalid').innerText = 'La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.';
+    document.getElementById('closeButton').innerText = 'Cerrar';
+    document.getElementById('registerButton').innerText = 'Registrarse';
+    document.getElementById('passwordError').innerText = 'La contraseña no coincide.';
+    document.getElementById('closeButton').innerText = 'Cerrar';
+    document.getElementById('Registernick').placeholder = 'Nombre de usuario';
+    document.getElementById('Registerpassword').placeholder = 'Contraseña';
+    document.getElementById('repeatPassword').placeholder = 'Repeat contraseña';
+    document.getElementById('Login42').placeholder = 'Acceder con 42';
+    document.getElementById('nickInput').placeholder = 'Nombre de usuario';
+  }
+  </script>
+    </body>
+    </html>
+  </body>
+</html>
