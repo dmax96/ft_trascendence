@@ -37,20 +37,13 @@ Per raggiungere il 100% del progetto, è necessario implementare almeno **7 modu
    ```bash
    git clone https://github.com/dmax96/ft_transcendence.git
    ```
-2. Esegui il progetto con Docker:
+2. Esegui il progetto con il MakeFile:
    ```bash
-   docker-compose up --build
+   Make Up
    ```
-   
+3. Collegati al sito con la seguente porta:
+    ```bash
+    https://localhost:8443
+   ```
 
-## 📝 **Valutazione**
-
-Il progetto verrà valutato in base alla completezza della parte obbligatoria e all'implementazione dei moduli opzionali. Assicurati di seguire tutte le linee guida e di giustificare le tue scelte tecniche durante la valutazione.
-
----
-
-**Buona fortuna e buon coding!** 🚀
-
----
-
-Puoi personalizzare ulteriormente questa descrizione in base alle tue preferenze o aggiungere dettagli specifici sui moduli che hai intenzione di implementare.
+Enjoy!
