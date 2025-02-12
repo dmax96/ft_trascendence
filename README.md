@@ -48,3 +48,5 @@ Per raggiungere il 100% del progetto, è necessario implementare almeno **7 modu
 Per cancellare tutte le dockerizzazioni puoi usare Make Down
 
 Enjoy!
+
+Progetto con tutti i commit visibile qui https://github.com/ATKcodes/ft_trascendence
