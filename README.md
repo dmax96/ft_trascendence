@@ -37,12 +37,11 @@ Per raggiungere il 100% del progetto, è necessario implementare almeno **7 modu
    ```bash
    git clone https://github.com/dmax96/ft_transcendence.git
    ```
-2. Segui le istruzioni nel file `README.md` per configurare l'ambiente di sviluppo.
-3. Sviluppa le funzionalità richieste e aggiungi i moduli opzionali che desideri implementare.
-4. Esegui il progetto con Docker:
+2. Esegui il progetto con Docker:
    ```bash
    docker-compose up --build
    ```
+   
 
 ## 📝 **Valutazione**
 
