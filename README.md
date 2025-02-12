@@ -45,5 +45,6 @@ Per raggiungere il 100% del progetto, è necessario implementare almeno **7 modu
     ```bash
     https://localhost:8443
    ```
+Per cancellare tutte le dockerizzazioni puoi usare Make Down
 
 Enjoy!
