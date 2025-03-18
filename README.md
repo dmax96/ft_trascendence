@@ -1,3 +1,6 @@
+Progetto con tutti i commit visibile qui https://github.com/ATKcodes/ft_trascendence
+
+
 ft_transcendence
 
 Benvenuto nel progetto Transcendence! Questo progetto rappresenta un sito web per un torneo dei classici giochi **Pong** e **Tris**. L'obiettivo è sviluppare un'esperienza utente coinvolgente, con funzionalità avanzate come il multiplayer in tempo reale, la gestione degli utenti, la sicurezza e molto altro.
@@ -48,5 +51,3 @@ Per raggiungere il 100% del progetto, è necessario implementare almeno **7 modu
 Per cancellare tutte le dockerizzazioni puoi usare Make Down
 
 Enjoy!
-
-Progetto con tutti i commit visibile qui https://github.com/ATKcodes/ft_trascendence
