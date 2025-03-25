@@ -15,424 +15,595 @@
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <title>PONG-profile</title>
-  </head>
-  <style>
-    /* Stile base per dispositivi con schermo di larghezza inferiore a 600px */
-    body {
-      background-color: #dfa100;
-    }
-
-    /* Stile per dispositivi con schermo di larghezza compresa tra 600px e 900px */
-    @media screen and (min-width: 600px) {
+    <style>
+      /* Stile base per dispositivi con schermo di larghezza inferiore a 600px */
       body {
         background-color: #dfa100;
       }
-      .div-title {
-        font-family: "font-Despairs";
-        font-size: 400%;
-        position: absolute;
-        left: 42%;
-        right: 2%;
-        top: 3%;
-        padding: 1%;
-        color: black;
+      
+      /* Rimuovo la barra nera in alto */
+      .navbar {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
       }
-      .img-fluid {
-        width:20%;
-        height:20%;
-        position: relative;
-        top: 20%;
-        left: 2%;
-      }
-      .image {
-        width: 700px;
-        height: 500px;
-      }
-      .nickname {
-        font-family: "";
-        font-size: 200%;
-        position: absolute;
-        top: 140%;
-        left: 35%;
-      }
-      .statistics {
-        width: 30%;
-        height: 30%;
-        position: absolute;
-        left: 60%;
-      }
-    }
-
-    /* Stile per dispositivi con schermo di larghezza superiore a 900px */
-    @media screen and (min-width: 900px) {
-      body {
-        background-color: #dfa100;
-      }
-      .div-title {
-        font-family: "font-Despairs";
-        font-size: 400%;
-        position: absolute;
-        left: 42%;
-        right: 2%;
-        top: 3%;
-        padding: 1%;
-        color: black;
-      }
-      .profile {
-        display: flex;
-        position: relative;
-        top: 200px;
-      }
-      .img-fluid {
-        width: 50%;
-        height: 50%;
-        position: relative;
-        top: 200px;
-        left: 2%;
-        min-height: 800px;
-      }
-      .image {
-        width: 100%;
-        height: 100%;
-      }
-      .nickname {
-        font-family: "";
-        font-size: 240%;
-        position: relative;
-        left: 40%;
-        top: 5%;
-        display: flex;
-      }
-      .game_title {
-        font-family: "";
-        font-size: 300%;
-        position: relative;
-        left: 42%;
-        margin-bottom: 8%;
-      }
-      .statistics {
-        height: 50%;
-        width: 30%;
-      }
-      .data {
-        font-size: 200%;
-      }
-      .history {
-        font-size: 200%;
-      }
-      .pong {
-        margin-bottom: 10%;
-      }
-      .tris {
-        margin-top: 9%;
-      }
-      .nick {
-        font-size: 143%;
-        position: relative;
-      }
-      .modify {
-        position: relative;
-        left: 44%;
-        cursor: pointer;
-      }
-      .image-container {
-        position: relative;
-        width: 40%; /* Adatta a seconda delle tue esigenze */
-        height: 50%; /* Adatta a seconda delle tue esigenze */
-        min-height: 1px;
-      }
-
-      .image-container img {
-        max-width: 1000px;
-        max-height: 1000px;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .edit-icon {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        color: white;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 10px;
+      
+      #hamburger {
         font-size: 24px;
         cursor: pointer;
+        color: #333;
+        margin: 15px;
       }
-	  .modal {
-		display: none;
-		position: fixed;
-		z-index: 1;
-		padding-top: 100px;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		overflow: auto;
-		background-color: rgb(0,0,0);
-		background-color: rgba(0,0,0,0.4);
-		}
 
-		.modal-content {
-		background-color: #f4dc9e;
-		margin: auto;
-		padding: 20px;
-		border: 1px solid #888;
-		width: 50%;
-		height: 40%;
-		}
+      /* Stile per dispositivi con schermo di larghezza compresa tra 600px e 900px */
+      @media screen and (min-width: 600px) {
+        body {
+          background-color: #dfa100;
+        }
+        .div-title {
+          font-family: "font-Despairs";
+          font-size: 400%;
+          position: absolute;
+          left: 42%;
+          right: 2%;
+          top: 3%;
+          padding: 1%;
+          color: black;
+        }
+        .img-fluid {
+          width:20%;
+          height:20%;
+          position: relative;
+          top: 20%;
+          left: 2%;
+        }
+        .image {
+          width: 700px;
+          height: 500px;
+        }
+        .nickname {
+          font-family: "";
+          font-size: 200%;
+          position: absolute;
+          top: 140%;
+          left: 35%;
+        }
+        .statistics {
+          width: 30%;
+          height: 30%;
+          position: absolute;
+          left: 60%;
+        }
+      }
 
-		.close {
-		color: #aaaaaa;
-		float: right;
-		font-size: 28px;
-		font-weight: bold;
-		}
+      /* Stile per dispositivi con schermo di larghezza superiore a 900px */
+      @media screen and (min-width: 900px) {
+        body {
+          background-color: #dfa100;
+        }
+        .div-title {
+          font-family: "font-Despairs";
+          font-size: 400%;
+          position: absolute;
+          left: 42%;
+          right: 2%;
+          top: 3%;
+          padding: 1%;
+          color: black;
+        }
+        .profile {
+          display: flex;
+          position: relative;
+          top: 200px;
+        }
+        .img-fluid {
+          width: 50%;
+          height: 50%;
+          position: relative;
+          top: 200px;
+          left: 2%;
+          min-height: 800px;
+        }
+        .image {
+          width: 100%;
+          height: 100%;
+        }
+        .nickname {
+          font-family: "";
+          font-size: 240%;
+          position: relative;
+          left: 40%;
+          top: 5%;
+          display: flex;
+        }
+        .game_title {
+          font-family: "";
+          font-size: 300%;
+          position: relative;
+          left: 42%;
+          margin-bottom: 8%;
+        }
+        .statistics {
+          height: 50%;
+          width: 30%;
+        }
+        .data {
+          font-size: 200%;
+        }
+        .history {
+          font-size: 200%;
+        }
+        .pong {
+          margin-bottom: 10%;
+        }
+        .tris {
+          margin-top: 9%;
+        }
+        .nick {
+          font-size: 143%;
+          position: relative;
+        }
+        .modify {
+          position: relative;
+          left: 44%;
+          cursor: pointer;
+        }
+        .image-container {
+          position: relative;
+          width: 40%; /* Adatta a seconda delle tue esigenze */
+          height: 50%; /* Adatta a seconda delle tue esigenze */
+          min-height: 1px;
+        }
 
-		.close:hover,
-		.close:focus {
-		color: #000;
-		text-decoration: none;
-		cursor: pointer;
-		}
+        .image-container img {
+          max-width: 1000px;
+          max-height: 1000px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .edit-icon {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          color: white;
+          background: rgba(0, 0, 0, 0.5);
+          padding: 10px;
+          font-size: 24px;
+          cursor: pointer;
+        }
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          padding-top: 100px;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgb(0,0,0);
+          background-color: rgba(0,0,0,0.4);
+        }
 
-		.image-preview img {
-		width: 200px; /* Increase the width */
-		height: 200px; /* Increase the height */
-		margin: 5px;
-		cursor: pointer; 
-	}
-    }
-  </style>
+        .modal-content {
+          background-color: #f4dc9e;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 50%;
+          height: 40%;
+        }
+
+        .close {
+          color: #aaaaaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+
+        .image-preview img {
+          width: 200px; /* Increase the width */
+          height: 200px; /* Increase the height */
+          margin: 5px;
+          cursor: pointer; 
+        }
+      }
+
+      #profilePictureOptions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      
+      #profilePictureOptions img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: var(--transition);
+      }
+      
+      #profilePictureOptions img:hover {
+        transform: scale(1.1);
+        border-color: var(--accent-color);
+      }
+      
+      .selected-image {
+        border-color: var(--highlight-color) !important;
+      }
+    </style>
+  </head>
   <body>
-    <div>
-    <h2 id = "go_to_main" class="div-title">PONG</h2>
-    <div>
-    <div class="profile">
-      <div class="img-fluid">
-        <div class="image-container">
-          <img id="profile-image" src="" alt="Your Image" />
-          <i id="edit-icon" class="fas fa-edit edit-icon"></i>
-        </div>
-        <div class="nickname">
-          <div>
-            <h2 id="player">Mvolpi</h2>
+    <div class="navbar">
+      <!-- Rimuovo l'icona hamburger -->
+    </div>
+    <div class="nav">
+      <div class="nav-links">
+        <a href="#" id="go_to_main" class="nav-link">
+          <span>Home</span>
+          <i class="fa-solid fa-house float-end mt-1"></i>
+        </a>
+        <a href="#" id="go_to_profile" class="active nav-link">
+          <span>Profile</span>
+          <i class="fa-solid fa-user float-end mt-1"></i>
+        </a>
+        <a href="#" id="go_to_login" class="nav-link">
+          <span>Logout</span>
+          <i class="fa-solid fa-right-from-bracket float-end mt-1"></i>
+        </a>
+      </div>
+    </div>
+    
+    <div class="container mt-5 pt-5">
+      <a href="#" id="title_to_main" style="text-decoration: none; cursor: pointer;">
+        <h1 class="title-main text-center">Profile</h1>
+      </a>
+      
+      <div class="row mt-5">
+        <div class="col-md-5">
+          <div class="card profile-card text-center">
+            <div class="mb-4">
+              <img id="profilePicture" class="avatar mx-auto d-block" style="width: 150px; height: 150px;" src="media/1.jpg" alt="Profile Picture">
+            </div>
+            <h2 id="nickname" class="mb-3">Username</h2>
+            
+            <div class="d-grid gap-2 mt-4">
+              <button id="changePicture" class="btn btn-primary">Change Profile Picture</button>
+              <button id="changePassword" class="btn btn-secondary">Change Password</button>
+            </div>
           </div>
-          <div class="modify">
-            <i id="modify-icon" class="fas fa-edit modify"></i>
+        </div>
+        
+        <div class="col-md-7">
+          <div class="card">
+            <h3 class="mb-4"><i class="fas fa-chart-line me-2"></i>Statistics</h3>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Wins</h5>
+                    <h3 id="wins" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Losses</h5>
+                    <h3 id="losses" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Win Rate</h5>
+                    <h3 id="winrate" class="mb-0">0%</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Total Games</h5>
+                    <h3 id="totalGames" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card mt-4">
+            <h3 class="mb-4"><i class="fas fa-history me-2"></i>Recent Games</h3>
+            <div id="matchHistory" class="list-group list-group-flush">
+              <!-- Match history will be populated here -->
+            </div>
           </div>
         </div>
       </div>
-	  <div id="myModal" class="modal">
-		<div class="modal-content">
-		  <span class="close">&times;</span>
-		  <div class="image-preview">
-			<!-- Images will be added here by JavaScript -->
-		  </div>
-		</div>
-	  </div>
-      <div class="statistics">
-        <div class="pong">
-          <h2 class="game_title">Pong</h2>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-		  <h6 class="data wins">Wins: </h6>
-		  <h6 class="data losses">Losses: </h6>
-		  <h6 class="data winratePong">	Winrate: </h6>
-        </div>
-        <hr />
-        <div class="tris">
-          <h2 class="game_title">Tris</h2>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-	      </h6>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-		  <h6 class="data wins">Wins: </h6>
-		  <h6 class="data losses">Losses: </h6>
-      <h6 class="data ties">Ties:</h6>
-		  <h6 class="data winrateTris">	Winrate: </h6>
-        </div>
+    </div>
+    
+    <!-- Change Profile Picture Modal -->
+    <div id="pictureModal" class="modal-content" style="display: none;">
+      <span class="close">&times;</span>
+      <h3 class="mb-3">Change Profile Picture</h3>
+      <div class="row mb-3" id="profilePictureOptions">
+        <!-- Profile pictures will be dynamically added here -->
+      </div>
+      <button id="confirmPicture" class="btn btn-primary w-100 mt-2">Confirm Selection</button>
+    </div>
+    
+    <!-- Edit Bio Modal -->
+    <div id="bioModal" class="modal-content" style="display: none;">
+      <span class="close">&times;</span>
+      <h3 class="mb-3">Edit Bio</h3>
+      <div class="form-group">
+        <textarea id="bioText" class="form-control" rows="4" placeholder="Enter your bio (max 150 characters)"></textarea>
+        <button id="confirmBio" class="btn btn-primary w-100 mt-2">Save Bio</button>
       </div>
     </div>
+    
+    <!-- Change Password Modal -->
+    <div id="passwordModal" class="modal-content" style="display: none;">
+      <span class="close">&times;</span>
+      <h3 class="mb-3">Change Password</h3>
+      <div class="form-group">
+        <label for="currentPassword">Current Password</label>
+        <input type="password" id="currentPassword" class="form-control" placeholder="Enter current password">
+        <label for="newPassword">New Password</label>
+        <input type="password" id="newPassword" class="form-control" placeholder="Enter new password">
+        <label for="confirmPassword">Confirm New Password</label>
+        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm new password">
+        <button id="confirmPassword" class="btn btn-primary w-100 mt-3">Change Password</button>
+      </div>
     </div>
+    
+    <!-- Modal for adding friends -->
+    <div id="myModal" class="modal-content rounded" style="display: none; width: 350px; padding: 25px;">
+      <span class="close">&times;</span>
+      <h3 class="mb-3">Add a friend</h3>
+      <div style="width: 100%;">
+        <input type="text" id="friendUsername" class="form-control mb-3" placeholder="Enter friend's username" style="width: 100%; display: block; margin-bottom: 15px;">
+        <button id="confirmButton" class="btn btn-primary" style="width: 100%; display: block;">Confirm</button>
+      </div>
     </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-	var modal = document.getElementById("myModal");
-	var span = document.getElementsByClassName("close")[0];
-
-	span.onclick = function() {
-		modal.style.display = "none";
-	}
-
-	window.onclick = function(event) {
-	if (event.target == modal) {
-		modal.style.display = "none";
-	}
-	}
-
-	var imagePreview = document.querySelector('.image-preview');
-	var imagePaths = ['Mattarella.jpg', 'mikeTyson.png', 'carletto.jpg', 'richard.jpg', 'lebowski.png', 'Jacobs.png', 'gricia.jpg', 'ai.jpg', 'silvietto.jpeg', 'blade_runner.jpeg'];
-
-	imagePaths.forEach(function(path) {
-		var img = document.createElement('img');
-		img.src = 'media/' + path;
-		img.style.flex = "0 1 calc(20% - 10px)"; // This will make the image take up 20% of the container width minus 10px for margins
-		//Call to the back-end to update user  data.
-		img.onclick = function() {
-		document.getElementById('profile-image').src = this.src;
-		modal.style.display = "none";
-		var token = localStorage.getItem('userToken');
-		// Remove the base URL from the image src
-		var imagePath = this.src.replace('http://127.0.0.1:5501/front_end/', '');
-		// Send a fetch request to the backend
-		fetch('http://localhost:8001/main/profile_image/', {
-			method: 'POST',
-			headers: {
-				'Authorization' : 'Token ' + token,
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				profile_path: imagePath // Send the new image path to the backend
-			}),
-		})
-		.then(response => response.json())
-		.then(data => {
-			console.log('Success:', data);
-		})
-		.catch((error) => {
-			console.error('Error:', error);
-		});
-		}
-		imagePreview.appendChild(img);
-	});
-
-  function loadMatchHistory(){
-    var pongHistory = window.parent.userInstance.matchistory_pong;
-		var trisHistory = window.parent.userInstance.matchistory_tictactoe;
-
-		// Get all the h6 elements with class 'history' under 'pong' and 'tris'
-		var pongHistoryElements = document.querySelectorAll('.pong .history');
-		var trisHistoryElements = document.querySelectorAll('.tris .history');
-
-    var startPongIndex = pongHistory.length > 5 ? pongHistory.length - 5 : 0;
-    for (var i = startPongIndex, j = 0; i < pongHistory.length; i++, j++) {
-        var match = pongHistory[i];
-        var result;
-        if (match.win === "true") {
-            result = 'W';
-        } else if (match.win === "false"){
-            result = 'L';
-        }
-        var date = match.date.slice(0, -1); // This will remove the last character from match.date
-        pongHistoryElements[j].textContent = `${date}  vs ${match.player2} : ${result} (${match.score} - ${match.scoreplayer2})`;
-    }
-
-    var startTrisIndex = trisHistory.length > 5 ? trisHistory.length - 5 : 0;
-    for (var i = startTrisIndex, j = 0; i < trisHistory.length; i++, j++) {
-        var match = trisHistory[i];
-        var result;
-        if (match.win === "win") {
-            result = 'W';
-        } else if (match.win === "lose"){
-            result = 'L';
-        } else if (match.win === "draw"){
-            result = 'T';
-        }
-        trisHistoryElements[j].textContent = `${match.date}  vs ${match.player2} : ${result}`;
-    }
-        // Add the number of matches won and lost for Pong
-        var pongWins = document.querySelector('.pong .data.wins');
-        var pongLosses = document.querySelector('.pong .data.losses');
-		    var pongWinrate = document.querySelector('.pong .data.winratePong');
-        pongWins.textContent = 'W: ' + window.parent.userInstance.wins_pong;
-        pongLosses.textContent = 'L: ' + window.parent.userInstance.loses_pong;
-        var winrate = parseFloat(window.parent.userInstance.winrate_pong).toFixed(2);
-		    pongWinrate.textContent = 'Winrate: ' + winrate + '%';
-
-        // Add the number of matches won and lost for Tris
-        var trisWins = document.querySelector('.tris .data.wins');
-        var trisLosses = document.querySelector('.tris .data.losses');
-        var trisTies = document.querySelector('.tris .data.ties');
-	    	var trisWinrate = document.querySelector('.tris .data.winrateTris');
-        trisWins.textContent = 'W: ' + window.parent.userInstance.wins_tictactoe;
-        trisLosses.textContent = 'L: ' + window.parent.userInstance.loses_tictactoe;
-        trisTies.textContent = 'T: ' + (trisHistory.length - window.parent.userInstance.wins_tictactoe - window.parent.userInstance.loses_tictactoe);
-        var winrateTris = parseFloat(window.parent.userInstance.winrate_tictactoe).toFixed(2);
-        trisWinrate.textContent = 'Winrate: ' + winrateTris + '%';
-  }
-	if (window.parent.userInstance && window.parent.userInstance.username) {
-		document.getElementById("player").innerText  = window.parent.userInstance.player;
-    document.getElementById("profile-image").src = window.parent.userInstance.profile_image;
-		console.log ("user image: " + window.parent.userInstance.profile_image);
-		console.log ("User : " + window.parent.username);
-		loadMatchHistory();
-	}
-	window.addEventListener('message', function(event) {
-		// Check the type of the message
-		if (event.data.type === 'loadProfile') {
-			document.getElementById("player").innerText  = window.parent.userInstance.player;
-			document.getElementById("profile-image").src = window.parent.userInstance.profile_image;
-			console.log ("user image: " + window.parent.userInstance.profile_image);
-			console.log ("User : " + window.parent.userInstance.username);
-      loadMatchHistory();
-  }
-	});
-
-    document.getElementById("edit-icon").addEventListener("click", function () {
-		modal.style.display = "block";
-    });
-
-	document.getElementById("go_to_main").addEventListener("click", function() {
-			localStorage.setItem('lastPage', "main-page");
-            window.parent.goToMain();
+    
+    <!-- Bootstrap and jQuery JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- JavaScript -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById("go_to_main").addEventListener("click", function() {
+          localStorage.setItem('lastPage', "main-page");
+          window.parent.goToMain();
         });
-
-    document
-      .getElementById("modify-icon")
-      .addEventListener("click", function () {
-        var newNickname = prompt("Inserisci il nuovo nickname:");
-        if (newNickname && newNickname.length < 16 ) {
-          var nicknameData = {
-            player: newNickname,
-          };
-		  window.parent.userInstance.player = newNickname;
-          document.getElementById("player").textContent = newNickname;
-          fetch("http://localhost:8001/main/nick/", {
-            method: "POST",
+        
+        document.getElementById("go_to_profile").addEventListener("click", function() {
+          localStorage.setItem('lastPage', "main-page");
+          window.parent.goToMain();
+        });
+        
+        document.getElementById("title_to_main").addEventListener("click", function() {
+          localStorage.setItem('lastPage', "main-page");
+          window.parent.goToMain();
+        });
+        
+        document.getElementById("go_to_login").addEventListener("click", function() {
+          window.parent.userInstance.resetData();
+          token = localStorage.getItem('userToken');
+          fetch('http://localhost:8001/login/logout/', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
-              Authorization: "Token " + localStorage.getItem("userToken"),
+              'Authorization' : 'Token ' + token,
+              'Content-Type': 'application/json'
             },
-            body: JSON.stringify(nicknameData),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("Success:", data);
+          }).then(response => {
+            if (response.ok) {
+              console.log('Logout sent successfully');
+            } else {
+              console.error('Error sending language change:', response.statusText);
+            }
+          }).catch(error => {
+            console.error('Network error:', error);
+          });
+          localStorage.setItem('lastPage', "login");
+          localStorage.setItem('userToken', '');
+          window.parent.goToLogin();
+        });
+        
+        const pictureModal = document.getElementById("pictureModal");
+        const bioModal = document.getElementById("bioModal");
+        const passwordModal = document.getElementById("passwordModal");
+        const closeButtons = document.querySelectorAll(".close");
+        
+        document.getElementById("changePicture").addEventListener("click", function() {
+          // Aggiungo tutte le immagini presenti nella cartella media
+          const imagePaths = [
+            'silvietto.jpeg', 
+            'richard.jpg', 
+            'mikeTyson.png', 
+            'lebowski.png', 
+            'carletto.jpg', 
+            'blade_runner.jpeg', 
+            'ai.jpg', 
+            'Mattarella.jpg', 
+            'Jacobs.png'
+          ];
+          const profilePictureOptions = document.getElementById("profilePictureOptions");
+          profilePictureOptions.innerHTML = '';
+          
+          imagePaths.forEach(function(path) {
+            const img = document.createElement('img');
+            img.src = 'media/' + path;
+            img.alt = path;
+            img.className = 'col-3 mb-2';
+            img.onclick = function() {
+              document.querySelectorAll('#profilePictureOptions img').forEach(img => {
+                img.classList.remove('selected-image');
+              });
+              this.classList.add('selected-image');
+            };
+            profilePictureOptions.appendChild(img);
+          });
+          
+          pictureModal.style.display = "block";
+        });
+        
+        document.getElementById("confirmPicture").addEventListener("click", function() {
+          const selectedImage = document.querySelector('#profilePictureOptions img.selected-image');
+          if (selectedImage) {
+            document.getElementById('profilePicture').src = selectedImage.src;
+            pictureModal.style.display = "none";
+            
+            const token = localStorage.getItem('userToken');
+            const imagePath = selectedImage.src.replace(window.location.origin + '/', '');
+            
+            fetch('http://localhost:8001/main/profile_image/', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Token ' + token,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                profile_path: imagePath
+              }),
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Success:', data);
             })
             .catch((error) => {
-              console.error("Error:", error);
+              console.error('Error:', error);
             });
+          }
+        });
+        
+        document.getElementById("changePassword").addEventListener("click", function() {
+          passwordModal.style.display = "block";
+        });
+        
+        closeButtons.forEach(function(button) {
+          button.addEventListener("click", function() {
+            pictureModal.style.display = "none";
+            bioModal.style.display = "none";
+            passwordModal.style.display = "none";
+          });
+        });
+        
+        window.onclick = function(event) {
+          if (event.target == pictureModal || event.target == bioModal || event.target == passwordModal) {
+            pictureModal.style.display = "none";
+            bioModal.style.display = "none";
+            passwordModal.style.display = "none";
+          }
+        };
+        
+        if (window.parent.userInstance && window.parent.userInstance.username) {
+          document.getElementById("nickname").innerText = window.parent.userInstance.player;
+          document.getElementById("profilePicture").src = window.parent.userInstance.profile_image;
+          
+          updateStatistics();
         }
+        
+        function updateStatistics() {
+          const wins = document.getElementById("wins");
+          const losses = document.getElementById("losses");
+          const winrate = document.getElementById("winrate");
+          const totalGames = document.getElementById("totalGames");
+          
+          const totalWins = parseInt(window.parent.userInstance.wins_pong) + parseInt(window.parent.userInstance.wins_tictactoe);
+          const totalLosses = parseInt(window.parent.userInstance.loses_pong) + parseInt(window.parent.userInstance.loses_tictactoe);
+          const total = totalWins + totalLosses;
+          const winrateValue = total > 0 ? Math.round((totalWins / total) * 100) : 0;
+          
+          wins.innerText = totalWins;
+          losses.innerText = totalLosses;
+          winrate.innerText = winrateValue + "%";
+          totalGames.innerText = total;
+          
+          const matchHistory = document.getElementById("matchHistory");
+          matchHistory.innerHTML = "";
+          
+          const pongHistory = window.parent.userInstance.matchistory_pong || [];
+          const trisHistory = window.parent.userInstance.matchistory_tictactoe || [];
+          
+          const allMatches = [...pongHistory, ...trisHistory];
+          allMatches.sort((a, b) => new Date(b.date) - new Date(a.date));
+          
+          const recentMatches = allMatches.slice(0, 5);
+          
+          recentMatches.forEach(match => {
+            const isWin = match.win === "true" || match.win === "win";
+            const isDraw = match.win === "draw";
+            
+            const matchItem = document.createElement("div");
+            matchItem.className = "list-group-item d-flex justify-content-between align-items-center";
+            
+            const gameType = match.hasOwnProperty('score') ? 'Pong' : 'Tic-Tac-Toe';
+            let resultText = isWin ? 'Win' : (isDraw ? 'Draw' : 'Loss');
+            
+            let dateDisplay = match.date;
+            if (match.date) {
+              if (match.date.match(/^\d{1,2}\/\d{1,2}\/?$/)) {
+                const currentYear = new Date().getFullYear();
+                dateDisplay = match.date + currentYear;
+              }
+              
+              try {
+                const dateParts = dateDisplay.split('/');
+                if (dateParts.length >= 3) {
+                  const day = parseInt(dateParts[0], 10);
+                  const month = parseInt(dateParts[1], 10) - 1;
+                  const year = parseInt(dateParts[2], 10);
+                  const dateObj = new Date(year, month, day);
+                  if (!isNaN(dateObj.getTime())) {
+                    dateDisplay = dateObj.toLocaleDateString();
+                  }
+                }
+              } catch (e) {
+                console.log("Errore nel parsing della data:", e);
+              }
+            }
+            
+            matchItem.innerHTML = `
+              <div>
+                <strong>${gameType}</strong> vs ${match.player2}
+                <br>
+                <small class="text-muted">${dateDisplay}</small>
+              </div>
+              <span class="badge ${isWin ? 'bg-success' : (isDraw ? 'bg-warning' : 'bg-danger')} rounded-pill">${resultText}</span>
+            `;
+            
+            matchHistory.appendChild(matchItem);
+          });
+        }
+        
+        window.addEventListener('message', function(event) {
+          if (event.data.type === 'userDataLoaded' || event.data.type === 'loadProfile') {
+            document.getElementById("nickname").innerText = window.parent.userInstance.player;
+            document.getElementById("profilePicture").src = window.parent.userInstance.profile_image;
+            updateStatistics();
+          }
+        });
       });
-  </script>
+    </script>
+  </body>
 </html>

@@ -15,333 +15,447 @@
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <title>PONG-profile</title>
-  </head>
-  <style>
-    /* Stile base per dispositivi con schermo di larghezza inferiore a 600px */
-    body {
-      background-color: #dfa100;
-    }
-
-    /* Stile per dispositivi con schermo di larghezza compresa tra 600px e 900px */
-    @media screen and (min-width: 600px) {
+    <title>PONG-friend-profile</title>
+    <style>
+      /* Stile base per dispositivi con schermo di larghezza inferiore a 600px */
       body {
         background-color: #dfa100;
       }
-      .div-title {
-        font-family: "font-Despairs";
-        font-size: 400%;
-        position: absolute;
-        left: 42%;
-        right: 2%;
-        top: 3%;
-        padding: 1%;
-        color: black;
+      
+      /* Rimuovo la barra nera in alto */
+      .navbar {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
       }
-      .img-fluid {
-        width:20%;
-        height:20%;
-        position: relative;
-        top: 20%;
-        left: 2%;
-      }
-      .image {
-        width: 700px;
-        height: 500px;
-      }
-      .nickname {
-        font-family: "";
-        font-size: 200%;
-        position: absolute;
-        top: 140%;
-        left: 35%;
-      }
-      .statistics {
-        width: 30%;
-        height: 30%;
-        position: absolute;
-        left: 60%;
-      }
-    }
-
-    /* Stile per dispositivi con schermo di larghezza superiore a 900px */
-    @media screen and (min-width: 900px) {
-      body {
-        background-color: #dfa100;
-      }
-      .div-title {
-        font-family: "font-Despairs";
-        font-size: 400%;
-        position: absolute;
-        left: 42%;
-        right: 2%;
-        top: 3%;
-        padding: 1%;
-        color: black;
-      }
-      .profile {
-        display: flex;
-        position: relative;
-        top: 200px;
-      }
-      .img-fluid {
-        width: 50%;
-        height: 50%;
-        position: relative;
-        top: 200px;
-        left: 2%;
-        min-height: 800px;
-      }
-      .image {
-        width: 100%;
-        height: 100%;
-      }
-      .nickname {
-        font-family: "";
-        font-size: 240%;
-        position: relative;
-        left: 40%;
-        top: 5%;
-        display: flex;
-      }
-      .game_title {
-        font-family: "";
-        font-size: 300%;
-        position: relative;
-        left: 42%;
-        margin-bottom: 8%;
-      }
-      .statistics {
-        height: 50%;
-        width: 30%;
-      }
-      .data {
-        font-size: 200%;
-      }
-      .history {
-        font-size: 200%;
-      }
-      .pong {
-        margin-bottom: 10%;
-      }
-      .tris {
-        margin-top: 9%;
-      }
-      .nick {
-        font-size: 143%;
-        position: relative;
-      }
-      .modify {
-        position: relative;
-        left: 44%;
-        cursor: pointer;
-      }
-      .image-container {
-        position: relative;
-        width: 40%; /* Adatta a seconda delle tue esigenze */
-        height: 50%; /* Adatta a seconda delle tue esigenze */
-        min-height: 1px;
-      }
-
-      .image-container img {
-        max-width: 1000px;
-        max-height: 1000px;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .edit-icon {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        color: white;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 10px;
+      
+      #hamburger {
         font-size: 24px;
         cursor: pointer;
+        color: #333;
+        margin: 15px;
       }
-	  .modal {
-		display: none;
-		position: fixed;
-		z-index: 1;
-		padding-top: 100px;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		overflow: auto;
-		background-color: rgb(0,0,0);
-		background-color: rgba(0,0,0,0.4);
-		}
 
-		.modal-content {
-		background-color: #f4dc9e;
-		margin: auto;
-		padding: 20px;
-		border: 1px solid #888;
-		width: 50%;
-		height: 40%;
-		}
+      /* Stile per dispositivi con schermo di larghezza compresa tra 600px e 900px */
+      @media screen and (min-width: 600px) {
+        body {
+          background-color: #dfa100;
+        }
+        .div-title {
+          font-family: "font-Despairs";
+          font-size: 400%;
+          position: absolute;
+          left: 42%;
+          right: 2%;
+          top: 3%;
+          padding: 1%;
+          color: black;
+        }
+        .img-fluid {
+          width:20%;
+          height:20%;
+          position: relative;
+          top: 20%;
+          left: 2%;
+        }
+        .image {
+          width: 700px;
+          height: 500px;
+        }
+        .nickname {
+          font-family: "";
+          font-size: 200%;
+          position: absolute;
+          top: 140%;
+          left: 35%;
+        }
+        .statistics {
+          width: 30%;
+          height: 30%;
+          position: absolute;
+          left: 60%;
+        }
+      }
 
-		.close {
-		color: #aaaaaa;
-		float: right;
-		font-size: 28px;
-		font-weight: bold;
-		}
+      /* Stile per dispositivi con schermo di larghezza superiore a 900px */
+      @media screen and (min-width: 900px) {
+        body {
+          background-color: #dfa100;
+        }
+        .div-title {
+          font-family: "font-Despairs";
+          font-size: 400%;
+          position: absolute;
+          left: 42%;
+          right: 2%;
+          top: 3%;
+          padding: 1%;
+          color: black;
+        }
+        .profile {
+          display: flex;
+          position: relative;
+          top: 200px;
+        }
+        .img-fluid {
+          width: 50%;
+          height: 50%;
+          position: relative;
+          top: 200px;
+          left: 2%;
+          min-height: 800px;
+        }
+        .image {
+          width: 100%;
+          height: 100%;
+        }
+        .nickname {
+          font-family: "";
+          font-size: 240%;
+          position: relative;
+          left: 40%;
+          top: 5%;
+          display: flex;
+        }
+        .game_title {
+          font-family: "";
+          font-size: 300%;
+          position: relative;
+          left: 42%;
+          margin-bottom: 8%;
+        }
+        .statistics {
+          height: 50%;
+          width: 30%;
+        }
+        .data {
+          font-size: 200%;
+        }
+        .history {
+          font-size: 200%;
+        }
+        .pong {
+          margin-bottom: 10%;
+        }
+        .tris {
+          margin-top: 9%;
+        }
+        .nick {
+          font-size: 143%;
+          position: relative;
+        }
+        .modify {
+          position: relative;
+          left: 44%;
+          cursor: pointer;
+        }
+        .image-container {
+          position: relative;
+          width: 40%; /* Adatta a seconda delle tue esigenze */
+          height: 50%; /* Adatta a seconda delle tue esigenze */
+          min-height: 1px;
+        }
 
-		.close:hover,
-		.close:focus {
-		color: #000;
-		text-decoration: none;
-		cursor: pointer;
-		}
-
-		.image-preview img {
-		width: 200px; /* Increase the width */
-		height: 200px; /* Increase the height */
-		margin: 5px;
-		cursor: pointer; 
-	}
-    }
-  </style>
- <body>
-    <h2 id = "go_to_main" class="div-title">PONG</h2>
-    <div class="profile">
-      <div class="img-fluid">
-        <div class="image-container">
-          <img id="profile-image" src="" alt="Your Image" />
+        .image-container img {
+          max-width: 1000px;
+          max-height: 1000px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <!-- Rimuovo l'icona hamburger -->
+    </div>
+    <div class="nav">
+      <div class="nav-links">
+        <a href="#" id="go_to_main" class="nav-link">
+          <span>Home</span>
+          <i class="fa-solid fa-house float-end mt-1"></i>
+        </a>
+        <a href="#" id="go_to_profile" class="nav-link">
+          <span>Profile</span>
+          <i class="fa-solid fa-user float-end mt-1"></i>
+        </a>
+        <a href="#" id="go_to_login" class="nav-link">
+          <span>Logout</span>
+          <i class="fa-solid fa-right-from-bracket float-end mt-1"></i>
+        </a>
+      </div>
+    </div>
+    
+    <div class="container mt-5 pt-5">
+      <a href="#" id="title_to_main" style="text-decoration: none; cursor: pointer;">
+        <h1 class="title-main text-center">Profilo Amico</h1>
+      </a>
+      
+      <div class="row mt-5">
+        <div class="col-md-5">
+          <div class="card profile-card text-center">
+            <div class="mb-4">
+              <img id="profile-image" class="avatar mx-auto d-block" style="width: 150px; height: 150px;" src="" alt="Profile Picture">
+            </div>
+            <h2 id="player" class="mb-3">Username</h2>
+          </div>
         </div>
-        <div class="nickname">
-          <div>
-            <h2 id="player">Player</h2>
+        
+        <div class="col-md-7">
+          <div class="card mb-4">
+            <h3 class="mb-4"><i class="fas fa-chart-line me-2"></i>Statistiche PONG</h3>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Vittorie</h5>
+                    <h3 id="pong-wins" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Sconfitte</h5>
+                    <h3 id="pong-losses" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Percentuale Vittorie</h5>
+                    <h3 id="pong-winrate" class="mb-0">0%</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Partite Totali</h5>
+                    <h3 id="pong-total" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card mb-4">
+            <h3 class="mb-4"><i class="fas fa-gamepad me-2"></i>Statistiche Tris</h3>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Vittorie</h5>
+                    <h3 id="tris-wins" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Sconfitte</h5>
+                    <h3 id="tris-losses" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Pareggi</h5>
+                    <h3 id="tris-ties" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Percentuale Vittorie</h5>
+                    <h3 id="tris-winrate" class="mb-0">0%</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3 class="mb-4"><i class="fas fa-history me-2"></i>Partite Recenti</h3>
+            <div class="card mb-3">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">PONG</h5>
+              </div>
+              <div id="pong-history" class="list-group list-group-flush">
+                <!-- Pong match history will be populated here -->
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Tris</h5>
+              </div>
+              <div id="tris-history" class="list-group list-group-flush">
+                <!-- Tris match history will be populated here -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="statistics">
-        <div class="pong">
-          <h2 class="game_title">Pong</h2>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-		  <h6 class="data wins">Wins: </h6>
-		  <h6 class="data losses">Losses: </h6>
-		  <h6 class="data winratePong">	Winrate: </h6>
-        </div>
-        <hr />
-        <div class="tris">
-          <h2 class="game_title">Tris</h2>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-	      </h6>
-          <h6 class="history">
-          </h6>
-          <h6 class="history">
-          </h6>
-		  <h6 class="data wins">Wins: </h6>
-		  <h6 class="data losses">Losses: </h6>
-      <h6 class="data ties">Ties:</h6>
-		  <h6 class="data winrateTris">	Winrate: </h6>
-        </div>
-      </div>
     </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
 
-function loadFriendProfile(){
-    var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
-    var pongHistory = friend.matchistory_pong;
-    var trisHistory = friend.matchistory_tictactoe;
-
-    var pongHistoryElements = document.querySelectorAll('.pong .history');
-    var trisHistoryElements = document.querySelectorAll('.tris .history');
-
-    var startPongIndex = pongHistory.length > 5 ? pongHistory.length - 5 : 0;
-    for (var i = startPongIndex, j = 0; i < pongHistory.length; i++, j++) {
-        var match = pongHistory[i];
-        var result;
-        if (match.win === "true") {
-            result = 'W';
-        } else if (match.win === "false"){
-            result = 'L';
-        }
-        var date = match.date.slice(0, -1);
-        pongHistoryElements[j].textContent = `${date}  vs ${match.player2} : ${result} (${match.score} - ${match.scoreplayer2})`;
-    }
-
-    var startTrisIndex = trisHistory.length > 5 ? trisHistory.length - 5 : 0;
-    for (var i = startTrisIndex, j = 0; i < trisHistory.length; i++, j++) {
-        var match = trisHistory[i];
-        var result;
-        if (match.win === "win") {
-            result = 'W';
-        } else if (match.win === "lose"){
-            result = 'L';
-        } else if (match.win === "draw"){
-            result = 'T';
-        }
-        trisHistoryElements[j].textContent = `${match.date}  vs ${match.player2} : ${result}`;
-    }
-
-    var pongWins = document.querySelector('.pong .data.wins');
-    var pongLosses = document.querySelector('.pong .data.losses');
-    var pongWinrate = document.querySelector('.pong .data.winratePong');
-    pongWins.textContent = 'W: ' + friend.wins_pong;
-    pongLosses.textContent = 'L: ' + friend.loses_pong;
-    var winrate = parseFloat(friend.winrate_pong).toFixed(2);
-    pongWinrate.textContent = 'Winrate: ' + winrate + '%';
-
-    var trisWins = document.querySelector('.tris .data.wins');
-    var trisLosses = document.querySelector('.tris .data.losses');
-    var trisTies = document.querySelector('.tris .data.ties');
-    var trisWinrate = document.querySelector('.tris .data.winrateTris');
-    trisWins.textContent = 'W: ' + friend.wins_tictactoe;
-    trisLosses.textContent = 'L: ' + friend.loses_tictactoe;
-    trisTies.textContent = 'T: ' + (trisHistory.length - friend.wins_tictactoe - friend.loses_tictactoe);
-    var winrateTris = parseFloat(friend.winrate_tictactoe).toFixed(2);
-    trisWinrate.textContent = 'Winrate: ' + winrateTris + '%';
-}
-	// Use the friend's data
-  document.addEventListener('DOMContentLoaded', (event) => {
-  let friendIndex = localStorage.getItem('friendIndex');
-  console.log('friendIndex:', friendIndex);  // Log the friendIndex
-  if (window.parent.userInstance && window.parent.userInstance.username && window.parent.userInstance.friendlist && window.parent.userInstance.friendlist[friendIndex]) {
-    console.log("boia dio User data already loaded");
-    var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
-    document.getElementById('player').textContent = friend.player;
-    document.getElementById("profile-image").src = friend.profile_image;
-    loadFriendProfile();
-  }
-});
-	window.addEventListener('message', function(event) {
-		// Check the type of the message
-		if (event.data.type === 'loadProfile') {
-      var friend = window.parent.userInstance.friendlist[localStorage.getItem('friendIndex')];
-      console.log(window.parent.userInstance.username + " is viewing " + friend.username + "'s profile");
-			document.getElementById("player").innerText  = friend.player;
-			document.getElementById("profile-image").src = friend.profile_image;
-			console.log ("user image: " + friend.profile_image);
-			console.log ("User : " + friend.player);
-      loadFriendProfile();
-    }
-	});
-	document.getElementById("go_to_main").addEventListener("click", function() {
-			localStorage.setItem('lastPage', "main-page");
-            window.parent.goToMain();
+    <!-- Bootstrap and jQuery JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- JavaScript -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById("go_to_main").addEventListener("click", function() {
+          localStorage.setItem('lastPage', "main-page");
+          window.parent.goToMain();
         });
-  </script>
+        
+        document.getElementById("go_to_profile").addEventListener("click", function() {
+          localStorage.setItem('lastPage', "profile");
+          window.parent.goToProfile();
+        });
+        
+        document.getElementById("title_to_main").addEventListener("click", function() {
+          localStorage.setItem('lastPage', "main-page");
+          window.parent.goToMain();
+        });
+        
+        document.getElementById("go_to_login").addEventListener("click", function() {
+          window.parent.userInstance.resetData();
+          token = localStorage.getItem('userToken');
+          fetch('http://localhost:8001/login/logout/', {
+            method: 'POST',
+            headers: {
+              'Authorization' : 'Token ' + token,
+              'Content-Type': 'application/json'
+            },
+          }).then(response => {
+            if (response.ok) {
+              console.log('Logout sent successfully');
+            } else {
+              console.error('Error sending language change:', response.statusText);
+            }
+          }).catch(error => {
+            console.error('Network error:', error);
+          });
+          localStorage.setItem('lastPage', "login");
+          localStorage.setItem('userToken', '');
+          window.parent.goToLogin();
+        });
+
+        function loadFriendProfile() {
+          var friendIndex = localStorage.getItem('friendIndex');
+          if (window.parent.userInstance && window.parent.userInstance.friendlist && window.parent.userInstance.friendlist[friendIndex]) {
+            var friend = window.parent.userInstance.friendlist[friendIndex];
+            
+            // Aggiorna info profilo
+            document.getElementById('player').textContent = friend.player;
+            document.getElementById('profile-image').src = friend.profile_image;
+            
+            // Aggiorna statistiche PONG
+            document.getElementById('pong-wins').textContent = friend.wins_pong;
+            document.getElementById('pong-losses').textContent = friend.loses_pong;
+            document.getElementById('pong-winrate').textContent = parseFloat(friend.winrate_pong).toFixed(2) + '%';
+            document.getElementById('pong-total').textContent = parseInt(friend.wins_pong) + parseInt(friend.loses_pong);
+            
+            // Aggiorna statistiche Tris
+            document.getElementById('tris-wins').textContent = friend.wins_tictactoe;
+            document.getElementById('tris-losses').textContent = friend.loses_tictactoe;
+            var trisTies = friend.matchistory_tictactoe.length - parseInt(friend.wins_tictactoe) - parseInt(friend.loses_tictactoe);
+            document.getElementById('tris-ties').textContent = trisTies;
+            document.getElementById('tris-winrate').textContent = parseFloat(friend.winrate_tictactoe).toFixed(2) + '%';
+            
+            // Aggiorna cronologia PONG
+            var pongHistory = friend.matchistory_pong;
+            var pongHistoryContainer = document.getElementById('pong-history');
+            pongHistoryContainer.innerHTML = '';
+            
+            var startPongIndex = pongHistory.length > 5 ? pongHistory.length - 5 : 0;
+            for (var i = startPongIndex; i < pongHistory.length; i++) {
+              var match = pongHistory[i];
+              var result = match.win === "true" ? 'Vittoria' : 'Sconfitta';
+              var resultClass = match.win === "true" ? 'text-success' : 'text-danger';
+              var date = match.date.slice(0, -1);
+              
+              var historyItem = document.createElement('div');
+              historyItem.className = 'list-group-item';
+              historyItem.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>${date}</strong> vs ${match.player2}
+                  </div>
+                  <div>
+                    <span class="${resultClass}">${result}</span> 
+                    (${match.score} - ${match.scoreplayer2})
+                  </div>
+                </div>
+              `;
+              pongHistoryContainer.appendChild(historyItem);
+            }
+            
+            // Aggiorna cronologia Tris
+            var trisHistory = friend.matchistory_tictactoe;
+            var trisHistoryContainer = document.getElementById('tris-history');
+            trisHistoryContainer.innerHTML = '';
+            
+            var startTrisIndex = trisHistory.length > 5 ? trisHistory.length - 5 : 0;
+            for (var i = startTrisIndex; i < trisHistory.length; i++) {
+              var match = trisHistory[i];
+              var result, resultClass;
+              
+              if (match.win === "win") {
+                result = 'Vittoria';
+                resultClass = 'text-success';
+              } else if (match.win === "lose") {
+                result = 'Sconfitta';
+                resultClass = 'text-danger';
+              } else {
+                result = 'Pareggio';
+                resultClass = 'text-warning';
+              }
+              
+              var historyItem = document.createElement('div');
+              historyItem.className = 'list-group-item';
+              historyItem.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>${match.date}</strong> vs ${match.player2}
+                  </div>
+                  <div>
+                    <span class="${resultClass}">${result}</span>
+                  </div>
+                </div>
+              `;
+              trisHistoryContainer.appendChild(historyItem);
+            }
+          }
+        }
+        
+        // Carica profilo amico quando la pagina è pronta
+        if (window.parent.userInstance && window.parent.userInstance.username) {
+          loadFriendProfile();
+        }
+
+        // Ascolta eventi di messaggio dal parent frame
+        window.addEventListener('message', function(event) {
+          if (event.data.type === 'loadProfile') {
+            loadFriendProfile();
+          }
+        });
+      });
+    </script>
+  </body>
 </html>

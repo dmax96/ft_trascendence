@@ -7,1409 +7,929 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 	<link rel="stylesheet" href="styles.css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<title>PONG</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<title>PONG Game</title>
 	<style>
-	/* CSS for the basics of the page */
-	.select-language{
-		background-color: #B6A999;
-		color: #000000;
-		position: absolute;
-		right: 8%;
-		top: 5%;
-		width: 4%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: left;
-	}
-	.div-friends{
-		position: absolute;
-		right: 3%;
-		bottom: 5%;
-		width: 20%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}
-	.div-title {
-		font-family: 'font-Despairs';
-		font-size: 420%;
-		position: absolute;
-		left: 45.69%; /* Change this to move the div horizontally */
-		right: 2%;
-		top: 0%; /* Change this to move the div vertically */
-		width: 15%;
-		padding : 1%;
-		color: black;
+		.game-canvas {
+			background-color: var(--primary-color);
+			border-radius: var(--border-radius);
+			margin: 0 auto;
+			display: block;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 		}
-	.div-friendsmenu {
-		position: absolute;
-		right: 5%;
-		bottom: 3%;
-		width: 15%;
-		height: 40%;
-		padding : 1%;
-		margin: 0 auto;
-		text-align: center;
-		background-color: #B6A999;
-	}
-	.avatar {
-		width: 125px;
-		height: 125px;
-		border-radius: 50%;
-		font-weight: lighter;
-		font-size :110%;
-		color: #ffffff;
-		position: absolute;
-		left: 2%;
-		top: 0.3%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}
-	.avatar2 {
-		width: 125px;
-		height: 125px;
-		border-radius: 50%;
-		font-weight: lighter;
-		font-size :110%;
-		color: #ffffff;
-		position: absolute;
-		right: 2%;
-		top: 0.3%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}
-	.avatar3 {
-		width: 125px;
-		height: 125px;
-		border-radius: 50%;
-		font-weight: lighter;
-		font-size :110%;
-		color: #ffffff;
-		position: absolute;
-		left: 15%;
-		top: 0.3%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}
-	.avatar4 {
-		width: 125px;
-		height: 125px;
-		border-radius: 50%;
-		font-weight: lighter;
-		font-size :110%;
-		color: #ffffff;
-		position: absolute;
-		right: 15%;
-		top: 0.3%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}
-	.userleft{
-		position: absolute;
-		left: 5%;
-		top: 2.5%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}
-	.userleft2{
-		position: absolute;
-		left: 20%;
-		top: 2.5%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}	
-	.userright{
-		position: absolute;
-		right: 5%;
-		top: 2.5%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}
-	.userright2{
-		position: absolute;
-		right: 20%;
-		top: 2.5%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-	}
-	/* CSS for the menu buttons*/
-	.btn-left {
-		font-weight: lighter;
-		font-size :110%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		left: 20%;
-		top: 45%;
-		width: 20%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-left-top {
-		font-weight: lighter;
-		font-size :110%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		left: 20%;
-		top: 40%;
-		width: 20%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-left-bottom {
-		font-weight: lighter;
-		font-size :110%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		left: 20%;
-		top: 50%;
-		width: 20%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-right-top{
-		font-weight: lighter;
-		font-size :110%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		right: 20%;
-		top: 40%;
-		width: 20%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-right-bottom{
-		font-weight: lighter;
-		font-size :110%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		right: 20%;
-		top: 50%;
-		width: 20%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-right {
-		font-weight: lighter;
-		font-size :110%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		right: 20%;
-		top: 45%;
-		width: 20%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-center-bottom {
-		font-weight: lighter;
-		font-size :110%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		right: 40%;
-		top: 65%;
-		width: 20%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	/* CSS for tournament menu */
-	.btn-firstplace {
-		font-weight: lighter;
-		font-size :300%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		left: 25%;
-		top: 45%;
-		width: 20%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-secondplace {
-		font-weight: lighter;
-		font-size :220%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		right: 21%;
-		top: 38%;
-		width: 13%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-thirdplace {
-		font-weight: lighter;
-		font-size :120%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		right: 20%;
-		top: 55%;
-		width: 5%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-thirdplace2 {
-		font-weight: lighter;
-		font-size :120%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		right: 30%;
-		top: 55%;
-		width: 5%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-firstplace-text {
-		font-weight: lighter;
-		font-size :150%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		left: 22%;
-		top: 40%;
-		width: 25%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-secondplace-text {
-		font-weight: lighter;
-		font-size :140%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		right: 21%;
-		top: 30%;
-		width: 13%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-thirdplace-text {
-		font-weight: lighter;
-		font-size :120%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		right: 25%;
-		top: 50%;
-		width: 5%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-	.btn-endtournament {
-		font-weight: lighter;
-		font-size :110%;
-		background-color: #000000;
-		color: #ffffff;
-		position: absolute;
-		right: 46%;
-		top: 75%;
-		width: 10%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: center;
-		border-color: #ffffff;
-	}
-		/* CSS for miscellaneus */
-	.btn-nohover:hover {
-		visibility: visible !important;
-        opacity: 1 !important;
-	}
-	.open_text {
-		font-size: 200%;
-		text-align: center;
-		position: absolute;
-		width: 60%;
-		height: 75%;
-		left: 20%;
-		right: 2%;
-		top: 20%;
-		bottom: 10%;
-		background-color: #000000;
-		color: #ffffff;
-	}
-	.select {
-		background-image: url('download.jpeg');
-		border-radius: 50%;
-		color: #000000;
-		position: absolute;
-		left: 3%;
-		top: 5%;
-		padding : 0.5%;
-		margin: 0 auto;
-		text-align: left;
-	}
-	.dropdown {
-		position: relative;
-		display:flex;
-		top: 5%;
-	}
-	.dropdown-menu {
-		display: none;
-		position: absolute;
-		background-color: #f9f9f9;
-		min-width: 160px;
-		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-		z-index: 1;
-	}
-	.dialog {
-		display: none;
-		background-color: #f9f9f9;
-	}
-	/* CSS for the game */
-	#pong-game {
-    	position: relative;
-		width: 96%;
-		height: 90%;
-		left: 2%;
-		right: 2%;
-		top: 8%;
-		bottom: 10%;
-		background-color: #000000;
-		color: #ffffff;
-	    border: 1px solid black;
-	}
-
-	#ball {
-		position: absolute;
-		height: 20px;
-		width: 20px;
-		background: black;
-		color : white;
-	}
-
-	#paddleA, #paddleB, #paddleC, #paddleD{
-		position: absolute;
-		height: 80px;
-		width: 20px;
-		background: black;
-		color : white;
-	}
-
-	#paddleA {
-		left: 0;
-	}
-
-	#paddleB {
-		right: 0;
-	}
-	#paddleC{
-		left : 25%
-	}
-	#paddleD{
-		right : 25%
-	}
-
-	#ball, #paddleA, #paddleB, #paddleC, #paddleD {
-		background: white;
-   		z-index: 2;
-}
+		
+		.player-info {
+			display: flex;
+			align-items: center;
+			margin-bottom: 1rem;
+		}
+		
+		.player-avatar {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			margin-right: 1rem;
+			object-fit: cover;
+		}
+		
+		.player-name {
+			font-weight: 600;
+			margin-bottom: 0;
+		}
+		
+		.player-score {
+			font-size: 2rem;
+			font-weight: 700;
+			color: var(--highlight-color);
+		}
+		
+		.game-controls {
+			margin-top: 1.5rem;
+			text-align: center;
+		}
+		
+		.game-message {
+			padding: 1rem;
+			margin: 1rem 0;
+			border-radius: var(--border-radius);
+			text-align: center;
+			background-color: var(--background-secondary);
+			font-weight: 500;
+		}
+		
+		.score-display {
+			font-size: 3rem;
+			font-family: "font-Despairs", sans-serif;
+			letter-spacing: 2px;
+			color: var(--text-light);
+			text-align: center;
+			margin: 0;
+			padding: 0.5rem;
+		}
+		
+		.chat-container {
+			height: 300px;
+			overflow-y: auto;
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			border-radius: var(--border-radius);
+			padding: 1rem;
+			background-color: var(--background-secondary);
+			margin-bottom: 1rem;
+		}
+		
+		.chat-message {
+			margin-bottom: 0.5rem;
+			padding: 0.5rem;
+			border-radius: var(--border-radius);
+		}
+		
+		.chat-message.sent {
+			background-color: var(--accent-color);
+			color: var(--text-light);
+			margin-left: 2rem;
+		}
+		
+		.chat-message.received {
+			background-color: #fff;
+			color: var(--text-dark);
+			margin-right: 2rem;
+		}
+		
+		.chat-input {
+			display: flex;
+		}
+		
+		.chat-input input {
+			flex-grow: 1;
+			margin-right: 0.5rem;
+		}
+		
+		.title-main {
+			transition: all 0.3s ease;
+			display: inline-block;
+		}
+		
+		.title-main:hover {
+			color: var(--highlight-color);
+			transform: scale(1.05);
+			text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+		}
 	</style>
 </head>
 <body>
-    <img src="media/silvietto.jpeg" alt="Avatar" class="avatar" id = "go_to_profile">
-    <h5 id = "userleft" style = "margin-left: 1%" class = "userleft">User1</h5>
-	<img src="media/Mattarella.jpg" alt="Avatar" class="avatar3" id = "avatar3" style = "display:none">
-	<h5 id = "userleft2" style = "margin-left: 1%; display:none" class = "userleft2">User3</h5>
-    <h2 id="go_to_main" class="div-title" style="user-select:none;">PONG</h2>
-    <script>
-        document.getElementById("go_to_main").addEventListener("click", function() {
-            if(pongGame.animationFrameId) {
-				cancelAnimationFrame(pongGame.animationFrameId);
-			}
-			localStorage.setItem('lastPage', "main-page");
-            window.parent.goToMain();
-        });
-    </script>
-    <img src="media/carletto.jpg" alt="Avatar" class="avatar2" id = "avatar2">
-    <h5 id = "userright" style = "margin-right: 1%" class = "userright">User2</h5>
-	<img src="media/Jacobs.png" alt="Avatar" class="avatar4" id = "avatar4" style = "display:none">
-	<h5 id = "userright2" style = "margin-right: 1%; display:none" class = "userright2" style = "display:none">User4</h5>
-    <div id="pong-game">
-        <div id="scoreBoard" style="display: flex; justify-content: center; align-items: center; position: absolute; width: 100%; top: 1%; padding: 10px; ">
-            <div><span id="scoreA" style="font-size: 24px; color: white; display:none">0</span></div>
-            <div style="margin-left: 20px;"><span id="scoreB" style="font-size: 24px; color: white; display:none">0</span></div>
-        </div>
-        <div id="ball" style = "display: none;"></div>
-        <div id="paddleA" style = "display: none;"></div>
-		<div id="paddleC" style = "display: none;"></div>
-        <div id="paddleB" style = "display: none;"></div>
-		<div id="paddleD" style = "display: none;"></div>
-    </div>
-	<!--first menu-->
-	<button id="play-pong" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Play Pong</button>
-	<button id="play-tris" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tris</button>
-	<!--menu choose pong mode-->
-	<button id="play-1v1" type="button" class="btn btn-left-top btn-lg btn-block" style="display: none;">Play 1v1</button>
-    <button id="play-4players" type="button" class="btn btn-left-bottom btn-lg btn-block" style="display: none;">Play in 4 Players</button>
-    <button id="play-vs-ia" type="button" class="btn btn-right-top btn-lg btn-block" style="display: none;">Play vs IA</button>
-    <button id="play-tournament" type="button" class="btn btn-right-bottom btn-lg btn-block" style="display: none;">Play Tournament</button>
-	<!--menu insert player2 nick in play-1v1-->
-	<input id="player2-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" maxlength="16" placeholder="Insert Player2 Nick">
-    <button id="submit-username" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
-	<!--menu insert players nick in play-4players and tournament-->
-	<input id="player2-username2" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" maxlength="16" placeholder="Insert Player2 Nick">
-    <button id="submit-username2" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
-	<input id="player3-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" maxlength="16" placeholder="Insert Player3 Nick">
-    <button id="submit-username3" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
-	<input id="player4-username" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" maxlength="16" placeholder="Insert Player4 Nick">
-    <button id="submit-username4" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
-	<!--menu choose tris mode-->
-	<button id="play-tris-1v1" style="display: none;"type="button" class="btn-nohover btn btn-left btn-lg btn-block">Play 1v1</button>
-	<button id="play-tris-tournament" style="display: none;" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Play Tournament</button>
-	<!--menu insert player2 nick in play-tris-1v1-->
-	<input id="player2-username-tris" type="text" style="display: none;" class="btn btn-left btn-block btn-lg" placeholder="Insert Player2 Nick">
-	<button id="submit-username-tris" type="button" class="btn btn-right btn-lg btn-block" style="display: none;">Submit</button>
-	<!--menu NextMatch-->
-	<div class="open_text" style="display: none;">The game is over. The winner is: <span id="winner"></span></div>
-	<button id = "NextMatch" style = "display: none;" class = "btn btn-center-bottom btn-lg btn-block">Next Match</button>
-	<!--menu tournament between matches-->
-	<button id="Player1" style="display:none" type="button" class="btn btn-nohover btn-left btn-lg btn-block">Player1</button>
-	<button id="Player2" style="display:none" type="button" class="btn-nohover btn btn-right btn-lg btn-block">Player2</button>
-	<button id = "Readyup" style="display:none" class = "btn btn-center-bottom btn-lg btn-block ">Start</button>
-	<!--menu tournament end-->
-	<span id="firstplace-text" class="btn-firstplace-text" style="display:none;">The tournament is over, The winner is:</span>
-	<button id="FirstPlace" style="display:none" class="btn btn-firstplace btn-lg btn-block">First Place</button>
-	<span id="secondplace-text" class="btn-secondplace-text" style="display:none;">Second place:</span>
-	<button id="SecondPlace" style="display:none" class="btn btn-secondplace btn-lg btn-block">Second Place</button>
-	<span id="thirdplace-text" class="btn-thirdplace-text" style="display:none;">Third place:</span>
-	<button id="ThirdPlace" style="display:none" class="btn btn-thirdplace btn-lg btn-block">Third Place</button>
-	<button id="ThirdPlace2" style="display:none" class="btn btn-thirdplace2 btn-lg btn-block">Third Place</button>
-	<button id="EndTournament" style="display:none" class="btn btn-endtournament btn-lg btn-block">End Tournament</button>
+	<nav class="nav">
+		<ul>
+			<li id="Username" style="font-size: 1.8rem; font-weight: 600;">User</li>
+			<li id="go_to_main" class="nav-item"><span class="nav-link">Home</span></li>
+			<li id="go_to_profile" class="nav-item"><span class="nav-link">Profile</span></li>
+			<li id="go_to_login" class="nav-item mt-5"><span class="nav-link">Logout</span></li>
+		</ul>
+	</nav>
+	
+	<div class="container mt-5 pt-4">
+		<div class="text-center">
+			<h1 class="title-main mb-4" id="title-pong" style="cursor: pointer;">PONG</h1>
+		</div>
+		
+		<div class="row">
+			<div class="col-12">
+				<div class="card mb-4">
+					<div class="card-body p-0">
+						<div class="d-flex justify-content-between p-3">
+							<div class="player-info">
+								<img id="userAvatar" class="player-avatar" src="media/silvietto.jpeg" alt="Your Avatar">
+								<div>
+									<p class="player-name" id="userName">You</p>
+									<p class="player-score" id="userScore">0</p>
+								</div>
+							</div>
+							<div class="score-display">VS</div>
+							<div class="player-info text-end">
+								<div>
+									<p class="player-name" id="opponentName">Opponent</p>
+									<p class="player-score" id="opponentScore">0</p>
+								</div>
+								<img id="opponentAvatar" class="player-avatar ms-3" src="media/carletto.jpg" alt="Opponent Avatar">
+							</div>
+						</div>
+						
+						<canvas id="gameCanvas" class="game-canvas" width="800" height="400"></canvas>
+						
+						<div class="game-controls p-3">
+							<button id="startGame" class="btn btn-primary me-2">Start Game</button>
+							<button id="pauseGame" class="btn btn-outline me-2">Pause</button>
+							<button id="resetGame" class="btn btn-secondary">Reset</button>
+						</div>
+					</div>
+				</div>
+				
+				<div class="card mb-4">
+					<div class="card-body">
+						<h3 class="mb-3"><i class="fas fa-gamepad me-2"></i>Scegli Modalità di Gioco</h3>
+						<div class="row text-center">
+							<div class="col-md-3 mb-3">
+								<button id="play-1v1" class="btn btn-lg btn-primary w-100 py-3">
+									<i class="fas fa-user me-2"></i>vs<i class="fas fa-user ms-2"></i><br>
+									<span class="d-block mt-2">1 vs 1</span>
+								</button>
+							</div>
+							<div class="col-md-3 mb-3">
+								<button id="play-4players" class="btn btn-lg btn-info w-100 py-3">
+									<i class="fas fa-users me-2"></i><br>
+									<span class="d-block mt-2">4 Giocatori</span>
+								</button>
+							</div>
+							<div class="col-md-3 mb-3">
+								<button id="play-vs-ia" class="btn btn-lg btn-warning w-100 py-3">
+									<i class="fas fa-user me-2"></i>vs<i class="fas fa-robot ms-2"></i><br>
+									<span class="d-block mt-2">Contro IA</span>
+								</button>
+							</div>
+							<div class="col-md-3 mb-3">
+								<button id="play-tris" class="btn btn-lg btn-success w-100 py-3">
+									<i class="fas fa-th me-2"></i><br>
+									<span class="d-block mt-2">Tris</span>
+								</button>
+							</div>
+						</div>
+						
+						<!-- Input per nome giocatore -->
+						<div id="player-input-container" class="mt-4" style="display: none;">
+							<div class="row justify-content-center">
+								<div class="col-md-4">
+									<div class="form-group text-center">
+										<input type="text" id="player2-username" class="form-control mb-2 text-center" placeholder="Inserisci nome giocatore 2">
+										<button id="submit-username" class="btn btn-primary w-100">Conferma</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Game Invitation Modal -->
+	<div id="inviteModal" class="modal-content" style="display: none;">
+		<span class="close">&times;</span>
+		<h3 class="mb-3">Game Invitation</h3>
+		<p>You've received a game invitation from <span id="inviterName">User</span>!</p>
+		<div class="d-flex justify-content-between mt-3">
+			<button id="acceptInvite" class="btn btn-primary">Accept</button>
+			<button id="declineInvite" class="btn btn-outline">Decline</button>
+		</div>
+	</div>
+	
+	<!-- Game End Modal -->
+	<div id="gameEndModal" class="modal-content" style="display: none;">
+		<span class="close">&times;</span>
+		<h3 class="mb-3">Game Over</h3>
+		<div id="gameResult" class="text-center mb-3">
+			<h2 id="resultMessage">You Won!</h2>
+			<p>Final Score: <span id="finalScore">5 - 3</span></p>
+		</div>
+		<div class="d-grid gap-2">
+			<button id="playAgain" class="btn btn-primary">Play Again</button>
+			<button id="returnToMain" class="btn btn-outline">Return to Main Menu</button>
+		</div>
+	</div>
+	
+	<!-- Bootstrap and jQuery JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<!-- Game JavaScript -->
 	<script>
-		function updateLanguage(){
-			savedLanguage = window.parent.userInstance.language;
-			if (savedLanguage == 'IT') {
-				document.getElementById('userright').innerText = 'Giocatore 2';
-				document.getElementById('userright2').innerText = 'Giocatore 4';
-				document.getElementById('userleft2').innerText = 'Giocatore 3';
-				document.getElementById('player2-username').placeholder = 'Inserisci nome giocatore2'
-				document.getElementById('submit-username').innerText = 'Invia';
-				document.getElementById('player2-username-tris').placeholder = 'Inserisci nome giocatore2'
-				document.getElementById('submit-username-tris').innerText = 'Invia';
-				document.getElementById('play-pong').innerText = 'Gioca a Pong';
-				document.getElementById('play-tris').innerText = 'Gioca a Tris';
-				document.getElementById('play-tris-1v1').innerText = 'Gioca 1 contro 1';
-				document.getElementById('play-tris-tournament').innerText = 'Modalità torneo';
-				document.getElementById('play-1v1').innerText = 'Gioca 1 contro 1';
-				document.getElementById('play-4players').innerText = 'Modalità 4 Giocatori';
-				document.getElementById('play-vs-ia').innerText = 'Modalità contro computer';
-				document.getElementById('play-tournament').innerText = 'Modalità torneo';
-				document.getElementById('NextMatch').innerText = 'Prossima partita';
-				let div = document.querySelector('.open_text');
-				div.firstChild.textContent = 'La partita e finita. I vincitori sono : ';
-				
-			} else if (savedLanguage == 'EN') {
-				document.getElementById('userright').innerText = 'Player 2';
-				document.getElementById('userright2').innerText = 'Player 4';
-				document.getElementById('userleft2').innerText = 'Player 3';
-				document.getElementById('player2-username').placeholder = 'Insert Player2 Nick'
-				document.getElementById('submit-username').innerText = 'Submit';
-				document.getElementById('player2-username-tris').placeholder = 'Insert Player2 Nick'
-				document.getElementById('submit-username-tris').innerText = 'Submit';
-				document.getElementById('play-pong').innerText = 'Play Pong';
-				document.getElementById('play-tris').innerText = 'Play Tic Tac Toe';
-				document.getElementById('play-tris-1v1').innerText = 'Play 1v1';
-				document.getElementById('play-tris-tournament').innerText = 'Play Tournament';
-				document.getElementById('play-1v1').innerText = 'Play 1v1';
-				document.getElementById('play-4players').innerText = '4 Player Mode';
-				document.getElementById('play-vs-ia').innerText = 'Play vs IA';
-				document.getElementById('play-tournament').innerText = 'Play Tournament';
-				document.getElementById('NextMatch').innerText = 'Next Match';
-				let div = document.querySelector('.open_text');
-				div.firstChild.textContent = 'The game is over. The winner is: ';
-				
-			} else if (savedLanguage == 'ES') {
-				document.getElementById('userright').innerText = 'Jugador 2';
-				document.getElementById('userright2').innerText = 'Jugador 4';
-				document.getElementById('userleft2').innerText = 'Jugador 3';
-				document.getElementById('player2-username').placeholder = 'Introduce el nombre del jugador2'
-				document.getElementById('submit-username').innerText = 'Entregar';
-				document.getElementById('player2-username-tris').placeholder = 'Introduce el nombre del jugador2'
-				document.getElementById('submit-username-tris').innerText = 'Entregar';
-				document.getElementById('play-pong').innerText = 'Jugar Pong';
-				document.getElementById('play-tris').innerText = 'Jugar al tres en raya';
-				document.getElementById('play-tris-1v1').innerText = 'Juega 1 contra 1';
-				document.getElementById('play-tris-tournament').innerText = 'Jugar torneo';
-				document.getElementById('play-1v1').innerText = 'Juega 1 contra 1';
-				document.getElementById('play-4players').innerText = 'Modo de 4 jugadores';
-				document.getElementById('play-vs-ia').innerText = 'Juega contra IA';
-				document.getElementById('play-tournament').innerText = 'Jugar torneo';
-				document.getElementById('NextMatch').innerText = 'Próximo partido';
-				let div = document.querySelector('.open_text');
-				div.firstChild.textContent = 'El juego ha terminado. El ganador es: ';
-			}
-		}
-	</script>		
-</body>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-	var pongGame;
-	window.onload = function(){
-	pongGame = {
-		lastTime: 0,
-		fpsInterval:1000 / 80, // 60 FPS
-		gameMode: "1v1",
-		game: document.getElementById('pong-game'),
-		ball: document.getElementById('ball'),
-		paddleA: document.getElementById('paddleA'),
-		paddleB: document.getElementById('paddleB'),
-		paddleC: document.getElementById('paddleC'),
-		paddleD: document.getElementById('paddleD'),
-		ballPos: {x: 0, y: 0},
-		futureBallPos: {x: 0, y: 0},
-		futureEdgeHit: 0,
-		paddleAPos: {y: 0},
-		paddleBPos: {y: 0},
-	    ballSpeed: {x: 9, y: 9},
-		ballSize: 10,
-		paddleASpeed: 0,
-    	paddleBSpeed: 0,
-		paddleCSpeed: 0,
-   		paddleDSpeed: 0,
-    	paddleSpeed: 12,
-		scoreA: 0,
-   		scoreB: 0,
-		bouncecounter: 0,
-		balllimitfaster: 2,
-		matchdatasent : 0,
-		tournamentStatus: 0,
-		running: false,
-		aiInterval: null,
-		tournamentGame1Win: "player1",
-		tournamentGame2Win: "player3",
-		tournamentGame3Win: "player1", //FIRST PLACE
-		tournamentGame1Lose: "player2", //THIRD PLACE
-		tournamentGame2Lose: "player4", //THIRD PLACE
-		tournamentGame3Lose: "player3", //SECOND PLACE
-		winorlose : true,
-		placement : 1,
-		paddleCPos: {x: document.getElementById('pong-game').offsetWidth * 0.25, y: 0},
-		paddleDPos: {x: document.getElementById('pong-game').offsetWidth * 0.75, y: 0},
-
-		calculateFuturePos: function() {
-    // Simulate the ball's movement for 1 second into the future
-    let updatesPerSecond = this.frameRate || 80; // replace with your actual frame rate
-    let ballTravel = { y: this.ballSpeed.y * updatesPerSecond, x: this.ballSpeed.x * updatesPerSecond};
-    let overshoot = 0;
-    let temp = 0;
-    let temp2 = 0;
-
-    // Calculate when the ball will hit the right edge
-    if (this.ballPos.x + ballTravel.x > this.game.offsetWidth - this.ballSize / 2) {
-        overshoot = (this.ballPos.x + ballTravel.x) - (this.game.offsetWidth - this.ballSize / 2);
-        this.futureBallPos.x = this.game.offsetWidth - this.ballSize / 2 - overshoot;
-    } else {
-        this.futureBallPos.x = this.ballPos.x + ballTravel.x;
-    }
-    if (overshoot !== 0)
-    {
-        temp = ballTravel.x - overshoot;
-        temp2 = temp / ballTravel.x;
-        this.futureEdgeHit = temp2 * ballTravel.y;
-    }
-    else
-        this.futureEdgeHit = ballTravel.y;
-
-    // If the ball hits a wall, it will bounce back
-    if (this.ballPos.y + this.futureEdgeHit <  this.ballSize / 2) {
-        this.futureBallPos.y = this.ballSize / 2 + (this.ballSize / 2 - (this.ballPos.y + this.futureEdgeHit));
-    } else if (this.ballPos.y + this.futureEdgeHit > this.game.offsetHeight - this.ballSize / 2) {
-        this.futureBallPos.y = this.game.offsetHeight - this.ballSize / 2 - ((this.ballPos.y + this.futureEdgeHit) - (this.game.offsetHeight - this.ballSize / 2));
-    } else {
-        this.futureBallPos.y = this.ballPos.y + this.futureEdgeHit;
-    }
-	let AIdifficulty = 199;
-	let randomOffset = { x: (Math.random() - 0.5) * AIdifficulty, y: (Math.random() - 0.5) * AIdifficulty };
-    this.futureBallPos.x += randomOffset.x;
-    this.futureBallPos.y += randomOffset.y;
-	},
-	initAI: function() {
-		// Bind the context of calculateFuturePos to this
-		this.calculateFuturePos = this.calculateFuturePos.bind(this);
-		// Call the function for the first time
-		this.calculateFuturePos();
-		// Call this function again every 1 second and store the interval ID
-		this.aiInterval = setInterval(this.calculateFuturePos, 1000);
-		this.lastTimestamp = performance.now();
-		this.frameCount = 0;
-		this.frameRate;
-		this.accumulatedTime = 0;
-	},
-
-	update: function() {
-		let now = performance.now();
-		let deltaTime = now - this.lastTimestamp;
-		this.lastTimestamp = now;
-		this.frameCount++;
-
-		this.accumulatedTime += deltaTime;
-		if (this.accumulatedTime >= 1000) { // Every second
-			this.frameRate = this.frameCount;
-			this.frameCount = 0;
-			this.accumulatedTime -= 1000;
-			console.log('Frame rate:', this.frameRate);
-		}
-
-		document.getElementById("scoreA").style.display = "block";
-        document.getElementById("scoreB").style.display = "block";
-        // Update the position of the ball
-        this.ballPos.x += this.ballSpeed.x;
-        this.ballPos.y += this.ballSpeed.y;
-		// Update the position of the paddles
-		let intervalSet = false;
-		this.paddleAPos.y += this.paddleASpeed;
-
-		if (this.gameMode === 'vs-ai') {
-			let paddleMiddle = this.paddleBPos.y + this.paddleB.offsetHeight / 2;
-			if (Math.abs(this.futureBallPos.y - paddleMiddle) < this.paddleSpeed) {
-				// If the paddle is close enough to the futureBallPos.y, stop it
-				this.paddleBSpeed = 0;
-			} else if (this.futureBallPos.y > paddleMiddle) {
-				this.paddleBSpeed = this.paddleSpeed;
-			} else {
-				this.paddleBSpeed = -this.paddleSpeed;
-			}
-    	}
-		else if (pongGame.gameMode === '4players')
-		{
-			// Add movement for paddleC and paddleD
-			this.paddleCPos.y += this.paddleCSpeed;
-			this.paddleDPos.y += this.paddleDSpeed;
-
-			// Prevent the paddles from going out of the game area
-			this.paddleCPos.y = Math.max(Math.min(this.paddleCPos.y, this.game.offsetHeight - this.paddleC.offsetHeight), 0);
-			this.paddleDPos.y = Math.max(Math.min(this.paddleDPos.y, this.game.offsetHeight - this.paddleD.offsetHeight), 0);
+		document.addEventListener('DOMContentLoaded', function() {
+			// Elementi del gioco
+			const gameCanvas = document.getElementById('gameCanvas');
+			const userAvatarEl = document.getElementById('userAvatar');
+			const opponentAvatarEl = document.getElementById('opponentAvatar');
+			const userNameEl = document.getElementById('userName');
+			const opponentNameEl = document.getElementById('opponentName');
+			const userScoreEl = document.getElementById('userScore');
+			const opponentScoreEl = document.getElementById('opponentScore');
 			
-			// Check for collisions with paddles C and D
-			if ((this.ballPos.y < this.paddleCPos.y + this.paddleC.offsetHeight && this.ballPos.y > this.paddleCPos.y && this.ballPos.x + this.ball.offsetWidth > this.paddleCPos.x && this.ballPos.x < this.paddleCPos.x + this.paddleC.offsetWidth)) {
-				this.ballSpeed.x *= -1; // Reverse the horizontal direction
-				if (this.ballPos.y + this.ball.offsetHeight > this.game.offsetHeight) {
-					this.ballPos.y = this.game.offsetHeight - this.ball.offsetHeight; // Move the ball just inside the bottom border
+			// Elementi dell'interfaccia
+			const play1v1Btn = document.getElementById('play-1v1');
+			const play4playersBtn = document.getElementById('play-4players');
+			const playVsIABtn = document.getElementById('play-vs-ia');
+			const playTrisBtn = document.getElementById('play-tris');
+			const playerInputContainer = document.getElementById('player-input-container');
+			const player2Username = document.getElementById('player2-username');
+			const submitUsernameBtn = document.getElementById('submit-username');
+			
+			// Pulsanti controllo gioco
+			const startGameBtn = document.getElementById('startGame');
+			const pauseGameBtn = document.getElementById('pauseGame');
+			const resetGameBtn = document.getElementById('resetGame');
+			
+			// Variabili globali
+			let currentGameMode = '';
+			let gameStarted = false;
+			
+			// Variabili PONG
+			let ctx;
+			let ballX = 400;
+			let ballY = 200;
+			let ballSpeedX = 5;
+			let ballSpeedY = 2;
+			let paddle1Y = 160; // Racchetta del giocatore
+			let paddle2Y = 160; // Racchetta dell'avversario
+			let paddle1Speed = 0;
+			let paddle2Speed = 0;
+			let paddle1Score = 0;
+			let paddle2Score = 0;
+			let ballRadius = 10;
+			let paddleHeight = 80;
+			let paddleWidth = 10;
+			let paddleGap = 30;
+			let aiDifficulty = 0.85; // 0.0 (facile) - 1.0 (impossibile)
+			let lastTime = 0;
+			let animationId = 0;
+			let isPaused = false;
+			const WINNING_SCORE = 5;
+			
+			// Gestione input tastiera
+			const keys = {
+				ArrowUp: false,
+				ArrowDown: false,
+				w: false,
+				s: false
+			};
+			
+			// Aggiungi event listener per i tasti
+			window.addEventListener('keydown', function(e) {
+				if (e.key in keys) {
+					keys[e.key] = true;
+					// Previeni lo scrolling della pagina con le frecce
+					if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+						e.preventDefault();
+					}
 				}
-				if (this.ballSpeed.x > 0)
-					this.ballPos.x = this.paddleCPos.x + this.paddleC.offsetWidth + 1; // Move the ball just to the right of paddle C and add a small buffer
-				if (this.ballPos.x + this.ball.offsetWidth > this.game.offsetWidth) {
-					this.ballPos.x = this.game.offsetWidth - this.ball.offsetWidth; // Move the ball just inside the right border
-				}
-				this.bouncecounter++;
-			} else if ((this.ballPos.y + this.ball.offsetHeight > this.paddleDPos.y && this.ballPos.y + this.ball.offsetHeight < this.paddleDPos.y + this.paddleD.offsetHeight && this.ballPos.x + this.ball.offsetWidth > this.paddleDPos.x && this.ballPos.x < this.paddleDPos.x + this.paddleD.offsetWidth)) {
-				this.ballSpeed.x *= -1; // Reverse the horizontal direction
-				if (this.ballPos.y < 0) {
-					this.ballPos.y = 0; // Move the ball just inside the top border
-				}
-				if (this.ballSpeed.x < 0)
-					this.ballPos.x = this.paddleDPos.x - this.ball.offsetWidth - 1; // Move the ball just to the left of paddle D and add a small buffer
-				if (this.ballPos.x < 0) {
-					this.ballPos.x = 0; // Move the ball just inside the left border
-				}
-				this.bouncecounter++;
-			}
-		}
-		this.paddleBPos.y += this.paddleBSpeed;
-        // Prevent the paddles from going out of the game area
-        this.paddleAPos.y = Math.max(Math.min(this.paddleAPos.y, this.game.offsetHeight - this.paddleA.offsetHeight), 0);
-        this.paddleBPos.y = Math.max(Math.min(this.paddleBPos.y, this.game.offsetHeight - this.paddleB.offsetHeight), 0);
-
-        // Check for goals
-        if (this.ballPos.x < 0) { // Ball touches the left border
-            this.scoreB++; // Increment score for Player B
-            this.resetBall(); // Reset the ball to the center
-        } else if (this.ballPos.x + this.ball.offsetWidth > this.game.offsetWidth) { // Ball touches the right border
-            this.scoreA++; // Increment score for Player A
-            this.resetBall(); // Reset the ball to the center
-        }
-
-		// Check for collisions for top and bottom boundaries
-        if (this.ballPos.y < 0 || this.ballPos.y + this.ball.offsetHeight > this.game.offsetHeight) {
-            this.ballSpeed.y *= -1; // Reverse the vertical direction
-        }
-
-        // Update scores display, if you have elements to show scores
-        document.getElementById("scoreA").textContent = this.scoreA;
-        document.getElementById("scoreB").textContent = this.scoreB;
-
-		// Collision detection with the paddles
-		if (this.ballPos.x <= this.paddleA.offsetWidth && this.ballPos.y + this.ball.offsetHeight >= this.paddleAPos.y && this.ballPos.y <= this.paddleAPos.y + this.paddleA.offsetHeight) {
-			this.ballSpeed.x *= -1; // Reverse the horizontal direction
-			this.ballPos.x = this.paddleA.offsetWidth; // Move the ball outside the paddle
-			this.bouncecounter++;
-		} else if (this.ballPos.x + this.ball.offsetWidth >= this.game.offsetWidth - this.paddleB.offsetWidth && this.ballPos.y + this.ball.offsetHeight >= this.paddleBPos.y && this.ballPos.y <= this.paddleBPos.y + this.paddleB.offsetHeight) {
-			this.ballSpeed.x *= -1; // Reverse the horizontal direction
-			this.ballPos.x = this.game.offsetWidth - this.paddleB.offsetWidth - this.ball.offsetWidth; // Move the ball outside the paddle
-			this.bouncecounter++;
-		}
-
-		if (this.bouncecounter == this.balllimitfaster){
-			this.balllimitfaster = this.balllimitfaster * 2;
-			this.ballSpeed.x = this.ballSpeed.x + 1;
-			this.ballSpeed.y = this.ballSpeed.y + 1;
-		}
-		// Check if player A has reached 5 points
-		if (this.scoreA >= 5) {
-			this.resetBall();
-			this.endGame(document.querySelector('.userleft').textContent);
-       		return;
-		}
-		// Check if player B has reached 5 points
-		else if (this.scoreB >= 5) {
-			this.resetBall();
-        	this.endGame(document.querySelector('.userright').textContent);
-        	return;
-    	}
-    },
-	endGame: function(winner) {
-	pongGame.matchdatasent = 0;
-    // Reset the ball
-	this.stop();
-	clearInterval(this.aiInterval);
-	this.ballPos.x = this.game.offsetWidth / 2 - this.ball.offsetWidth / 2;
-    this.ballPos.y = this.game.offsetHeight / 2 - this.ball.offsetHeight / 2;
-	this.ballSpeed.x = 0;
-	this.ballSpeed.y = 0;
-	this.bouncecounter = 0;
-	this.balllimitfaster = 2;
-	this.ball.style.display = "none";
-	this.paddleA.style.display = "none";
-	this.paddleB.style.display = "none";
-	this.paddleC.style.display = "none";
-	this.paddleD.style.display = "none";
-	document.getElementById("scoreA").style.display = "none";
-    document.getElementById("scoreB").style.display = "none";
-	this.winorlose = "true";
-	if (winner === document.querySelector('.userleft').textContent)
-	{
-		this.winorlose = "true";
-	}
-	else 
-	{
-		this.winorlose = "false";
-	}
-    // Save match data
-    var matchData = {
-		game: "pong",
-		win: this.winorlose,
-		score: this.scoreA,
-        scoreplayer2: this.scoreB,
-   		player2: document.querySelector('.userright').textContent, // Get User2 name
-    };
-	console.log(matchData);
-    var jsonMatchData = JSON.stringify(matchData);
-	this.scoreA = 0;
-	this.scoreB = 0;
-	if (this.gameMode !== "1v1")
-	{
-		this.matchdatasent = 1;
-	}
-	if (this.matchdatasent === 0)
-	{
-		sendMatchData(jsonMatchData);
-	}
-	if (this.gameMode === "4players"){
-		if (winner === document.querySelector('.userleft').textContent)
-			document.getElementById('winner').textContent = "Team 1";
-		else
-			document.getElementById('winner').textContent = "Team 2";
-	}
-	else if (this.gameMode === "tournament"){
-		if (this.tournamentStatus === 0)
-		{
-			if (winner === document.querySelector('.userleft').textContent)
-			{
-				this.tournamentGame1Win = this.tournamentP1;
-				this.tournamentGame1Lose = this.tournamentP2;
-			}
-			else
-			{
-				this.tournamentGame1Win = this.tournamentP2;
-				this.tournamentGame1Lose = this.tournamentP1;
-			}
-			document.getElementById("Player1").innerText = this.tournamentP3;
-			document.getElementById("Player2").innerText = this.tournamentP4;
-			document.getElementById("Player1").style.display = "block";
-			document.getElementById("Player2").style.display = "block";
-			document.getElementById("Readyup").style.display = "block";
-			document.getElementById("winner").textContent = this.tournamentGame1Win ;
-			document.querySelector('.open_text').style.display = "block";
-		}
-		else if (this.tournamentStatus === 1)
-		{if (winner === document.querySelector('.userleft').textContent)
-			{
-				this.tournamentGame2Win = this.tournamentP3;
-				this.tournamentGame2Lose = this.tournamentP4;
-			}
-			else
-			{
-				this.tournamentGame2Win = this.tournamentP4;
-				this.tournamentGame2Lose = this.tournamentP3;
-			}
-			document.getElementById("Player1").innerText = this.tournamentGame1Win;
-			document.getElementById("Player2").innerText = this.tournamentGame2Win;
-			document.getElementById("Player1").style.display = "block";
-			document.getElementById("Player2").style.display = "block";
-			document.getElementById("Readyup").style.display = "block";
-			document.getElementById("winner").textContent = this.tournamentGame2Win;
-			document.querySelector('.open_text').style.display = "block";
-		}
-		else if (pongGame.tournamentStatus === 2)
-		{
-			if (winner === document.querySelector('.userleft').textContent)
-				this.tournamentGame3Win = this.tournamentGame1Win;
-			else
-				this.tournamentGame3Win = this.tournamentGame2Win;
-			if (this.tournamentGame3Win === this.tournamentGame1Win)
-				this.tournamentGame3Lose = this.tournamentGame2Win;
-			else
-				this.tournamentGame3Lose = this.tournamentGame1Win;
-			document.getElementById("scoreA").style.display = "none";
-			document.getElementById("scoreB").style.display = "none";
-			document.getElementById("FirstPlace").innerText = this.tournamentGame3Win;
-			document.getElementById("SecondPlace").innerText = this.tournamentGame3Lose;
-			document.getElementById("ThirdPlace").innerText = this.tournamentGame1Lose;
-			document.getElementById("ThirdPlace2").innerText = this.tournamentGame2Lose;
-			document.getElementById("FirstPlace").style.display = "block";
-			document.getElementById("SecondPlace").style.display = "block";
-			document.getElementById("ThirdPlace").style.display = "block";
-			document.getElementById("ThirdPlace2").style.display = "block";
-			document.getElementById("firstplace-text").style.display = "block";
-			document.getElementById("secondplace-text").style.display = "block";
-			document.getElementById("thirdplace-text").style.display = "block";
-			document.getElementById("EndTournament").style.display = "block";
-			this.tournamentStatus = -1;
-		}
-		this.tournamentStatus++;
-	}
-	else
-	{
-		document.getElementById('winner').textContent = winner;
-	}
-	if (this.gameMode !== "tournament")
-	{
-		document.querySelector('.open_text').style.display = "block";
-		document.getElementById('NextMatch').style.display = "block";
-	}
-	document.getElementById('NextMatch').addEventListener('click', function() {
-		document.querySelector('.open_text').style.display = "none";
-		document.getElementById('NextMatch').style.display = "none";
-		pongGame.ballSpeed.x = 0;
-		pongGame.ballSpeed.y = 0;
-		pongGame.bouncecounter = 0;
-		pongGame.balllimitfaster = 2;
-		pongGame.scoreA = 0;
-		pongGame.scoreB = 0;
-		document.getElementById('scoreA').style.display = "none"
-		document.getElementById('scoreB').style.display = "none"
-		document.getElementById('play-pong').style.display = "block";
-		document.getElementById('play-tris').style.display = "block";
-	});
-},
-
-	resetBall: function() {
-        // Reset ball position to the center of the game area
-		this.paddleAPos.y = this.game.offsetHeight / 2;
-		this.paddleBPos.y = this.game.offsetHeight / 2;
-		this.paddleCPos.y = this.game.offsetHeight / 3 * 2;
-		this.paddleDPos.y = this.game.offsetHeight / 3;
-        this.ballPos.x = this.game.offsetWidth / 2 - this.ball.offsetWidth / 2;
-        this.ballPos.y = this.game.offsetHeight / 2 - this.ball.offsetHeight / 2;
-        // Optionally, reset ball speed or direction
-		this.ballSpeed.x = 9;
-		this.ballSpeed.y = 9;
-		this.bouncecounter = 0;
-		this.balllimitfaster = 2;
-	},
-
-	draw: function() {
-    // Update the position of the ball
-    this.ball.style.top = this.ballPos.y + 'px';
-    this.ball.style.left = this.ballPos.x + 'px';
-
-    // Update the position of paddle A
-    this.paddleA.style.top = this.paddleAPos.y + 'px';
-
-    // Update the position of paddle B
-    this.paddleB.style.top = this.paddleBPos.y + 'px';
-
-	// Update the position of paddle C
-	this.paddleC.style.top = this.paddleCPos.y + 'px';
-
-	// Update the position of paddle D
-	this.paddleD.style.top = this.paddleDPos.y + 'px';
-},
-
-
-	loop: function(currentTime) {
-		if (!pongGame.running)
-		{
-			return;
-		}
-        pongGame.animationFrameId = requestAnimationFrame(pongGame.loop);
-
-        let elapsedTime = currentTime - pongGame.lastTime;
-
-        if (elapsedTime > pongGame.fpsInterval) {
-            pongGame.lastTime = currentTime - (elapsedTime % pongGame.fpsInterval);
-
-            pongGame.update();
-            pongGame.draw();
-        }
-    },
-
-	stop: function() {
-		pongGame.running = false;
-		cancelAnimationFrame(this.animationFrameId);
-	},
-    start: function() {
-		pongGame.running = true;
-        pongGame.loop();
-    }
-};
-function sendMatchData(jsonMatchData){
-	var token = localStorage.getItem('userToken');
-	fetch('http://localhost:8001/main/pong_result/', {
-			method: 'POST',
-			headers: {
-				'Authorization' : 'Token ' + token,
-				'Content-Type': 'application/json'
-			},
-			body: jsonMatchData
-		}).then(response => {
-			if (response.ok) {
-				console.log('Match data sent successfully');
-			} else {
-				console.error('Error sending match data:', response.statusText);
-			}
-		}).catch(error => {
-			console.error('Network error:', error);
-		});
-}
-
-document.addEventListener('keydown', function(event) {
-    switch (event.key) {
-        case 'w':
-            pongGame.paddleASpeed = -pongGame.paddleSpeed;
-            break;
-        case 's':
-            pongGame.paddleASpeed = pongGame.paddleSpeed;
-            break;
-        case 'ArrowUp':
-            pongGame.paddleBSpeed = -pongGame.paddleSpeed;
-            break;
-        case 'ArrowDown':
-            pongGame.paddleBSpeed = pongGame.paddleSpeed;
-            break;
-		case 'i':
-			pongGame.paddleCSpeed = -pongGame.paddleSpeed;
-			break;
-		case 'k':
-			pongGame.paddleCSpeed = pongGame.paddleSpeed;
-			break;
-		case '-':
-			pongGame.paddleDSpeed = -pongGame.paddleSpeed;
-			break;
-		case '+':
-			pongGame.paddleDSpeed = pongGame.paddleSpeed;
-			break;
-    }
-});
-
-document.addEventListener('keyup', function(event) {
-    switch (event.key) {
-        case 'w':
-        case 's':
-            pongGame.paddleASpeed = 0;
-            break;
-        case 'ArrowUp':
-        case 'ArrowDown':
-            pongGame.paddleBSpeed = 0;
-            break;
-		case 'i':
-		case 'k':
-			pongGame.paddleCSpeed = 0;
-			break;
-		case '-':
-		case '+':
-			pongGame.paddleDSpeed = 0;
-			break;
-    }
-});
-
-	pongGame.ballPos = {x: pongGame.game.offsetWidth/2, y: pongGame.game.offsetHeight/2},
-    pongGame.paddleAPos = {y: pongGame.game.offsetHeight/2 - pongGame.paddleA.offsetHeight/2},
-    pongGame.paddleBPos = {y: pongGame.game.offsetHeight/2 - pongGame.paddleB.offsetHeight/2},
-
-
-document.getElementById("play-pong").addEventListener("click", function() {
-    document.getElementById("play-pong").style.display = "none";
-    document.getElementById("play-tris").style.display = "none";
-	
-	// Show the new buttons
-	document.getElementById("play-1v1").style.display = "block";
-    document.getElementById("play-4players").style.display = "block";
-    document.getElementById("play-vs-ia").style.display = "block";
-    document.getElementById("play-tournament").style.display = "block";
-    
-});
-document.getElementById("play-1v1").addEventListener("click", function(){
-	document.getElementById("userright2").style.display = "none";
-	document.getElementById("userleft2").style.display = "none";
-	document.getElementById("avatar3").style.display = "none";
-	document.getElementById("avatar4").style.display = "none";
-	document.getElementById("play-1v1").style.display = "none";
-    document.getElementById("play-4players").style.display = "none";
-    document.getElementById("play-vs-ia").style.display = "none";
-    document.getElementById("play-tournament").style.display = "none";
-	document.getElementById("player2-username").style.display = "block";
-    document.getElementById("submit-username").style.display = "block";
-});
-//Funzione per cambiare il nick dell'user2.
-document.getElementById("submit-username").addEventListener("click", function() {
-	console.log("Submit username clicked"); // Add this line
-	var username = document.getElementById("player2-username").value;
-	if (username) {
-		// Save the username for player 2
-		document.getElementById("userright").textContent = username;
-		document.getElementById("player2-username").style.display = "none";
-		document.getElementById("submit-username").style.display = "none";
-		document.getElementById("scoreA").style.display = "block";
-		document.getElementById("scoreB").style.display = "block";
-		document.getElementById("ball").style.display = "block";
-		document.getElementById("paddleA").style.display = "block";
-		document.getElementById("paddleB").style.display = "block";
-		pongGame.gameMode = "1v1";
-		pongGame.resetBall();
-		pongGame.start();
-	} else {
-		alert("Please enter a username for player 2.");
-	}
-});
-
-//IA menu
-document.getElementById("play-vs-ia").addEventListener("click", function(){
-	document.getElementById("userright2").style.display = "none";
-	document.getElementById("userleft2").style.display = "none";
-	document.getElementById("avatar3").style.display = "none";
-	document.getElementById("avatar4").style.display = "none";
-	document.getElementById("userright").textContent = "IA";
-	document.getElementById("avatar2").src = "media/ai.jpg";
-	document.getElementById("play-1v1").style.display = "none";
-    document.getElementById("play-4players").style.display = "none";
-    document.getElementById("play-vs-ia").style.display = "none";
-    document.getElementById("play-tournament").style.display = "none";
-	pongGame.gameMode = "vs-ai";
-	pongGame.resetBall();
-	document.getElementById("scoreA").style.display = "block";
-	document.getElementById("scoreB").style.display = "block";
-	document.getElementById("ball").style.display = "block";
-	document.getElementById("paddleA").style.display = "block";
-	document.getElementById("paddleB").style.display = "block";
-	pongGame.initAI();
-	pongGame.start();
-});
-
-
-//4 players menu
-document.getElementById("play-4players").addEventListener("click", function(){
-	document.getElementById("play-1v1").style.display = "none";
-	document.getElementById("play-4players").style.display = "none";
-	document.getElementById("play-vs-ia").style.display = "none";
-	document.getElementById("play-tournament").style.display = "none";
-	pongGame.gameMode = "4players";
-	document.getElementById("player2-username").style.display = "block";
-	document.getElementById("submit-username2").style.display = "block";
-	document.getElementById("userright2").style.display = "block";
-	document.getElementById("userleft2").style.display = "block";
-	document.getElementById("avatar3").style.display = "block";
-	document.getElementById("avatar4").style.display = "block";
-});
-
-document.getElementById("submit-username2").addEventListener("click", function() {
-    var username = document.getElementById("player2-username").value;
-
-    if (username) {
-        // Save the username for player 2
-		document.getElementById("userright").textContent = username;
-		document.getElementById("player2-username").style.display = "none";
-		document.getElementById("submit-username2").style.display = "none";
-		document.getElementById("player3-username").style.display = "block";
-		document.getElementById("submit-username3").style.display = "block";
-    } else {
-        alert("Please enter a username for player 2.");
-    }
-});
-
-document.getElementById("submit-username3").addEventListener("click", function() {
-    var username = document.getElementById("player3-username").value;
-
-    if (username) {
-        // Save the username for player 2
-		document.getElementById("userleft2").textContent = username;
-		document.getElementById("player3-username").style.display = "none";
-		document.getElementById("submit-username3").style.display = "none";
-		document.getElementById("player4-username").style.display = "block";
-		document.getElementById("submit-username4").style.display = "block";
-    } else {
-        alert("Please enter a username for player 3.");
-    }
-});
-
-
-//Tournament menu
-document.getElementById("play-tournament").addEventListener("click", function(){
-	document.getElementById("play-1v1").style.display = "none";
-	document.getElementById("play-4players").style.display = "none";
-	document.getElementById("play-vs-ia").style.display = "none";
-	document.getElementById("play-tournament").style.display = "none";
-	pongGame.gameMode = "tournament";
-	document.getElementById("player2-username").style.display = "block";
-	document.getElementById("submit-username2").style.display = "block";
-	document.getElementById("userright2").style.display = "block";
-	document.getElementById("userleft2").style.display = "block";
-	document.getElementById("avatar3").style.display = "block";
-	document.getElementById("avatar4").style.display = "block";
-});
-
-document.getElementById("submit-username2").addEventListener("click", function() {
-    var username = document.getElementById("player2-username").value;
-
-    if (username) {
-        // Save the username for player 2
-		document.getElementById("userright").textContent = username;
-		document.getElementById("player2-username").style.display = "none";
-		document.getElementById("submit-username2").style.display = "none";
-		document.getElementById("player3-username").style.display = "block";
-		document.getElementById("submit-username3").style.display = "block";
-    } else {
-        alert("Please enter a username for player 2.");
-    }
-});
-
-document.getElementById("submit-username3").addEventListener("click", function() {
-    var username = document.getElementById("player3-username").value;
-
-    if (username) {
-        // Save the username for player 2
-		document.getElementById("userleft2").textContent = username;
-		document.getElementById("player3-username").style.display = "none";
-		document.getElementById("submit-username3").style.display = "none";
-		document.getElementById("player4-username").style.display = "block";
-		document.getElementById("submit-username4").style.display = "block";
-    } else {
-        alert("Please enter a username for player 3.");
-    }
-});
-
-document.getElementById("submit-username4").addEventListener("click", function() {
-    var username = document.getElementById("player4-username").value;
-
-    if (username) {
-        // Save the username for player 2
-		document.getElementById("userright2").textContent = username;
-		document.getElementById("player4-username").style.display = "none";
-		document.getElementById("submit-username4").style.display = "none";
-		if (pongGame.gameMode === "tournament")
-		{
-			// Case for Tournament Gamemode
-			var players = [document.querySelector('.userleft').textContent, document.querySelector('.userleft2').textContent, document.querySelector('.userright').textContent, document.querySelector('.userright2').textContent];
-
-			// Shuffle the players array
-			players.sort(function() {
-				return 0.5 - Math.random();
 			});
-
-			// Assign the shuffled players to the tournament variables
-			pongGame.tournamentP1 = players[0];
-			pongGame.tournamentP2 = players[1];
-			pongGame.tournamentP3 = players[2];
-			pongGame.tournamentP4 = players[3];
-			document.getElementById("Player1").innerText = pongGame.tournamentP1;
-			document.getElementById("Player2").innerText = pongGame.tournamentP2;
-			document.getElementById("Player1").style.display = "block";
-			document.getElementById("Player2").style.display = "block";
-			document.getElementById("Readyup").style.display = "block";
-		}
-		else {
-			// Case for 4 players gamemode
-			document.getElementById("scoreA").style.display = "block";
-			document.getElementById("scoreB").style.display = "block";
-			document.getElementById("ball").style.display = "block";
-			document.getElementById("paddleA").style.display = "block";
-			document.getElementById("paddleB").style.display = "block";
-			document.getElementById("paddleC").style.display = "block";
-			document.getElementById("paddleD").style.display = "block";
-			pongGame.resetBall();
-			pongGame.start();
-		}
-    } else {
-        alert("Please enter a username for player 4.");
-    }
-});
-// Ready up button for tournament
-document.getElementById("Readyup").addEventListener("click", function(){
-	document.querySelector('.open_text').style.display = "none";
-	document.getElementById('NextMatch').style.display = "none";
-	document.getElementById("Player1").style.display = "none";
-	document.getElementById("Player2").style.display = "none";
-	document.getElementById("Readyup").style.display = "none";
-	document.getElementById("scoreA").style.display = "block";
-	document.getElementById("scoreB").style.display = "block";
-	document.getElementById("ball").style.display = "block";
-	document.getElementById("paddleA").style.display = "block";
-	document.getElementById("paddleB").style.display = "block";
-	pongGame.resetBall();
-	pongGame.start();
-});
-
-
-document.getElementById('EndTournament').addEventListener('click', function() {
-	
-		document.getElementById("scoreA").style.display = "none";
-		document.getElementById("scoreB").style.display = "none";
-		document.getElementById("play-pong").style.display = "block";
-		document.getElementById("play-tris").style.display = "block";
-		document.getElementById("FirstPlace").style.display = "none";
-		document.getElementById("SecondPlace").style.display = "none";
-		document.getElementById("ThirdPlace").style.display = "none";
-		document.getElementById("ThirdPlace2").style.display = "none";
-		document.getElementById("firstplace-text").style.display = "none";
-		document.getElementById("secondplace-text").style.display = "none";
-		document.getElementById("thirdplace-text").style.display = "none";
-		document.getElementById('EndTournament').style.display = "none";
-		pongGame.ballSpeed.x = 0;
-		pongGame.ballSpeed.y = 0;
-		pongGame.bouncecounter = 0;
-		pongGame.balllimitfaster = 2;
-		pongGame.scoreA = 0;
-		pongGame.scoreB = 0;
-	});
-
-//TRIS CODE
-document.getElementById("play-tris").addEventListener("click", function(){
-	localStorage.setItem('lastPage', "tris-game");
-	window.parent.goToTris();
-});
-}
-if (window.parent.userInstance && window.parent.userInstance.username) {
-			console.log('User data already loaded');
-			document.getElementById('userleft').textContent = window.parent.userInstance.username;
-			document.getElementById("go_to_profile").src = window.parent.userInstance.image;
-		}
-window.addEventListener('message', function(event) {
-	if (event.data.type === 'reset')
-	{
-		pongGame.resetBall();
-		pongGame.ballSpeed.x = 0;
-		pongGame.ballSpeed.y = 0;
-		pongGame.stop();
-		document.getElementById("play-pong").style.display = "block";
-		document.getElementById("play-tris").style.display = "block";
-		document.getElementById("play-1v1").style.display = "none";
-		document.getElementById("play-4players").style.display = "none";
-		document.getElementById("play-vs-ia").style.display = "none";
-		document.getElementById("play-tournament").style.display = "none";
-		document.getElementById("player2-username").style.display = "none";
-		document.getElementById("submit-username").style.display = "none";
-		document.getElementById("player2-username").style.display = "none";
-		document.getElementById("submit-username2").style.display = "none";
-		document.getElementById("player3-username").style.display = "none";
-		document.getElementById("submit-username3").style.display = "none";
-		document.getElementById("player4-username").style.display = "none";
-		document.getElementById("submit-username4").style.display = "none";
-		document.getElementById("userright2").style.display = "none";
-		document.getElementById("userleft2").style.display = "none";
-		document.getElementById("avatar3").style.display = "none";
-		document.getElementById("avatar4").style.display = "none";
-		document.getElementById("userright2").textContent = "Player 3";
-		document.getElementById("userleft2").textContent = "Player 4";
-		document.getElementById("player2-username").value = "";
-		document.getElementById("player3-username").value = "";
-		document.getElementById("player4-username").value = "";
-		document.getElementById("scoreA").style.display = "none";
-		document.getElementById("scoreB").style.display = "none";
-		document.getElementById("firstplace-text").style.display = "none";
-		document.getElementById("secondplace-text").style.display = "none";
-		document.getElementById("thirdplace-text").style.display = "none";
-		document.getElementById("ball").style.display = "none";
-		document.getElementById("paddleA").style.display = "none";
-		document.getElementById("paddleB").style.display = "none";
-		document.getElementById("paddleC").style.display = "none";
-		document.getElementById("paddleD").style.display = "none";
-		document.getElementById("Player1").style.display = "none";
-		document.getElementById("Player2").style.display = "none";
-		document.getElementById("Readyup").style.display = "none";
-		document.getElementById("FirstPlace").style.display = "none";
-		document.getElementById("SecondPlace").style.display = "none";
-		document.getElementById("ThirdPlace").style.display = "none";
-		document.getElementById("ThirdPlace2").style.display = "none";
-		document.getElementById("EndTournament").style.display = "none";
-		document.querySelector('.open_text').style.display = "none";
-		pongGame.tournamentStatus = 0;
-		pongGame.bouncecounter = 0;
-		pongGame.balllimitfaster = 2;
-		pongGame.scoreA = 0;
-		pongGame.scoreB = 0;
-	}
-	// Check the type of the message
-	else if (event.data.type === 'loadProfile') {
-        document.getElementById("userleft").innerText  = window.parent.userInstance.player;
-        document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
-		updateLanguage();
-
-    }
-	if (event.data.type === 'userDataLoaded') {
-        console.log('userDataLoaded event triggered');
-        // Access the userInstance from the parent window
-        document.getElementById('userleft').textContent = window.parent.userInstance.username;
-		document.getElementById("go_to_profile").src = window.parent.userInstance.profile_image;
-		updateLanguage();
-	}
-});
-document.getElementById("go_to_profile").addEventListener("click", function() {
-	localStorage.setItem('lastPage', "profile");
-    window.parent.goToProfile();
-});
-</script>
+			
+			window.addEventListener('keyup', function(e) {
+				if (e.key in keys) {
+					keys[e.key] = false;
+				}
+			});
+			
+			// Navigazione
+			document.getElementById('go_to_main').addEventListener('click', function() {
+				localStorage.setItem('lastPage', 'main-page');
+				window.parent.goToMain();
+			});
+			
+			document.getElementById('go_to_profile').addEventListener('click', function() {
+				localStorage.setItem('lastPage', 'profile');
+				window.parent.goToProfile();
+			});
+			
+			document.getElementById('go_to_login').addEventListener('click', function() {
+				window.parent.userInstance.resetData();
+				const token = localStorage.getItem('userToken');
+				fetch('http://localhost:8001/login/logout/', {
+					method: 'POST',
+					headers: {
+						'Authorization': 'Token ' + token,
+						'Content-Type': 'application/json'
+					},
+				}).then(response => {
+					if (response.ok) {
+						console.log('Logout sent successfully');
+					} else {
+						console.error('Error sending logout:', response.statusText);
+					}
+				}).catch(error => {
+					console.error('Network error:', error);
+				});
+				localStorage.setItem('lastPage', 'login');
+				localStorage.setItem('userToken', '');
+				window.parent.goToLogin();
+			});
+			
+			// Funzioni di gestione modalità di gioco
+			play1v1Btn.addEventListener('click', function() {
+				currentGameMode = '1v1';
+				
+				// Resetta e mostra il campo di input
+				playerInputContainer.style.display = 'block';
+				player2Username.value = '';
+				player2Username.placeholder = 'Inserisci nome giocatore 2';
+				player2Username.focus();
+				
+				// Aggiungi una classe per migliorare la visibilità
+				playerInputContainer.classList.add('animate__animated', 'animate__fadeIn');
+				
+				// Messaggio di istruzioni
+				const instructionMsg = document.createElement('div');
+				instructionMsg.className = 'alert alert-info mt-2';
+				instructionMsg.innerHTML = 'Inserisci il nome del tuo avversario e clicca su "Conferma"';
+				if (!document.querySelector('.input-instruction')) {
+					instructionMsg.classList.add('input-instruction');
+					playerInputContainer.appendChild(instructionMsg);
+					
+					// Rimuovi il messaggio dopo 5 secondi
+					setTimeout(() => {
+						if (instructionMsg.parentNode) {
+							instructionMsg.parentNode.removeChild(instructionMsg);
+						}
+					}, 5000);
+				}
+			});
+			
+			play4playersBtn.addEventListener('click', function() {
+				currentGameMode = '4players';
+				playerInputContainer.style.display = 'block';
+				player2Username.placeholder = 'Inserisci nome giocatore 2';
+				player2Username.focus();
+				// Logica aggiuntiva per 4 giocatori da implementare
+			});
+			
+			playVsIABtn.addEventListener('click', function() {
+				currentGameMode = 'vs-ia';
+				opponentNameEl.textContent = 'IA';
+				opponentAvatarEl.src = 'media/ai.jpg';
+				// Preparazione per il gioco contro l'IA
+				prepareGame();
+			});
+			
+			playTrisBtn.addEventListener('click', function() {
+				currentGameMode = 'tris';
+				playerInputContainer.style.display = 'block';
+				player2Username.placeholder = 'Inserisci nome avversario per Tris';
+				player2Username.focus();
+			});
+			
+			submitUsernameBtn.addEventListener('click', function() {
+				const username = player2Username.value.trim();
+				console.log('Submit button clicked, username:', username);
+				
+				if (username) {
+					// Assicurati che il nome sia impostato e visibile
+					opponentNameEl.textContent = username;
+					playerInputContainer.style.display = 'none';
+					
+					// Salva il nome in una variabile globale per sicurezza
+					const opponentName = username;
+					console.log('Nome avversario impostato:', opponentName);
+					
+					// Animazione per evidenziare il cambio di nome
+					opponentNameEl.classList.add('animate__animated', 'animate__flash');
+					setTimeout(() => {
+						opponentNameEl.classList.remove('animate__animated', 'animate__flash');
+					}, 1000);
+					
+					// Se in modalità Tris, salva il nome e vai alla pagina del tris
+					if (currentGameMode === 'tris') {
+						localStorage.setItem('trisOpponentName', username);
+						localStorage.setItem('lastPage', 'tris-game');
+						window.parent.goToTris();
+					} else {
+						// Per altre modalità, prepara il gioco come prima
+						console.log('Preparazione gioco con avversario:', opponentNameEl.textContent);
+						prepareGame();
+					}
+				} else {
+					alert('Per favore inserisci un nome per il giocatore 2.');
+				}
+			});
+			
+			// Gestione del gioco
+			function prepareGame() {
+				// Inizializza il contesto del canvas
+				ctx = gameCanvas.getContext('2d');
+				
+				// Reimposta le variabili di gioco
+				ballX = gameCanvas.width / 2;
+				ballY = gameCanvas.height / 2;
+				ballSpeedX = 5 * (Math.random() > 0.5 ? 1 : -1);
+				ballSpeedY = 2 * (Math.random() > 0.5 ? 1 : -1);
+				paddle1Y = (gameCanvas.height - paddleHeight) / 2;
+				paddle2Y = (gameCanvas.height - paddleHeight) / 2;
+				paddle1Score = 0;
+				paddle2Score = 0;
+				userScoreEl.textContent = '0';
+				opponentScoreEl.textContent = '0';
+				
+				// Mostra canvas e altri elementi necessari
+				gameCanvas.style.display = 'block';
+				
+				// Visualizza messaggio di istruzioni
+				const message = document.createElement('div');
+				message.className = 'alert alert-info mt-3';
+				message.innerHTML = 'Premi <strong>Start Game</strong> per iniziare a giocare.<br>'+
+									'Usa <strong>↑</strong> e <strong>↓</strong> per muovere la racchetta.';
+				gameCanvas.parentNode.insertBefore(message, gameCanvas.nextSibling);
+				
+				// Rimuovi il messaggio dopo 5 secondi
+				setTimeout(() => {
+					if (message.parentNode) {
+						message.parentNode.removeChild(message);
+					}
+				}, 5000);
+			}
+			
+			// Pulsanti di controllo gioco
+			startGameBtn.addEventListener('click', function() {
+				if (!currentGameMode) {
+					alert('Seleziona prima una modalità di gioco');
+					return;
+				}
+				
+				// Verifica che il contesto del canvas sia definito
+				if (!ctx) {
+					ctx = gameCanvas.getContext('2d');
+					if (!ctx) {
+						alert('Errore: impossibile ottenere il contesto del canvas');
+						return;
+					}
+				}
+				
+				// Assicurati che il canvas sia visibile
+				gameCanvas.style.display = 'block';
+				
+				if (!gameStarted) {
+					gameStarted = true;
+					isPaused = false;
+					startGameBtn.textContent = 'Restart Game';
+					// Disegna una volta prima di iniziare il loop
+					drawEverything();
+					startGame();
+				} else {
+					// Riavvia il gioco
+					resetGame();
+					startGame();
+				}
+			});
+			
+			pauseGameBtn.addEventListener('click', function() {
+				if (!gameStarted) return;
+				
+				if (isPaused) {
+					// Riprendi il gioco
+					isPaused = false;
+					pauseGameBtn.textContent = 'Pause';
+					startGame();
+				} else {
+					// Metti in pausa
+					isPaused = true;
+					pauseGameBtn.textContent = 'Resume';
+					cancelAnimationFrame(animationId);
+				}
+			});
+			
+			resetGameBtn.addEventListener('click', function() {
+				resetGame();
+			});
+			
+			// Avvia il gioco
+			function startGame() {
+				cancelAnimationFrame(animationId);
+				
+				// Debug
+				console.log('Avvio del gioco...');
+				console.log('Modo: ' + currentGameMode);
+				console.log('Canvas: ' + (gameCanvas ? 'OK' : 'NON TROVATO'));
+				console.log('Contesto: ' + (ctx ? 'OK' : 'NON TROVATO'));
+				
+				// Risoluzione errore di timing
+				if (lastTime === 0) {
+					lastTime = performance.now();
+				}
+				
+				// Assicurati che la palla sia posizionata al centro
+				ballX = gameCanvas.width / 2;
+				ballY = gameCanvas.height / 2;
+				
+				// Forza un primo rendering
+				drawEverything();
+				
+				// Avvia il loop con un timeout per assicurarci che tutto sia pronto
+				setTimeout(() => {
+					lastTime = performance.now();
+					gameLoop(lastTime);
+				}, 50);
+			}
+			
+			// Reset del gioco
+			function resetGame() {
+				cancelAnimationFrame(animationId);
+				
+				ballX = gameCanvas.width / 2;
+				ballY = gameCanvas.height / 2;
+				ballSpeedX = 5 * (Math.random() > 0.5 ? 1 : -1);
+				ballSpeedY = 2 * (Math.random() > 0.5 ? 1 : -1);
+				paddle1Y = (gameCanvas.height - paddleHeight) / 2;
+				paddle2Y = (gameCanvas.height - paddleHeight) / 2;
+				paddle1Score = 0;
+				paddle2Score = 0;
+				gameStarted = false;
+				isPaused = false;
+				
+				userScoreEl.textContent = '0';
+				opponentScoreEl.textContent = '0';
+				
+				startGameBtn.textContent = 'Start Game';
+				pauseGameBtn.textContent = 'Pause';
+				
+				// Disegna il campo vuoto
+				drawEverything();
+			}
+			
+			// Loop principale del gioco
+			function gameLoop(timestamp) {
+				// Debug
+				if (animationId % 60 === 0) { // Solo ogni 60 frame per non intasare la console
+					console.log('Game loop running, frame:', animationId);
+					console.log('Ball position:', ballX, ballY);
+				}
+				
+				// Calcola il delta time per un movimento uniforme
+				const deltaTime = timestamp - lastTime;
+				lastTime = timestamp;
+				
+				// Evita deltaTime eccessivamente grande (ad esempio dopo pausa o tab inattivo)
+				const safeDeltaTime = Math.min(deltaTime, 100);
+				
+				// Aggiorna la posizione degli elementi
+				moveEverything(safeDeltaTime);
+				
+				// Disegna gli elementi
+				drawEverything();
+				
+				// Continua il loop se il gioco è attivo
+				if (gameStarted && !isPaused) {
+					animationId = requestAnimationFrame(gameLoop);
+				}
+			}
+			
+			// Movimento degli elementi del gioco
+			function moveEverything(deltaTime) {
+				// Normalizza il deltaTime per un movimento uniforme
+				const timeMultiplier = deltaTime / 16.67; // 60fps = 16.67ms per frame
+				
+				// Movimento del giocatore (paddle1)
+				if (keys.ArrowUp) {
+					paddle1Speed = -8 * timeMultiplier;
+				} else if (keys.ArrowDown) {
+					paddle1Speed = 8 * timeMultiplier;
+				} else {
+					paddle1Speed = 0;
+				}
+				
+				paddle1Y += paddle1Speed;
+				
+				// Limita il movimento della racchetta del giocatore
+				if (paddle1Y < 0) {
+					paddle1Y = 0;
+				}
+				if (paddle1Y > gameCanvas.height - paddleHeight) {
+					paddle1Y = gameCanvas.height - paddleHeight;
+				}
+				
+				// Movimento dell'avversario
+				if (currentGameMode === '1v1') {
+					// In modalità 1v1, l'avversario è controllato dai tasti W/S
+					if (keys.w) {
+						paddle2Speed = -8 * timeMultiplier;
+					} else if (keys.s) {
+						paddle2Speed = 8 * timeMultiplier;
+					} else {
+						paddle2Speed = 0;
+					}
+				} else if (currentGameMode === 'vs-ia') {
+					// AI per l'avversario
+					const paddleCenter = paddle2Y + (paddleHeight / 2);
+					const targetY = ballY;
+					
+					// Aggiungi un po' di ritardo e imprecisione all'AI
+					if (Math.abs(paddleCenter - targetY) > 30) {
+						if (paddleCenter < targetY) {
+							paddle2Speed = 5 * aiDifficulty * timeMultiplier;
+						} else {
+							paddle2Speed = -5 * aiDifficulty * timeMultiplier;
+						}
+					} else {
+						paddle2Speed = 0;
+					}
+					
+					// Aggiungi un po' di casualità al movimento dell'AI
+					if (Math.random() < 0.05) {
+						paddle2Speed *= (0.5 + Math.random());
+					}
+				}
+				
+				paddle2Y += paddle2Speed;
+				
+				// Limita il movimento della racchetta dell'avversario
+				if (paddle2Y < 0) {
+					paddle2Y = 0;
+				}
+				if (paddle2Y > gameCanvas.height - paddleHeight) {
+					paddle2Y = gameCanvas.height - paddleHeight;
+				}
+				
+				// Movimento della palla
+				ballX += ballSpeedX * timeMultiplier;
+				ballY += ballSpeedY * timeMultiplier;
+				
+				// Collisione con le racchette
+				if (ballX < paddleGap + paddleWidth + ballRadius) {
+					if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
+						// Collisione con la racchetta del giocatore
+						ballSpeedX = -ballSpeedX;
+						
+						// Cambia l'angolo in base a dove la palla colpisce la racchetta
+						const deltaY = ballY - (paddle1Y + paddleHeight/2);
+						ballSpeedY = deltaY * 0.3;
+						
+						// Aumenta leggermente la velocità
+						ballSpeedX *= 1.05;
+						if (ballSpeedX > 15) ballSpeedX = 15;
+					}
+				}
+				
+				if (ballX > gameCanvas.width - paddleGap - paddleWidth - ballRadius) {
+					if (ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
+						// Collisione con la racchetta dell'avversario
+						ballSpeedX = -ballSpeedX;
+						
+						// Cambia l'angolo in base a dove la palla colpisce la racchetta
+						const deltaY = ballY - (paddle2Y + paddleHeight/2);
+						ballSpeedY = deltaY * 0.3;
+						
+						// Aumenta leggermente la velocità
+						ballSpeedX *= 1.05;
+						if (ballSpeedX < -15) ballSpeedX = -15;
+					}
+				}
+				
+				// Collisione con i bordi superiore e inferiore
+				if (ballY < ballRadius || ballY > gameCanvas.height - ballRadius) {
+					ballSpeedY = -ballSpeedY;
+				}
+				
+				// Punto segnato
+				if (ballX < 0) {
+					// Punto per l'avversario
+					paddle2Score++;
+					opponentScoreEl.textContent = paddle2Score;
+					resetBall();
+					
+					// Verifica se la partita è finita
+					if (paddle2Score >= WINNING_SCORE) {
+						endGame(false);
+					}
+				}
+				
+				if (ballX > gameCanvas.width) {
+					// Punto per il giocatore
+					paddle1Score++;
+					userScoreEl.textContent = paddle1Score;
+					resetBall();
+					
+					// Verifica se la partita è finita
+					if (paddle1Score >= WINNING_SCORE) {
+						endGame(true);
+					}
+				}
+			}
+			
+			// Resetta la posizione della palla dopo un punto
+			function resetBall() {
+				ballX = gameCanvas.width / 2;
+				ballY = gameCanvas.height / 2;
+				ballSpeedX = 5 * (Math.random() > 0.5 ? 1 : -1);
+				ballSpeedY = 2 * (Math.random() > 0.5 ? 1 : -1);
+			}
+			
+			// Disegna tutti gli elementi del gioco
+			function drawEverything() {
+				try {
+					// Assicurati che il contesto sia definito
+					if (!ctx) {
+						ctx = gameCanvas.getContext('2d');
+					}
+					
+					// Pulisci il canvas con un colore definito
+					ctx.fillStyle = '#1a2634'; // Colore blu scuro come fallback
+					ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+					
+					// Disegna la linea centrale
+					ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+					ctx.setLineDash([10, 10]);
+					ctx.beginPath();
+					ctx.moveTo(gameCanvas.width / 2, 0);
+					ctx.lineTo(gameCanvas.width / 2, gameCanvas.height);
+					ctx.stroke();
+					ctx.setLineDash([]);
+					
+					// Disegna le racchette
+					// Racchetta del giocatore
+					ctx.fillStyle = '#ff9f43'; // Arancione come fallback
+					ctx.fillRect(paddleGap, paddle1Y, paddleWidth, paddleHeight);
+					
+					// Racchetta dell'avversario
+					ctx.fillStyle = '#0abde3'; // Blu come fallback
+					ctx.fillRect(gameCanvas.width - paddleGap - paddleWidth, paddle2Y, paddleWidth, paddleHeight);
+					
+					// Disegna la palla
+					ctx.fillStyle = '#fff';
+					ctx.beginPath();
+					ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
+					ctx.fill();
+					
+					// Se il gioco è in pausa, mostra un messaggio
+					if (isPaused && gameStarted) {
+						ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+						ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+						
+						ctx.font = 'bold 30px Arial';
+						ctx.fillStyle = '#fff';
+						ctx.textAlign = 'center';
+						ctx.fillText('PAUSA', gameCanvas.width / 2, gameCanvas.height / 2);
+					}
+				} catch (error) {
+					console.error('Errore nel disegno:', error);
+				}
+			}
+			
+			// Fine del gioco
+			function endGame(playerWon) {
+				gameStarted = false;
+				isPaused = false;
+				cancelAnimationFrame(animationId);
+				
+				// Mostra il modal di fine gioco
+				const gameEndModal = document.getElementById('gameEndModal');
+				const resultMessageEl = document.getElementById('resultMessage');
+				const finalScoreEl = document.getElementById('finalScore');
+				const playAgainBtn = document.getElementById('playAgain');
+				const returnToMainBtn = document.getElementById('returnToMain');
+				const closeModalBtn = document.querySelector('#gameEndModal .close');
+				
+				if (playerWon) {
+					resultMessageEl.textContent = 'Hai Vinto!';
+				} else {
+					resultMessageEl.textContent = 'Hai Perso!';
+				}
+				
+				finalScoreEl.textContent = `${paddle1Score} - ${paddle2Score}`;
+				
+				// Rimuovi i vecchi event listener per evitare duplicati
+				const newPlayAgainBtn = playAgainBtn.cloneNode(true);
+				playAgainBtn.parentNode.replaceChild(newPlayAgainBtn, playAgainBtn);
+				
+				const newReturnToMainBtn = returnToMainBtn.cloneNode(true);
+				returnToMainBtn.parentNode.replaceChild(newReturnToMainBtn, returnToMainBtn);
+				
+				const newCloseModalBtn = closeModalBtn.cloneNode(true);
+				closeModalBtn.parentNode.replaceChild(newCloseModalBtn, closeModalBtn);
+				
+				// Aggiungi event listener per i pulsanti del modal
+				newPlayAgainBtn.addEventListener('click', function() {
+					gameEndModal.style.display = 'none';
+					resetGame();
+					startGameBtn.textContent = 'Start Game';
+				});
+				
+				newReturnToMainBtn.addEventListener('click', function() {
+					gameEndModal.style.display = 'none';
+					localStorage.setItem('lastPage', 'main-page');
+					window.parent.goToMain();
+				});
+				
+				// Chiudi il modal cliccando sulla X
+				newCloseModalBtn.addEventListener('click', function() {
+					gameEndModal.style.display = 'none';
+				});
+				
+				gameEndModal.style.display = 'block';
+				
+				// Invia i risultati al server SOLO se NON è una partita contro l'IA
+				if (currentGameMode !== 'vs-ia') {
+					console.log("Invio dati al server per modalità: " + currentGameMode);
+					
+					// Assicurati che i valori siano nel formato corretto
+					const winResult = playerWon ? 'true' : 'false';  // Il backend si aspetta 'true' o 'false', non 'win' o 'lose'
+					const opponent = opponentNameEl.textContent.trim();
+					const scoreFormatted = paddle1Score;
+					const scorePlayer2Formatted = paddle2Score;
+					
+					const matchData = {
+						game: 'pong',
+						win: winResult,
+						player2: opponent,
+						score: scoreFormatted,
+						scoreplayer2: scorePlayer2Formatted
+					};
+					
+					console.log("Dati da inviare:", JSON.stringify(matchData));
+					
+					const token = localStorage.getItem('userToken');
+					if (token) {
+						// Aggiungi un breve timeout per assicurarti che tutte le animazioni siano complete
+						setTimeout(() => {
+							fetch('http://localhost:8001/main/pong_result/', {
+								method: 'POST',
+								headers: {
+									'Authorization': 'Token ' + token,
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(matchData)
+							})
+							.then(response => {
+								console.log("Risposta del server:", response.status);
+								if (response.ok) {
+									console.log('Match data sent successfully');
+									return response.json();
+								}
+								return response.text().then(text => {
+									throw new Error(`Error sending match data: ${response.status} ${text}`);
+								});
+							})
+							.then(data => console.log('Success response:', data))
+							.catch(error => console.error('Error:', error));
+						}, 100);
+					} else {
+						console.error("Token non disponibile, impossibile inviare dati");
+					}
+				} else {
+					console.log('Partita contro IA completata - Nessun dato inviato al server');
+				}
+			}
+			
+			// Carica i dati utente se disponibili
+			if (window.parent.userInstance && window.parent.userInstance.username) {
+				userNameEl.textContent = window.parent.userInstance.username;
+				if (window.parent.userInstance.profile_image) {
+					userAvatarEl.src = window.parent.userInstance.profile_image;
+				}
+			}
+			
+			// Effetti visivi per il titolo PONG
+			const titlePong = document.getElementById('title-pong');
+			
+			titlePong.addEventListener('click', function() {
+				// Aggiungi animazione al click
+				this.classList.add('animate__animated', 'animate__pulse');
+				
+				// Imposta timeout per navigare dopo l'animazione
+				setTimeout(() => {
+					localStorage.setItem('lastPage', 'main-page');
+					window.parent.goToMain();
+				}, 300);
+			});
+			
+			// Rimuovi classi animate quando l'animazione è completata
+			titlePong.addEventListener('animationend', function() {
+				this.classList.remove('animate__animated', 'animate__pulse');
+			});
+		});
+	</script>
+</body>
 </html>

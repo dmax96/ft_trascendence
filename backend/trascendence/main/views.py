@@ -35,7 +35,6 @@ def Change_Player(request):
             {"error": "Player name cannot be empty"}, status=status.HTTP_400_BAD_REQUEST
         )
     user.save()
-    # Return a success response
     return Response({"player": user.player}, status=status.HTTP_200_OK)
 
 

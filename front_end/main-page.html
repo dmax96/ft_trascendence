@@ -20,6 +20,28 @@
     />
     <title>PONG</title>
     <style>
+      /* Aggiungo uno sfondo più moderno */
+      body {
+        background: linear-gradient(135deg, #dfa100 0%, #c68f00 50%, #ac7c00 100%);
+        background-attachment: fixed;
+        background-size: cover;
+        position: relative;
+      }
+      
+      /* Aggiungo un effetto di pattern sovrapposto per modernizzare ulteriormente */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSJ0cmFuc3BhcmVudCI+PC9yZWN0Pgo8cGF0aCBkPSJNMCA1TDUgMFpNNiA0TDQgNlpNLTEgMUwxIC0xWiIgc3Ryb2tlPSIjZmZmZmZmMTAiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=');
+        opacity: 0.3;
+        pointer-events: none;
+        z-index: -1;
+      }
+      
       .select-language{
         background-color: #B6A999;
         color: #000000;
@@ -191,14 +213,16 @@
 		position: fixed; /* Stay in place */
 		z-index: 9999; /* Sit on top of everything else */
 		left: 50%; /* Center horizontally */
-		top: 5%; /* Position from the top */
-		transform: translate(-50%, -10%); /* Adjust for modal width and height */
-		width: 15%; /* Width */
-		height: 10%; /* Height */
-		overflow: auto; /* Enable scroll if needed */
+		top: 50%; /* Position from the top - centro verticalmente */
+		transform: translate(-50%, -50%); /* Adjust for modal width and height - centrato perfettamente */
+		width: 300px; /* Width - aumento larghezza */
+		min-height: 200px; /* Height - aumento altezza e uso min-height */
+		overflow: visible; /* Consenti che il contenuto sia visibile anche fuori dai bordi */
 		background-color: #f4dc9e; /* Fallback color */
 		padding: 20px;
 		border: 1px solid #888;
+		border-radius: 10px; /* Arrotondo gli angoli */
+		box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Aggiungo ombra */
 	}
 
 	/* The Close Button */
@@ -273,321 +297,361 @@
   </head>
   <body>
     <div class="navbar">
-		<div class="icon-bar"></div>
-	</div>
-    <nav class="nav">
-		<ul>
-			<li id="Username" style="margin-top: 10%; font-size: 50px;">User</li>
-			<li id="go_to_profile" style="margin-top: 5%;">Profile</li>
-			<li style="margin-top: 5%; display: flex; align-items: center;">
-				<span id="amici">Friends</span>
-				<button id="addFriend" class="btn" style="font-size: 15px; margin-left: 25%; background-color: #000; color:#ffffff">addFriend</button>
-			</li>
-			<li id="noFriends" style = "display: none; margin-top:5%; font-size: 22px;">No friends to display yet</li>
-			<li id="friendsList" style="margin-top: 5%;"></li> <!-- New element for the friends list -->
-			<li id = "go_to_login"style="margin-top: 250%;">Logout</li>
-		</ul>
-    </nav>
-    <h2 class="div-title">PONG</h2>
-	<select id = "select-language"class="select-language rounded-pill">
-	<option value="EN">EN</option>
-	<option value="IT">IT</option>
-	<option value="ES">ES</option>
-	</select>
-	<div id="myModal" class="modal-content rounded">
-		<span class="close">&times;</span>
-		<p>Add a friend</p>
-		<input type="text" id="friendUsername" placeholder="Enter friend's username">
-		<button id="confirmButton">Confirm</button>
-	</div>
-    <div class="game">
-      <button id = "go_to_game" type="button" class="btn btn-primary btn-lg btn-block">Play</button>
+      <div class="icon-bar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </div>
     </div>
-  </body>
-  <script>
-	var friends;
-	if (window.parent.userInstance && window.parent.userInstance.username) {
-		console.log('User data already loaded');
-		document.getElementById('Username').textContent = window.parent.userInstance.username;
-		friends = window.parent.userInstance.friendlist;
-		if (friends) {
-			console.log('Friends list:', friends);
-			populateFriendsList();
-		}
-	}
-	window.addEventListener('message', function(event) {
-		if (event.data.type === 'userDataLoaded') {
-			console.log('userDataLoaded event triggered');
-			document.getElementById('Username').textContent = window.parent.userInstance.username;
-			var languageSelect = document.getElementById('select-language');
-			languageSelect.value = window.parent.userInstance.language;
-			updateText();
-			friends = window.parent.userInstance.friendlist;
-			if (friends) {
-            	populateFriendsList();
-	        }
-		}
-	});
-	function populateFriendsList() {
-			var container = document.getElementById('friendsList');
-			container.innerHTML = ''; // Clear the container
+    
+    <nav class="nav">
+      <ul>
+        <li id="Username" class="mb-4" style="font-size: 1.8rem; font-weight: 600;">User</li>
+        <li id="go_to_profile" class="nav-item"><span class="nav-link">Profile</span></li>
+        <li class="nav-item" style="display: flex; align-items: center; justify-content: space-between;">
+          <span id="amici" class="nav-link">Friends</span>
+          <button id="addFriend" class="btn btn-outline btn-sm">Add Friend</button>
+        </li>
+        <li id="noFriends" style="display: none; font-size: 0.9rem; opacity: 0.8;">No friends to display yet</li>
+        <li id="friendsList" class="mt-3"></li> <!-- New element for the friends list -->
+        <li id="go_to_login" class="nav-item mt-5"><span class="nav-link">Logout</span></li>
+      </ul>
+    </nav>
+    
+    <div class="container">
+      <h1 class="title-main text-center mt-4">PONG</h1>
+      
+      <select id="select-language" style="position: absolute; top: 15px; right: 15px; width: 70px; z-index: 1000; background-color: var(--background-secondary); border: 1px solid var(--accent-color); border-radius: 5px; padding: 5px;">
+        <option value="EN">EN</option>
+        <option value="IT">IT</option>
+        <option value="ES">ES</option>
+      </select>
+      
+      <div class="game-container mt-4">
+        <div class="text-center py-5">
+          <h2 class="mb-5" style="color: var(--text-light); font-size: 2rem; margin-bottom: 3rem !important;">Welcome to PONG</h2>
+          <div style="height: 80px;"></div>
+          <button id="playButton" class="btn btn-primary btn-lg mt-5">PLAY NOW</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal for adding friends -->
+    <div id="myModal" class="modal-content rounded" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; background-color: #f4dc9e; z-index: 1000; border: 1px solid #dfa100; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+      <div style="padding: 20px; position: relative;">
+        <span class="close" style="position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer;">&times;</span>
+        <h3 style="margin-bottom: 15px; text-align: center; display: block;">Add a friend</h3>
+        <input type="text" id="friendUsername" placeholder="Enter friend's username" style="width: 100%; display: block; margin-bottom: 20px; box-sizing: border-box; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+        <button id="confirmButton" style="width: 100%; display: block; padding: 8px; background-color: #4F4537; color: white; border: none; border-radius: 4px; cursor: pointer;">Confirm</button>
+      </div>
+    </div>
 
-			if (friends && friends.length > 0) {
-				document.getElementById('noFriends').style.display = 'none';
-				var maxFriends = 10;
-				friends = friends.slice(0, maxFriends);
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <!-- JavaScript code -->
+    <script>
+      var friends;
+      if (window.parent.userInstance && window.parent.userInstance.username) {
+        console.log('User data already loaded');
+        document.getElementById('Username').textContent = window.parent.userInstance.username;
+        friends = window.parent.userInstance.friendlist;
+        if (friends) {
+          console.log('Friends list:', friends);
+          populateFriendsList();
+        }
+      }
+      window.addEventListener('message', function(event) {
+        if (event.data.type === 'userDataLoaded') {
+          console.log('userDataLoaded event triggered');
+          document.getElementById('Username').textContent = window.parent.userInstance.username;
+          var languageSelect = document.getElementById('select-language');
+          languageSelect.value = window.parent.userInstance.language;
+          updateText();
+          friends = window.parent.userInstance.friendlist;
+          if (friends) {
+            populateFriendsList();
+          }
+        }
+      });
+      function populateFriendsList() {
+        var container = document.getElementById('friendsList');
+        container.innerHTML = ''; // Clear the container
 
-				for (let i = 0; i < friends.length; i++) {
-					var friendElement = document.createElement('p');
-					friendElement.textContent = friends[i].username;
+        if (friends && friends.length > 0) {
+          document.getElementById('noFriends').style.display = 'none';
+          var maxFriends = 10;
+          friends = friends.slice(0, maxFriends);
 
-					var statusIndicator = document.createElement('span');
-					statusIndicator.className = friends[i].status ? 'online' : 'offline';
-					statusIndicator.style.marginLeft = '10px';
+          for (let i = 0; i < friends.length; i++) {
+            var friendElement = document.createElement('p');
+            friendElement.textContent = friends[i].username;
 
-					friendElement.appendChild(statusIndicator);
+            var statusIndicator = document.createElement('span');
+            statusIndicator.className = friends[i].status ? 'online' : 'offline';
+            statusIndicator.style.marginLeft = '10px';
 
-					friendElement.addEventListener('click', (function(i) {
-						return function() {
-							console.log("Friend clicked: " + friends[i].username);
-							localStorage.setItem('lastPage', "friend-profile");
-							window.parent.goToFriendProfile(i);
-						};
-					})(i));
-					container.appendChild(friendElement);
-				}
-			} else {
-				document.getElementById('noFriends').style.display = 'block';
-			}
-		}
-  	document.addEventListener('DOMContentLoaded', (event) => {
-		var token = localStorage.getItem('userToken');
-		// Get the user's language
-		var userLanguage = window.parent.userInstance.language;
-		selectLanguage = document.querySelector('.select-language');
-		updateText();
-		// Select the option that matches the user's language
-		selectLanguage.value = userLanguage;
-		// Seleziona l'elemento select
-		var selectLanguage = document.querySelector('.select-language');
+            friendElement.appendChild(statusIndicator);
 
-		// Aggiungi un event listener per l'evento 'change'
-		selectLanguage.addEventListener('change', function() {
-		// Quando l'utente seleziona una nuova lingua, salvala nel localStorage
-		localStorage.setItem('language', this.value);
-		console.log('Language changed to:', this.value);
-		window.parent.userInstance.changeLanguage(this.value);
-		console.log("User language = "+window.parent.userInstance.language);
-		var language = JSON.stringify( {language: this.value})
+            friendElement.addEventListener('click', (function(i) {
+              return function() {
+                console.log("Friend clicked: " + friends[i].username);
+                localStorage.setItem('lastPage', "friend-profile");
+                window.parent.goToFriendProfile(i);
+              };
+            })(i));
+            container.appendChild(friendElement);
+          }
+        } else {
+          document.getElementById('noFriends').style.display = 'block';
+        }
+      }
+      document.addEventListener('DOMContentLoaded', (event) => {
+        var token = localStorage.getItem('userToken');
+        // Get the user's language
+        var userLanguage = window.parent.userInstance.language;
+        var selectLanguage = document.getElementById('select-language');
+        updateText();
+        // Select the option that matches the user's language
+        selectLanguage.value = userLanguage;
 
-		fetch('http://localhost:8001/main/language/', {
-				method: 'POST',
-				headers: {
-					'Authorization' : 'Token ' + token,
-					'Content-Type': 'application/json'
-				},
-				body: language,
-			}).then(response => {
-				if (response.ok) {
-					console.log('Language change sent successfully');
-				} else {
-					console.error('Error sending language change:', response.statusText);
-				}
-			}).catch(error => {
-				console.error('Network error:', error);
-			});
-		// Aggiorna il testo sulla pagina
-		updateText();
-  	});
-	  async function fetchWithRetry(url, options, retries = 3) {
-			for (let i = 0; i < retries; i++) {
-				try {
-					const response = await fetch(url, options);
-					if (!response.ok) { // check if HTTP-status is 2xx
-						throw new Error(`HTTP status ${response.status}`);
-					}
-					return response;
-				} catch (error) {
-					if (i === retries - 1) { // if last retry
-						throw error;
-					}
-					await new Promise(resolve => setTimeout(resolve, 1000)); // wait before retrying
-				}
-			}
-		}
-		let loadUserClassPromise = null;
-				// Load the user class
-				async function loadUserClass() {
-					if (loadUserClassPromise) {
-						// If loadUserClass is already running, wait for it to finish
-						return loadUserClassPromise;
-					}
+        // Aggiungi un event listener per l'evento 'change'
+        selectLanguage.addEventListener('change', function() {
+          // Quando l'utente seleziona una nuova lingua, salvala nel localStorage
+          localStorage.setItem('language', this.value);
+          console.log('Language changed to:', this.value);
+          window.parent.userInstance.changeLanguage(this.value);
+          console.log("User language = "+window.parent.userInstance.language);
+          var language = JSON.stringify( {language: this.value})
 
-					loadUserClassPromise = new Promise(async (resolve, reject) => {
-				try {
-					window.User = User;
-					window.userInstance = new window.parent.User();
-
-					const tokenData = {
-						token: localStorage.getItem('userToken'),
-					};
-
-					const response = await fetchWithRetry('http://127.0.0.1:8001/login/info/', {
-						method: 'POST',
-						headers: {
-							'Authorization' : 'Token ' + localStorage.getItem('userToken'),
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify(tokenData),
-					});
-
-					const data = await response.json(); // Parse the JSON response
-
-					if(data.token) {
-						window.userInstance.fillData(data);
-						console.log("User.js loaded", window.userInstance.username);
-						resolve(); // Resolve the Promise
-					} else {
-						reject('Token not found in response'); // Reject the Promise
-					}
-				} catch (error) {
-					console.log("Error loading User.js:", error);
-					reject(error); // Reject the Promise
-				}
-			});
-			try {
-				await loadUserClassPromise;
-			} catch (error) {
-				console.error('Error:', error);
-			} finally {
-				loadUserClassPromise = null;
-			}
-
-			return loadUserClassPromise;
-		}
-		});
-
-	function updateText() {
-		language = window.parent.userInstance.language;
-		localStorage.setItem('language', language);
-		if (language == 'IT') {
-		document.getElementById('addFriend').innerText = 'Aggiungi Amico';
-		document.getElementById('go_to_profile').innerText = 'Profilo';
-		document.getElementById('amici').innerText = 'Amici';
-		document.getElementById('go_to_login').innerText = 'Esci';
-		document.getElementById('go_to_game').innerText = 'Gioca';
-		document.getElementById('noFriends').innerText = 'Non hai ancora nessun amico :\(';
-		} else if (language == 'EN') {
-		document.getElementById('addFriend').innerText = 'Add Friend';
-		document.getElementById('go_to_profile').innerText = 'Profile';
-		document.getElementById('amici').innerText = 'Friends';
-		document.getElementById('go_to_login').innerText = 'Logout';
-		document.getElementById('go_to_game').innerText = 'Play';
-		document.getElementById('noFriends').innerText = 'No friends to display yet :\(';
-		} else if (language == 'ES') {
-		document.getElementById('addFriend').innerText = 'Añadir Amigo';
-		document.getElementById('go_to_profile').innerText = 'Perfil';
-		document.getElementById('amici').innerText = 'Amigos';
-		document.getElementById('go_to_login').innerText = 'Salir';
-		document.getElementById('go_to_game').innerText = 'Jugar';
-		document.getElementById('noFriends').innerText = 'Aún no tienes amigos :\(';
-		}
-	}
-    document.getElementById("go_to_login").addEventListener("click", function() {
-		window.parent.userInstance.resetData();
-		token = localStorage.getItem('userToken');
-		fetch('http://localhost:8001/login/logout/', {
-				method: 'POST',
-				headers: {
-					'Authorization' : 'Token ' + token,
-					'Content-Type': 'application/json'
-				},
-			}).then(response => {
-				if (response.ok) {
-					console.log('Logout sent successfully');
-				} else {
-					console.error('Error sending language change:', response.statusText);
-				}
-			}).catch(error => {
-				console.error('Network error:', error);
-			});
-        localStorage.setItem('lastPage', "login");
-		localStorage.setItem('userToken', '');
-        window.parent.goToLogin();
+          fetch('http://localhost:8001/main/language/', {
+            method: 'POST',
+            headers: {
+              'Authorization' : 'Token ' + token,
+              'Content-Type': 'application/json'
+            },
+            body: language,
+          }).then(response => {
+            if (response.ok) {
+              console.log('Language change sent successfully');
+            } else {
+              console.error('Error sending language change:', response.statusText);
+            }
+          }).catch(error => {
+            console.error('Network error:', error);
+          });
+          // Aggiorna il testo sulla pagina
+          updateText();
         });
-	document.getElementById("go_to_profile").addEventListener("click", function() {
+        async function fetchWithRetry(url, options, retries = 3) {
+          for (let i = 0; i < retries; i++) {
+            try {
+              const response = await fetch(url, options);
+              if (!response.ok) { // check if HTTP-status is 2xx
+                throw new Error(`HTTP status ${response.status}`);
+              }
+              return response;
+            } catch (error) {
+              if (i === retries - 1) { // if last retry
+                throw error;
+              }
+              await new Promise(resolve => setTimeout(resolve, 1000)); // wait before retrying
+            }
+          }
+        }
+        let loadUserClassPromise = null;
+        // Load the user class
+        async function loadUserClass() {
+          if (loadUserClassPromise) {
+            // If loadUserClass is already running, wait for it to finish
+            return loadUserClassPromise;
+          }
+
+          loadUserClassPromise = new Promise(async (resolve, reject) => {
+            try {
+              window.User = User;
+              window.userInstance = new window.parent.User();
+
+              const tokenData = {
+                token: localStorage.getItem('userToken'),
+              };
+
+              const response = await fetchWithRetry('http://127.0.0.1:8001/login/info/', {
+                method: 'POST',
+                headers: {
+                  'Authorization' : 'Token ' + localStorage.getItem('userToken'),
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(tokenData),
+              });
+
+              const data = await response.json(); // Parse the JSON response
+
+              if(data.token) {
+                window.userInstance.fillData(data);
+                console.log("User.js loaded", window.userInstance.username);
+                resolve(); // Resolve the Promise
+              } else {
+                reject('Token not found in response'); // Reject the Promise
+              }
+            } catch (error) {
+              console.log("Error loading User.js:", error);
+              reject(error); // Reject the Promise
+            }
+          });
+          try {
+            await loadUserClassPromise;
+          } catch (error) {
+            console.error('Error:', error);
+          } finally {
+            loadUserClassPromise = null;
+          }
+
+          return loadUserClassPromise;
+        }
+      });
+
+      function updateText() {
+        language = window.parent.userInstance.language;
+        localStorage.setItem('language', language);
+        if (language == 'IT') {
+          document.getElementById('addFriend').innerText = 'Aggiungi Amico';
+          document.getElementById('go_to_profile').innerText = 'Profilo';
+          document.getElementById('amici').innerText = 'Amici';
+          document.getElementById('go_to_login').innerText = 'Esci';
+          document.getElementById('playButton').innerText = 'Gioca';
+          document.getElementById('noFriends').innerText = 'Non hai ancora nessun amico :\(';
+          // Aggiungo traduzione per il titolo
+          document.querySelector('.game-container h2').innerText = 'Benvenuto a PONG';
+        } else if (language == 'EN') {
+          document.getElementById('addFriend').innerText = 'Add Friend';
+          document.getElementById('go_to_profile').innerText = 'Profile';
+          document.getElementById('amici').innerText = 'Friends';
+          document.getElementById('go_to_login').innerText = 'Logout';
+          document.getElementById('playButton').innerText = 'Play';
+          document.getElementById('noFriends').innerText = 'No friends to display yet :\(';
+          // Ripristino il testo originale in inglese
+          document.querySelector('.game-container h2').innerText = 'Welcome to PONG';
+        } else if (language == 'ES') {
+          document.getElementById('addFriend').innerText = 'Añadir Amigo';
+          document.getElementById('go_to_profile').innerText = 'Perfil';
+          document.getElementById('amici').innerText = 'Amigos';
+          document.getElementById('go_to_login').innerText = 'Salir';
+          document.getElementById('playButton').innerText = 'Jugar';
+          document.getElementById('noFriends').innerText = 'Aún no tienes amigos :\(';
+          // Aggiungo traduzione in spagnolo
+          document.querySelector('.game-container h2').innerText = 'Bienvenido a PONG';
+        }
+      }
+      document.getElementById("go_to_login").addEventListener("click", function() {
+        window.parent.userInstance.resetData();
+        token = localStorage.getItem('userToken');
+        fetch('http://localhost:8001/login/logout/', {
+          method: 'POST',
+          headers: {
+            'Authorization' : 'Token ' + token,
+            'Content-Type': 'application/json'
+          },
+        }).then(response => {
+          if (response.ok) {
+            console.log('Logout sent successfully');
+          } else {
+            console.error('Error sending language change:', response.statusText);
+          }
+        }).catch(error => {
+          console.error('Network error:', error);
+        });
+        localStorage.setItem('lastPage', "login");
+        localStorage.setItem('userToken', '');
+        window.parent.goToLogin();
+      });
+      document.getElementById("go_to_profile").addEventListener("click", function() {
         localStorage.setItem('lastPage', "profile");
         window.parent.goToProfile();
       });
-	document.getElementById("go_to_game").addEventListener("click", function() {
-	  localStorage.setItem('lastPage', "game-page");
-	  window.parent.goToGame();
-	});
-	//Aggiungere qui la chiamata al backend per l'aggiunta di un amico
-	document.getElementById("addFriend").addEventListener("click", function() {
-	});
-
-
-		// Get the modal
-		var modal = document.getElementById("myModal");
-
-		// Get the button that opens the modal
-		var btn = document.getElementById("addFriend");
-
-		// Get the <span> element that closes the modal
-		var span = document.getElementsByClassName("close")[0];
-
-		// When the user clicks the button, open the modal 
-		btn.onclick = function() {
-			modal.style.display = "block";
-		}
-
-		// When the user clicks on <span> (x), close the modal
-		span.onclick = function() {
-			document.getElementById("friendUsername").value = "";
-			modal.style.display = "none";
-		}
-
-		// Get the confirm button
-		var confirmButton = document.getElementById("confirmButton");
-
-		document.getElementById("confirmButton").addEventListener("click", function() {
-			var token = localStorage.getItem('userToken');
-			var friendUsername = document.getElementById("friendUsername").value;
-			const addFriendData = {
-				friend_username: friendUsername
-			};
-			console.log("Friend request sent to: " + friendUsername);
-			fetch('http://localhost:8001/main/add_friends/', {
-				method: 'POST',
-				headers: {
-					'Authorization' : 'Token ' + token,
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(addFriendData),
-			}).then(response => {
-				if (response.ok) {
-					console.log('Friend request sent successfully');
-				} else {
-					console.error('Error sending friend request:', response.statusText);
-				}
-			}).catch(error => {
-				console.error('Network error:', error);
-			});
-		});
-  </script>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-    $(document).ready(function(){
-      $('.navbar').click(function(){
-        $('.nav').toggleClass('wide');
+      document.getElementById("playButton").addEventListener("click", function() {
+        localStorage.setItem('lastPage', "game-page");
+        window.parent.goToGame();
       });
-    });
-    let variabileBooleana = false;
-  
-    document.getElementById('amici').addEventListener('click', function() {
-      variabileBooleana = !variabileBooleana;
-  });
+      //Aggiungere qui la chiamata al backend per l'aggiunta di un amico
+      document.getElementById("addFriend").addEventListener("click", function() {
+      });
+
+      // Get the modal
+      var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("addFriend");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks the button, open the modal 
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        document.getElementById("friendUsername").value = "";
+        modal.style.display = "none";
+      }
+
+      // Get the confirm button
+      var confirmButton = document.getElementById("confirmButton");
+
+      document.getElementById("confirmButton").addEventListener("click", function() {
+        var token = localStorage.getItem('userToken');
+        var friendUsername = document.getElementById("friendUsername").value;
+        const addFriendData = {
+          friend_username: friendUsername
+        };
+        console.log("Friend request sent to: " + friendUsername);
+        fetch('http://localhost:8001/main/add_friends/', {
+          method: 'POST',
+          headers: {
+            'Authorization' : 'Token ' + token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(addFriendData),
+        }).then(response => {
+          if (response.ok) {
+            console.log('Friend request sent successfully');
+          } else {
+            console.error('Error sending friend request:', response.statusText);
+          }
+        }).catch(error => {
+          console.error('Network error:', error);
+        });
+      });
     </script>
+    <script>
+      $(document).ready(function(){
+        // Apri/chiudi il menu quando si clicca sull'hamburger
+        $('.navbar').click(function(event){
+          event.stopPropagation(); // Impedisce che il click si propaghi al documento
+          $('.nav').toggleClass('wide');
+        });
+        
+        // Chiudi il menu quando si clicca su un elemento del menu
+        $('.nav-item').click(function(){
+          $('.nav').removeClass('wide');
+        });
+        
+        // Chiudi il menu quando si clicca fuori dal menu
+        $(document).click(function(event){
+          if (!$(event.target).closest('.nav').length && $('.nav').hasClass('wide')) {
+            $('.nav').removeClass('wide');
+          }
+        });
+      });
+      
+      let variabileBooleana = false;
+      
+      document.getElementById('amici').addEventListener('click', function() {
+        variabileBooleana = !variabileBooleana;
+      });
+    </script>
+  </body>
 </html>
