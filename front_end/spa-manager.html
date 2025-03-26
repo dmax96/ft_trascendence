@@ -237,32 +237,63 @@
 		}
 
 		function login42(code){
-				console.log("Login42 function called");
-				fetch(`http://localhost:8001/login/token42/?code=${code}`, {
-					method: 'GET',
-				})
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(`HTTP error! status: ${response.status}`);
+			console.log("Login42 function called with code:", code);
+			
+			// Invia richiesta al backend con il codice
+			fetch(`http://127.0.0.1:8001/login/token42/?code=${code}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			})
+			.then(response => {
+				console.log("Risposta dal server:", response.status);
+				// Leggi il corpo della risposta anche se non è OK per il debug
+				return response.text().then(text => {
+					try {
+						// Prova a parsare come JSON
+						const data = text ? JSON.parse(text) : {};
+						console.log("Corpo della risposta:", data);
+						if (!response.ok) {
+							throw new Error(`HTTP error! status: ${response.status}, message: ${data.error || text}`);
+						}
+						return data;
+					} catch (e) {
+						console.error("Errore nel parsing JSON:", e);
+						console.log("Risposta testuale:", text);
+						if (!response.ok) {
+							throw new Error(`HTTP error! status: ${response.status}, text: ${text}`);
+						}
+						return {};
 					}
-					return response.json();
-				})
-				.then(data => {
-					console.log('Success:', data); // Debugging: Log the data to see its structure
-					if(data.token) {
-						localStorage.setItem('userToken', data.token); // Correctly access and store the token
-						console.log('Login successful');
-						localStorage.setItem('lastPage', "main-page");
+				});
+			})
+			.then(data => {
+				console.log('Success response:', data);
+				if(data.token) {
+					localStorage.setItem('userToken', data.token);
+					console.log('Token salvato:', data.token);
+					localStorage.setItem('lastPage', "main-page");
+					
+					try {
 						window.fillUserData(data);
-						console.log("Login :"+ window.userInstance.username);
+						console.log("Istanza utente aggiornata:", window.userInstance.username);
 						window.goToMain();
-					} else if(data.detail) {
-						console.error('Error:', data.detail); // Handle error (e.g., invalid credentials)
-					} else {
-						console.error('Token not found in response');
+					} catch (error) {
+						console.error("Errore durante fillUserData:", error);
 					}
-				})
-				.catch(error => console.error('Error:', error));
+				} else if(data.error) {
+					console.error('Errore dal server:', data.error);
+					alert('Errore durante il login con 42: ' + data.error);
+				} else {
+					console.error('Token non trovato nella risposta');
+					alert('Errore durante il login con 42. Riprova più tardi.');
+				}
+			})
+			.catch(error => {
+				console.error('Errore durante il login:', error);
+				alert('Errore durante il login con 42: ' + error.message);
+			});
 		}
 
 	window.onload = async function() {

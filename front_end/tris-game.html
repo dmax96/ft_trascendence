@@ -100,6 +100,73 @@
         font-weight: 700;
         margin: 0.5rem 0;
       }
+
+      /* Stili per il modale */
+      .modal-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        z-index: 1000;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        display: none;
+        border: 2px solid var(--accent-color);
+      }
+
+      .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+      }
+
+      .modal-backdrop.show {
+        display: block;
+      }
+
+      .close {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-dark);
+      }
+
+      .close:hover {
+        color: var(--accent-color);
+      }
+
+      #gameResult {
+        margin: 2rem 0;
+      }
+
+      #resultMessage {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--text-dark);
+      }
+
+      .btn-outline {
+        border: 2px solid var(--accent-color);
+        color: var(--accent-color);
+        background: transparent;
+      }
+
+      .btn-outline:hover {
+        background-color: var(--accent-color);
+        color: white;
+		}
     </style>
   </head>
   <body>
@@ -126,8 +193,8 @@
                     <p class="player-name" id="player1Name">You</p>
                     <span class="player-symbol">X</span>
                   </div>
-                </div>
-                
+    </div>
+
                 <div class="player-info text-end">
                   <div>
                     <p class="player-name" id="player2Name">Opponent</p>
@@ -139,8 +206,8 @@
               
               <div class="player-turn" id="playerTurn">
                 Your turn
-              </div>
-              
+        </div>
+
               <div class="tris-board" id="trisBoard">
                 <div class="tris-cell" data-index="0"></div>
                 <div class="tris-cell" data-index="1"></div>
@@ -154,17 +221,17 @@
               </div>
             </div>
           </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    
+
     <!-- Game End Modal -->
-    <div id="gameEndModal" class="modal-content" style="display: none;">
+    <div id="gameEndModal" class="modal-content">
       <span class="close">&times;</span>
       <h3 class="mb-3">Game Over</h3>
       <div id="gameResult" class="text-center mb-3">
         <h2 id="resultMessage">You Won!</h2>
-      </div>
+            </div>
       <div class="d-grid gap-2">
         <button id="playAgain" class="btn btn-primary">Play Again</button>
         <button id="returnToMain" class="btn btn-outline">Return to Main Menu</button>
@@ -180,11 +247,11 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Navigazione
-        document.getElementById("go_to_main").addEventListener("click", function () {
-          localStorage.setItem("lastPage", "main-page");
-          window.parent.goToMain();
+		document.getElementById("go_to_main").addEventListener("click", function () {
+           localStorage.setItem("lastPage", "main-page");
+           window.parent.goToMain();
         });
-          
+
         document.getElementById("go_to_profile").addEventListener("click", function () {
           localStorage.setItem("lastPage", "profile");
           window.parent.goToProfile();
@@ -224,6 +291,7 @@
         const resultMessageEl = document.getElementById('resultMessage');
         const playAgainBtn = document.getElementById('playAgain');
         const returnToMainBtn = document.getElementById('returnToMain');
+        const closeBtn = document.querySelector('.close');
         
         // Game variables
         let currentPlayer = 'X';
@@ -231,14 +299,14 @@
         let gameActive = true;
         
         // Winning combinations
-        const winningCombinations = [
-          [0, 1, 2],
-          [3, 4, 5],
-          [6, 7, 8],
-          [0, 3, 6],
-          [1, 4, 7],
-          [2, 5, 8],
-          [0, 4, 8],
+          const winningCombinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
           [2, 4, 6]
         ];
         
@@ -274,16 +342,23 @@
             localStorage.setItem('lastPage', 'main-page');
             window.parent.goToMain();
           });
+
+          // Close button
+          closeBtn.addEventListener('click', () => {
+            gameEndModal.style.display = 'none';
+          });
           
           updatePlayerTurn();
         }
         
         // Handle cell click
         function handleCellClick(cell) {
+          if (!gameActive) return;
+          
           const index = cell.getAttribute('data-index');
           
-          // Check if cell is already filled or game is over
-          if (gameBoard[index] !== '' || !gameActive) return;
+          // Check if cell is already filled
+          if (gameBoard[index] !== '') return;
           
           // Update cell and game board
           gameBoard[index] = currentPlayer;
@@ -323,27 +398,69 @@
           return gameBoard.every(cell => cell !== '');
         }
         
+        // Send match data to server
+        function sendMatchData(result) {
+          console.log("Invio dati partita...");
+          console.log("Istanza utente prima dell'invio:", window.parent.userInstance);
+          
+          const matchData = {
+            player1: window.parent.userInstance.username,
+            player2: player2NameEl.textContent,
+            win: result,
+            date: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' })
+          };
+          
+          fetch('http://localhost:8001/main/tictactoe_result/', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Token ' + localStorage.getItem('userToken'),
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(matchData),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log("Success response dal server:", data);
+            if (data.tictactoe) {
+              console.log("Dati tictactoe ricevuti:", data.tictactoe);
+              console.log("Aggiornamento dati utente...");
+              
+              // Aggiorna l'istanza utente con i nuovi dati
+              window.parent.userInstance.wins_tictactoe = data.tictactoe.wins;
+              window.parent.userInstance.loses_tictactoe = data.tictactoe.loses;
+              window.parent.userInstance.draw_tictactoe = data.tictactoe.draws;
+              window.parent.userInstance.winrate_tictactoe = data.tictactoe.winrate;
+              window.parent.userInstance.matchistory_tictactoe = data.tictactoe.matchHistory;
+              
+              console.log("Istanza utente dopo l'aggiornamento:", window.parent.userInstance);
+              console.log("Cronologia partite dopo l'aggiornamento:", window.parent.userInstance.matchistory_tictactoe);
+              
+              // Invia l'evento gameResult dopo aver aggiornato l'istanza utente
+              window.parent.postMessage({ type: 'gameResult' }, '*');
+              console.log("Evento gameResult inviato dopo l'aggiornamento dell'istanza utente");
+            } else {
+              console.log("Nessun dato tictactoe ricevuto dal server");
+            }
+          })
+          .catch(error => {
+            console.error("Errore nell'invio dei dati:", error);
+          });
+        }
+        
         // End game
         function endGame(isTie) {
           gameActive = false;
           
           if (isTie) {
-            resultMessageEl.textContent = "It's a tie!";
-            // Send match data to server
+            resultMessageEl.textContent = "Pareggio!";
             sendMatchData('draw');
           } else {
-            if (currentPlayer === 'X') {
-              resultMessageEl.textContent = "You Won!";
-              // Send match data to server
-              sendMatchData('win');
-            } else {
-              resultMessageEl.textContent = "You Lost!";
-              // Send match data to server
-              sendMatchData('lose');
-            }
+            const winner = currentPlayer === 'X' ? player1NameEl.textContent : player2NameEl.textContent;
+            resultMessageEl.textContent = `${winner} ha vinto!`;
+            sendMatchData(currentPlayer === 'X' ? 'true' : 'false');
           }
           
-          // Show game end modal
+          // Mostra il modale di fine partita
           gameEndModal.style.display = 'block';
         }
         
@@ -360,57 +477,29 @@
             cell.classList.remove('x', 'o');
           });
           
+          // Nascondi il modale
+          gameEndModal.style.display = 'none';
+          
           updatePlayerTurn();
         }
         
-        // Send match data to server
-        function sendMatchData(result) {
-          // Converti il risultato nel formato atteso dal backend
-          let winValue;
-          if (result === 'win') {
-            winValue = 'true';
-          } else if (result === 'lose') {
-            winValue = 'false';
-          } else {
-            winValue = 'draw'; // Il backend accetta anche 'draw' per i pareggi
-          }
-          
-          // Log per debug
-          console.log(`Inviando risultato al server: ${result} convertito in ${winValue}`);
-          
-          const matchData = {
-            game: 'tictactoe',
-            win: winValue,
-            player2: player2NameEl.textContent
-          };
-          
-          const token = localStorage.getItem('userToken');
-          if (!token) return;
-          
-          fetch('http://localhost:8001/main/tictactoe_result/', {
-            method: 'POST',
-            headers: {
-              'Authorization': 'Token ' + token,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(matchData)
-          })
-          .then(response => {
-            if (response.ok) {
-              console.log('Match data sent successfully');
-              return response.json();
+        // Update board
+        function updateBoard() {
+          const cells = document.querySelectorAll('.tris-cell');
+          cells.forEach((cell, index) => {
+            cell.textContent = gameBoard[index];
+            cell.classList.remove('x', 'o');
+            if (gameBoard[index] === 'X') {
+              cell.classList.add('x');
+            } else if (gameBoard[index] === 'O') {
+              cell.classList.add('o');
             }
-            return response.text().then(text => {
-              throw new Error(`Error sending match data: ${response.status} ${text}`);
-            });
-          })
-          .then(data => console.log('Success response:', data))
-          .catch(error => console.error('Error:', error));
+          });
         }
         
         // Initialize the game
         initGame();
-      });
+	});
     </script>
   </body>
 </html>

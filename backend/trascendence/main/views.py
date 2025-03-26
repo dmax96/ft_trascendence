@@ -63,6 +63,8 @@ def WinLose_pong(request):
                 "date" : date,
             }
         )
+    if len(user.matchistory_pong) > 5:
+        user.matchistory_pong = user.matchistory_pong[-5:]
     user.winrate_pong = user.wins_pong / (user.wins_pong + user.loses_pong) * 100
     user.save()
     return Response(
@@ -97,7 +99,15 @@ def WinLose_tictac(request):
         else:
             user.draw_tictactoe += 1
             game_result = "draw"
+            
+        # Aggiungi la nuova partita
         user.matchistory_tictactoe.append({ "win": game_result, "player2": player2, "date": date})
+        
+        # Mantieni solo le ultime 5 partite
+        if len(user.matchistory_tictactoe) > 5:
+            user.matchistory_tictactoe = user.matchistory_tictactoe[-5:]
+            
+        # Calcola il winrate considerando solo vittorie e sconfitte (non i pareggi)
         if user.wins_tictactoe + user.loses_tictactoe != 0:
             user.winrate_tictactoe = (
                 user.wins_tictactoe / (user.wins_tictactoe + user.loses_tictactoe) * 100

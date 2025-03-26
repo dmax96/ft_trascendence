@@ -18,11 +18,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <title>PONG-profile</title>
-    <style>
-      /* Stile base per dispositivi con schermo di larghezza inferiore a 600px */
-      body {
-        background-color: #dfa100;
-      }
+  <style>
+    /* Stile base per dispositivi con schermo di larghezza inferiore a 600px */
+    body {
+      background-color: #dfa100;
+    }
       
       /* Rimuovo la barra nera in alto */
       .navbar {
@@ -36,189 +36,189 @@
         cursor: pointer;
         color: #333;
         margin: 15px;
+    }
+
+    /* Stile per dispositivi con schermo di larghezza compresa tra 600px e 900px */
+    @media screen and (min-width: 600px) {
+      body {
+        background-color: #dfa100;
+      }
+      .div-title {
+        font-family: "font-Despairs";
+        font-size: 400%;
+        position: absolute;
+        left: 42%;
+        right: 2%;
+        top: 3%;
+        padding: 1%;
+        color: black;
+      }
+      .img-fluid {
+        width:20%;
+        height:20%;
+        position: relative;
+        top: 20%;
+        left: 2%;
+      }
+      .image {
+        width: 700px;
+        height: 500px;
+      }
+      .nickname {
+        font-family: "";
+        font-size: 200%;
+        position: absolute;
+        top: 140%;
+        left: 35%;
+      }
+      .statistics {
+        width: 30%;
+        height: 30%;
+        position: absolute;
+        left: 60%;
+      }
+    }
+
+    /* Stile per dispositivi con schermo di larghezza superiore a 900px */
+    @media screen and (min-width: 900px) {
+      body {
+        background-color: #dfa100;
+      }
+      .div-title {
+        font-family: "font-Despairs";
+        font-size: 400%;
+        position: absolute;
+        left: 42%;
+        right: 2%;
+        top: 3%;
+        padding: 1%;
+        color: black;
+      }
+      .profile {
+        display: flex;
+        position: relative;
+        top: 200px;
+      }
+      .img-fluid {
+        width: 50%;
+        height: 50%;
+        position: relative;
+        top: 200px;
+        left: 2%;
+        min-height: 800px;
+      }
+      .image {
+        width: 100%;
+        height: 100%;
+      }
+      .nickname {
+        font-family: "";
+        font-size: 240%;
+        position: relative;
+        left: 40%;
+        top: 5%;
+        display: flex;
+      }
+      .game_title {
+        font-family: "";
+        font-size: 300%;
+        position: relative;
+        left: 42%;
+        margin-bottom: 8%;
+      }
+      .statistics {
+        height: 50%;
+        width: 30%;
+      }
+      .data {
+        font-size: 200%;
+      }
+      .history {
+        font-size: 200%;
+      }
+      .pong {
+        margin-bottom: 10%;
+      }
+      .tris {
+        margin-top: 9%;
+      }
+      .nick {
+        font-size: 143%;
+        position: relative;
+      }
+      .modify {
+        position: relative;
+        left: 44%;
+        cursor: pointer;
+      }
+      .image-container {
+        position: relative;
+        width: 40%; /* Adatta a seconda delle tue esigenze */
+        height: 50%; /* Adatta a seconda delle tue esigenze */
+        min-height: 1px;
       }
 
-      /* Stile per dispositivi con schermo di larghezza compresa tra 600px e 900px */
-      @media screen and (min-width: 600px) {
-        body {
-          background-color: #dfa100;
-        }
-        .div-title {
-          font-family: "font-Despairs";
-          font-size: 400%;
-          position: absolute;
-          left: 42%;
-          right: 2%;
-          top: 3%;
-          padding: 1%;
-          color: black;
-        }
-        .img-fluid {
-          width:20%;
-          height:20%;
-          position: relative;
-          top: 20%;
-          left: 2%;
-        }
-        .image {
-          width: 700px;
-          height: 500px;
-        }
-        .nickname {
-          font-family: "";
-          font-size: 200%;
-          position: absolute;
-          top: 140%;
-          left: 35%;
-        }
-        .statistics {
-          width: 30%;
-          height: 30%;
-          position: absolute;
-          left: 60%;
-        }
+      .image-container img {
+        max-width: 1000px;
+        max-height: 1000px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
-
-      /* Stile per dispositivi con schermo di larghezza superiore a 900px */
-      @media screen and (min-width: 900px) {
-        body {
-          background-color: #dfa100;
-        }
-        .div-title {
-          font-family: "font-Despairs";
-          font-size: 400%;
-          position: absolute;
-          left: 42%;
-          right: 2%;
-          top: 3%;
-          padding: 1%;
-          color: black;
-        }
-        .profile {
-          display: flex;
-          position: relative;
-          top: 200px;
-        }
-        .img-fluid {
-          width: 50%;
-          height: 50%;
-          position: relative;
-          top: 200px;
-          left: 2%;
-          min-height: 800px;
-        }
-        .image {
-          width: 100%;
-          height: 100%;
-        }
-        .nickname {
-          font-family: "";
-          font-size: 240%;
-          position: relative;
-          left: 40%;
-          top: 5%;
-          display: flex;
-        }
-        .game_title {
-          font-family: "";
-          font-size: 300%;
-          position: relative;
-          left: 42%;
-          margin-bottom: 8%;
-        }
-        .statistics {
-          height: 50%;
-          width: 30%;
-        }
-        .data {
-          font-size: 200%;
-        }
-        .history {
-          font-size: 200%;
-        }
-        .pong {
-          margin-bottom: 10%;
-        }
-        .tris {
-          margin-top: 9%;
-        }
-        .nick {
-          font-size: 143%;
-          position: relative;
-        }
-        .modify {
-          position: relative;
-          left: 44%;
-          cursor: pointer;
-        }
-        .image-container {
-          position: relative;
-          width: 40%; /* Adatta a seconda delle tue esigenze */
-          height: 50%; /* Adatta a seconda delle tue esigenze */
-          min-height: 1px;
-        }
-
-        .image-container img {
-          max-width: 1000px;
-          max-height: 1000px;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        .edit-icon {
-          position: absolute;
-          bottom: 10px;
-          right: 10px;
-          color: white;
-          background: rgba(0, 0, 0, 0.5);
-          padding: 10px;
-          font-size: 24px;
-          cursor: pointer;
-        }
-        .modal {
-          display: none;
-          position: fixed;
-          z-index: 1;
-          padding-top: 100px;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          overflow: auto;
-          background-color: rgb(0,0,0);
-          background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-          background-color: #f4dc9e;
-          margin: auto;
-          padding: 20px;
-          border: 1px solid #888;
-          width: 50%;
-          height: 40%;
-        }
-
-        .close {
-          color: #aaaaaa;
-          float: right;
-          font-size: 28px;
-          font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-          color: #000;
-          text-decoration: none;
-          cursor: pointer;
-        }
-
-        .image-preview img {
-          width: 200px; /* Increase the width */
-          height: 200px; /* Increase the height */
-          margin: 5px;
-          cursor: pointer; 
-        }
+      .edit-icon {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        font-size: 24px;
+        cursor: pointer;
       }
+	  .modal {
+		display: none;
+		position: fixed;
+		z-index: 1;
+		padding-top: 100px;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgb(0,0,0);
+		background-color: rgba(0,0,0,0.4);
+		}
+
+		.modal-content {
+		background-color: #f4dc9e;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 50%;
+		height: 40%;
+		}
+
+		.close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+		}
+
+		.image-preview img {
+		width: 200px; /* Increase the width */
+		height: 200px; /* Increase the height */
+		margin: 5px;
+		cursor: pointer; 
+	}
+    }
 
       #profilePictureOptions {
         display: flex;
@@ -243,8 +243,8 @@
       
       .selected-image {
         border-color: var(--highlight-color) !important;
-      }
-    </style>
+    }
+  </style>
   </head>
   <body>
     <div class="navbar">
@@ -341,13 +341,13 @@
     
     <!-- Change Profile Picture Modal -->
     <div id="pictureModal" class="modal-content" style="display: none;">
-      <span class="close">&times;</span>
+		  <span class="close">&times;</span>
       <h3 class="mb-3">Change Profile Picture</h3>
       <div class="row mb-3" id="profilePictureOptions">
         <!-- Profile pictures will be dynamically added here -->
-      </div>
+		  </div>
       <button id="confirmPicture" class="btn btn-primary w-100 mt-2">Confirm Selection</button>
-    </div>
+		</div>
     
     <!-- Edit Bio Modal -->
     <div id="bioModal" class="modal-content" style="display: none;">
@@ -371,7 +371,7 @@
         <label for="confirmPassword">Confirm New Password</label>
         <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm new password">
         <button id="confirmPassword" class="btn btn-primary w-100 mt-3">Change Password</button>
-      </div>
+    </div>
     </div>
     
     <!-- Modal for adding friends -->
@@ -381,7 +381,7 @@
       <div style="width: 100%;">
         <input type="text" id="friendUsername" class="form-control mb-3" placeholder="Enter friend's username" style="width: 100%; display: block; margin-bottom: 15px;">
         <button id="confirmButton" class="btn btn-primary" style="width: 100%; display: block;">Confirm</button>
-      </div>
+    </div>
     </div>
     
     <!-- Bootstrap and jQuery JS -->
@@ -389,7 +389,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <!-- JavaScript -->
-    <script>
+  <script>
       document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("go_to_main").addEventListener("click", function() {
           localStorage.setItem('lastPage', "main-page");
@@ -449,13 +449,13 @@
           ];
           const profilePictureOptions = document.getElementById("profilePictureOptions");
           profilePictureOptions.innerHTML = '';
-          
-          imagePaths.forEach(function(path) {
+
+	imagePaths.forEach(function(path) {
             const img = document.createElement('img');
-            img.src = 'media/' + path;
+		img.src = 'media/' + path;
             img.alt = path;
             img.className = 'col-3 mb-2';
-            img.onclick = function() {
+		img.onclick = function() {
               document.querySelectorAll('#profilePictureOptions img').forEach(img => {
                 img.classList.remove('selected-image');
               });
@@ -476,24 +476,24 @@
             const token = localStorage.getItem('userToken');
             const imagePath = selectedImage.src.replace(window.location.origin + '/', '');
             
-            fetch('http://localhost:8001/main/profile_image/', {
-              method: 'POST',
-              headers: {
+		fetch('http://localhost:8001/main/profile_image/', {
+			method: 'POST',
+			headers: {
                 'Authorization': 'Token ' + token,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
                 profile_path: imagePath
-              }),
-            })
-            .then(response => response.json())
-            .then(data => {
-              console.log('Success:', data);
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
-          }
+			}),
+		})
+		.then(response => response.json())
+		.then(data => {
+			console.log('Success:', data);
+		})
+		.catch((error) => {
+			console.error('Error:', error);
+		});
+		}
         });
         
         document.getElementById("changePassword").addEventListener("click", function() {
@@ -524,6 +524,9 @@
         }
         
         function updateStatistics() {
+          console.log('Aggiornamento statistiche...');
+          console.log('Istanza utente:', window.parent.userInstance);
+          
           const wins = document.getElementById("wins");
           const losses = document.getElementById("losses");
           const winrate = document.getElementById("winrate");
@@ -545,42 +548,74 @@
           const pongHistory = window.parent.userInstance.matchistory_pong || [];
           const trisHistory = window.parent.userInstance.matchistory_tictactoe || [];
           
-          const allMatches = [...pongHistory, ...trisHistory];
-          allMatches.sort((a, b) => new Date(b.date) - new Date(a.date));
+          console.log('Cronologia Pong:', pongHistory);
+          console.log('Cronologia Tris:', trisHistory);
           
+          // Funzione per convertire la data in un oggetto Date per il confronto
+          function parseDate(dateStr) {
+            if (!dateStr) return new Date(0);
+            if (dateStr.match(/^\d{1,2}\/\d{1,2}$/)) {
+              const currentYear = new Date().getFullYear();
+              dateStr = dateStr + '/' + currentYear;
+            }
+            const [day, month, year] = dateStr.split('/').map(Number);
+            return new Date(year, month - 1, day);
+          }
+          
+          // Combina e ordina tutte le partite per data
+          const allMatches = [...pongHistory, ...trisHistory].sort((a, b) => {
+            const dateA = parseDate(a.date);
+            const dateB = parseDate(b.date);
+            return dateB - dateA; // Ordina in ordine decrescente (più recenti prima)
+          });
+          
+          console.log('Tutte le partite ordinate:', allMatches);
+          
+          // Prendi solo le ultime 5 partite
           const recentMatches = allMatches.slice(0, 5);
+          console.log('Ultime 5 partite:', recentMatches);
           
           recentMatches.forEach(match => {
-            const isWin = match.win === "true" || match.win === "win";
-            const isDraw = match.win === "draw";
+            // Verifica il tipo di gioco
+            const gameType = match.hasOwnProperty('score') ? 'Pong' : 'Tic-Tac-Toe';
+            
+            // Gestione risultato
+            let isWin = false;
+            let isDraw = false;
+            
+            if (match.win === "draw") {
+              isDraw = true;
+            } else if (match.win === "true" || match.win === "win") {
+              isWin = true;
+            }
+            
+            // Per debug, mostra il valore effettivo di win
+            console.log(`Partita ${gameType} vs ${match.player2}, risultato:`, match.win);
             
             const matchItem = document.createElement("div");
             matchItem.className = "list-group-item d-flex justify-content-between align-items-center";
             
-            const gameType = match.hasOwnProperty('score') ? 'Pong' : 'Tic-Tac-Toe';
             let resultText = isWin ? 'Win' : (isDraw ? 'Draw' : 'Loss');
             
             let dateDisplay = match.date;
             if (match.date) {
-              if (match.date.match(/^\d{1,2}\/\d{1,2}\/?$/)) {
-                const currentYear = new Date().getFullYear();
-                dateDisplay = match.date + currentYear;
-              }
-              
               try {
-                const dateParts = dateDisplay.split('/');
-                if (dateParts.length >= 3) {
-                  const day = parseInt(dateParts[0], 10);
-                  const month = parseInt(dateParts[1], 10) - 1;
-                  const year = parseInt(dateParts[2], 10);
-                  const dateObj = new Date(year, month, day);
-                  if (!isNaN(dateObj.getTime())) {
-                    dateDisplay = dateObj.toLocaleDateString();
-                  }
+                const dateObj = parseDate(match.date);
+                if (!isNaN(dateObj.getTime())) {
+                  dateDisplay = dateObj.toLocaleDateString('it-IT', { 
+                    day: '2-digit', 
+                    month: '2-digit', 
+                    year: 'numeric' 
+                  });
                 }
               } catch (e) {
                 console.log("Errore nel parsing della data:", e);
               }
+            }
+            
+            let scoreDisplay = '';
+            if (gameType === 'Pong' && match.hasOwnProperty('score')) {
+              scoreDisplay = ` (${match.score} - ${match.scoreplayer2})`;
             }
             
             matchItem.innerHTML = `
@@ -589,21 +624,24 @@
                 <br>
                 <small class="text-muted">${dateDisplay}</small>
               </div>
-              <span class="badge ${isWin ? 'bg-success' : (isDraw ? 'bg-warning' : 'bg-danger')} rounded-pill">${resultText}</span>
+              <span class="badge ${isWin ? 'bg-success' : (isDraw ? 'bg-warning' : 'bg-danger')} rounded-pill">
+                ${resultText}${scoreDisplay}
+              </span>
             `;
             
             matchHistory.appendChild(matchItem);
           });
         }
         
+        // Aggiorna le statistiche quando riceviamo nuovi dati
         window.addEventListener('message', function(event) {
-          if (event.data.type === 'userDataLoaded' || event.data.type === 'loadProfile') {
-            document.getElementById("nickname").innerText = window.parent.userInstance.player;
-            document.getElementById("profilePicture").src = window.parent.userInstance.profile_image;
+          console.log('Evento ricevuto:', event.data);
+          if (event.data.type === 'userDataLoaded' || event.data.type === 'loadProfile' || event.data.type === 'gameResult') {
+            console.log('Aggiornamento statistiche richiesto per evento:', event.data.type);
             updateStatistics();
           }
         });
       });
-    </script>
+  </script>
   </body>
 </html>
