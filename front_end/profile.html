@@ -244,6 +244,16 @@
       .selected-image {
         border-color: var(--highlight-color) !important;
     }
+
+    /* Stile per il titolo Profile */
+    #title-profile {
+      transition: color 0.3s ease;
+    }
+
+    #title-profile:hover {
+      color: #ff0000;
+      text-shadow: 0 0 10px #ff0000;
+    }
   </style>
   </head>
   <body>
@@ -268,9 +278,11 @@
     </div>
     
     <div class="container mt-5 pt-5">
-      <a href="#" id="title_to_main" style="text-decoration: none; cursor: pointer;">
-        <h1 class="title-main text-center">Profile</h1>
-      </a>
+      <div class="text-center">
+        <a href="#" id="title_to_main" style="text-decoration: none; cursor: pointer; display: inline-block;">
+          <h1 class="title-main mb-4" id="title-profile" style="cursor: pointer; display: inline-block; margin: 0;">Profile</h1>
+        </a>
+      </div>
       
       <div class="row mt-5">
         <div class="col-md-5">
@@ -282,7 +294,6 @@
             
             <div class="d-grid gap-2 mt-4">
               <button id="changePicture" class="btn btn-primary">Change Profile Picture</button>
-              <button id="changePassword" class="btn btn-secondary">Change Password</button>
             </div>
           </div>
         </div>
@@ -414,21 +425,6 @@
       </div>
     </div>
     
-    <!-- Change Password Modal -->
-    <div id="passwordModal" class="modal-content" style="display: none;">
-      <span class="close">&times;</span>
-      <h3 class="mb-3">Change Password</h3>
-      <div class="form-group">
-        <label for="currentPassword">Current Password</label>
-        <input type="password" id="currentPassword" class="form-control" placeholder="Enter current password">
-        <label for="newPassword">New Password</label>
-        <input type="password" id="newPassword" class="form-control" placeholder="Enter new password">
-        <label for="confirmPassword">Confirm New Password</label>
-        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm new password">
-        <button id="confirmPassword" class="btn btn-primary w-100 mt-3">Change Password</button>
-    </div>
-    </div>
-    
     <!-- Modal for adding friends -->
     <div id="myModal" class="modal-content rounded" style="display: none; width: 350px; padding: 25px;">
       <span class="close">&times;</span>
@@ -486,7 +482,6 @@
         
         const pictureModal = document.getElementById("pictureModal");
         const bioModal = document.getElementById("bioModal");
-        const passwordModal = document.getElementById("passwordModal");
         const closeButtons = document.querySelectorAll(".close");
         
         document.getElementById("changePicture").addEventListener("click", function() {
@@ -551,23 +546,17 @@
 		}
         });
         
-        document.getElementById("changePassword").addEventListener("click", function() {
-          passwordModal.style.display = "block";
-        });
-        
         closeButtons.forEach(function(button) {
           button.addEventListener("click", function() {
             pictureModal.style.display = "none";
             bioModal.style.display = "none";
-            passwordModal.style.display = "none";
           });
         });
         
         window.onclick = function(event) {
-          if (event.target == pictureModal || event.target == bioModal || event.target == passwordModal) {
+          if (event.target == pictureModal || event.target == bioModal) {
             pictureModal.style.display = "none";
             bioModal.style.display = "none";
-            passwordModal.style.display = "none";
           }
         };
         

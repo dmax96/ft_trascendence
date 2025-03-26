@@ -166,6 +166,25 @@
           object-fit: cover;
         }
       }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0ff, 0 0 40px #0ff;
+        }
+        to {
+          text-shadow: 0 0 20px #fff, 0 0 30px #00b3ff, 0 0 40px #00b3ff, 0 0 50px #00b3ff;
+        }
+      }
+
+      /* Stile per il titolo Profilo Amico */
+      #title-profile {
+        transition: color 0.3s ease;
+      }
+
+      #title-profile:hover {
+        color: #ff0000;
+        text-shadow: 0 0 10px #ff0000;
+      }
     </style>
   </head>
   <body>
@@ -190,9 +209,11 @@
     </div>
     
     <div class="container mt-5 pt-5">
-      <a href="#" id="title_to_main" style="text-decoration: none; cursor: pointer;">
-        <h1 class="title-main text-center">Profilo Amico</h1>
-      </a>
+      <div class="text-center">
+        <a href="#" id="title_to_main" style="text-decoration: none; cursor: pointer; display: inline-block;">
+          <h1 class="title-main mb-4" id="title-profile" style="cursor: pointer; display: inline-block; margin: 0;">Profilo Amico</h1>
+        </a>
+      </div>
       
       <div class="row mt-5">
         <div class="col-md-5">
