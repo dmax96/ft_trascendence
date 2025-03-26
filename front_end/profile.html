@@ -288,14 +288,14 @@
         </div>
         
         <div class="col-md-7">
-          <div class="card">
-            <h3 class="mb-4"><i class="fas fa-chart-line me-2"></i>Statistics</h3>
+          <div class="card mb-4">
+            <h3 class="mb-4"><i class="fas fa-chart-line me-2"></i>Statistiche PONG</h3>
             <div class="row">
               <div class="col-md-6 mb-4">
                 <div class="card">
                   <div class="text-center py-3">
-                    <h5>Wins</h5>
-                    <h3 id="wins" class="mb-0">0</h3>
+                    <h5>Vittorie</h5>
+                    <h3 id="pong-wins" class="mb-0">0</h3>
                   </div>
                 </div>
               </div>
@@ -303,8 +303,8 @@
               <div class="col-md-6 mb-4">
                 <div class="card">
                   <div class="text-center py-3">
-                    <h5>Losses</h5>
-                    <h3 id="losses" class="mb-0">0</h3>
+                    <h5>Sconfitte</h5>
+                    <h3 id="pong-losses" class="mb-0">0</h3>
                   </div>
                 </div>
               </div>
@@ -312,8 +312,8 @@
               <div class="col-md-6 mb-4">
                 <div class="card">
                   <div class="text-center py-3">
-                    <h5>Win Rate</h5>
-                    <h3 id="winrate" class="mb-0">0%</h3>
+                    <h5>Percentuale Vittorie</h5>
+                    <h3 id="pong-winrate" class="mb-0">0%</h3>
                   </div>
                 </div>
               </div>
@@ -321,8 +321,49 @@
               <div class="col-md-6 mb-4">
                 <div class="card">
                   <div class="text-center py-3">
-                    <h5>Total Games</h5>
-                    <h3 id="totalGames" class="mb-0">0</h3>
+                    <h5>Partite Totali</h5>
+                    <h3 id="pong-total" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card mb-4">
+            <h3 class="mb-4"><i class="fas fa-gamepad me-2"></i>Statistiche Tris</h3>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Vittorie</h5>
+                    <h3 id="tris-wins" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Sconfitte</h5>
+                    <h3 id="tris-losses" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Pareggi</h5>
+                    <h3 id="tris-ties" class="mb-0">0</h3>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <div class="card">
+                  <div class="text-center py-3">
+                    <h5>Percentuale Vittorie</h5>
+                    <h3 id="tris-winrate" class="mb-0">0%</h3>
                   </div>
                 </div>
               </div>
@@ -330,9 +371,23 @@
           </div>
           
           <div class="card mt-4">
-            <h3 class="mb-4"><i class="fas fa-history me-2"></i>Recent Games</h3>
-            <div id="matchHistory" class="list-group list-group-flush">
-              <!-- Match history will be populated here -->
+            <h3 class="mb-4"><i class="fas fa-history me-2"></i>Partite Recenti</h3>
+            <div class="card mb-3">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">PONG</h5>
+              </div>
+              <div id="pong-history" class="list-group list-group-flush">
+                <!-- Pong match history will be populated here -->
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Tris</h5>
+              </div>
+              <div id="tris-history" class="list-group list-group-flush">
+                <!-- Tris match history will be populated here -->
+              </div>
             </div>
           </div>
         </div>
@@ -527,24 +582,58 @@
           console.log('Aggiornamento statistiche...');
           console.log('Istanza utente:', window.parent.userInstance);
           
-          const wins = document.getElementById("wins");
-          const losses = document.getElementById("losses");
-          const winrate = document.getElementById("winrate");
-          const totalGames = document.getElementById("totalGames");
+          // Riferimenti agli elementi DOM per PONG
+          const pongWins = document.getElementById("pong-wins");
+          const pongLosses = document.getElementById("pong-losses");
+          const pongWinrate = document.getElementById("pong-winrate");
+          const pongTotal = document.getElementById("pong-total");
           
-          const totalWins = parseInt(window.parent.userInstance.wins_pong) + parseInt(window.parent.userInstance.wins_tictactoe);
-          const totalLosses = parseInt(window.parent.userInstance.loses_pong) + parseInt(window.parent.userInstance.loses_tictactoe);
-          const total = totalWins + totalLosses;
-          const winrateValue = total > 0 ? Math.round((totalWins / total) * 100) : 0;
+          // Riferimenti agli elementi DOM per Tris
+          const trisWins = document.getElementById("tris-wins");
+          const trisLosses = document.getElementById("tris-losses");
+          const trisTies = document.getElementById("tris-ties");
+          const trisWinrate = document.getElementById("tris-winrate");
           
-          wins.innerText = totalWins;
-          losses.innerText = totalLosses;
-          winrate.innerText = winrateValue + "%";
-          totalGames.innerText = total;
+          // Calcolo statistiche PONG
+          const pongWinsValue = parseInt(window.parent.userInstance.wins_pong || 0);
+          const pongLossesValue = parseInt(window.parent.userInstance.loses_pong || 0);
+          const pongTotalValue = pongWinsValue + pongLossesValue;
+          const pongWinrateValue = pongTotalValue > 0 ? Math.round((pongWinsValue / pongTotalValue) * 100) : 0;
           
-          const matchHistory = document.getElementById("matchHistory");
-          matchHistory.innerHTML = "";
+          // Calcolo statistiche Tris
+          const trisWinsValue = parseInt(window.parent.userInstance.wins_tictactoe || 0);
+          const trisLossesValue = parseInt(window.parent.userInstance.loses_tictactoe || 0);
+          const trisTiesValue = parseInt(window.parent.userInstance.draw_tictactoe || 0);
+          const trisTotalValue = trisWinsValue + trisLossesValue + trisTiesValue;
+          const trisWinrateValue = (trisWinsValue + trisLossesValue) > 0 ? 
+                                    Math.round((trisWinsValue / (trisWinsValue + trisLossesValue)) * 100) : 0;
           
+          // Aggiornamento dei valori PONG nell'interfaccia
+          pongWins.innerText = pongWinsValue;
+          pongLosses.innerText = pongLossesValue;
+          pongWinrate.innerText = pongWinrateValue + "%";
+          pongTotal.innerText = pongTotalValue;
+          
+          // Aggiornamento dei valori Tris nell'interfaccia
+          trisWins.innerText = trisWinsValue;
+          trisLosses.innerText = trisLossesValue;
+          trisTies.innerText = trisTiesValue;
+          trisWinrate.innerText = trisWinrateValue + "%";
+          
+          // Debug per verificare i valori
+          console.log('Tris Ties:', trisTiesValue);
+          console.log('Tris Wins:', trisWinsValue);
+          console.log('Tris Losses:', trisLossesValue);
+          
+          // Ottieni riferimenti ai contenitori delle cronologie
+          const pongHistoryContainer = document.getElementById("pong-history");
+          const trisHistoryContainer = document.getElementById("tris-history");
+          
+          // Pulisci i contenitori
+          pongHistoryContainer.innerHTML = "";
+          trisHistoryContainer.innerHTML = "";
+          
+          // Ottieni le cronologie delle partite
           const pongHistory = window.parent.userInstance.matchistory_pong || [];
           const trisHistory = window.parent.userInstance.matchistory_tictactoe || [];
           
@@ -558,79 +647,125 @@
               const currentYear = new Date().getFullYear();
               dateStr = dateStr + '/' + currentYear;
             }
-            const [day, month, year] = dateStr.split('/').map(Number);
-            return new Date(year, month - 1, day);
+            const parts = dateStr.includes('/') ? dateStr.split('/') : dateStr.split('-');
+            if (parts.length >= 3) {
+              const [day, month, year] = parts.map(Number);
+              return new Date(year, month - 1, day);
+            }
+            return new Date(dateStr);
           }
           
-          // Combina e ordina tutte le partite per data
-          const allMatches = [...pongHistory, ...trisHistory].sort((a, b) => {
+          // Ordina le partite PONG per data (più recenti prima)
+          const sortedPongHistory = [...pongHistory].sort((a, b) => {
             const dateA = parseDate(a.date);
             const dateB = parseDate(b.date);
-            return dateB - dateA; // Ordina in ordine decrescente (più recenti prima)
+            return dateB - dateA;
           });
           
-          console.log('Tutte le partite ordinate:', allMatches);
+          // Ordina le partite Tris per data (più recenti prima)
+          const sortedTrisHistory = [...trisHistory].sort((a, b) => {
+            const dateA = parseDate(a.date);
+            const dateB = parseDate(b.date);
+            return dateB - dateA;
+          });
           
-          // Prendi solo le ultime 5 partite
-          const recentMatches = allMatches.slice(0, 5);
-          console.log('Ultime 5 partite:', recentMatches);
+          // Prendi solo le ultime 5 partite di ogni tipo
+          const recentPongMatches = sortedPongHistory.slice(0, 5);
+          const recentTrisMatches = sortedTrisHistory.slice(0, 5);
           
-          recentMatches.forEach(match => {
-            // Verifica il tipo di gioco
-            const gameType = match.hasOwnProperty('score') ? 'Pong' : 'Tic-Tac-Toe';
-            
-            // Gestione risultato
-            let isWin = false;
-            let isDraw = false;
-            
-            if (match.win === "draw") {
-              isDraw = true;
-            } else if (match.win === "true" || match.win === "win") {
-              isWin = true;
+          // Funzione per formattare la data
+          function formatDate(dateStr) {
+            if (!dateStr) return '';
+            try {
+              const dateObj = parseDate(dateStr);
+              if (!isNaN(dateObj.getTime())) {
+                return dateObj.toLocaleDateString('it-IT', { 
+                  day: '2-digit', 
+                  month: '2-digit', 
+                  year: 'numeric' 
+                });
+              }
+              return dateStr;
+            } catch (e) {
+              console.log("Errore nel parsing della data:", e);
+              return dateStr;
             }
-            
-            // Per debug, mostra il valore effettivo di win
-            console.log(`Partita ${gameType} vs ${match.player2}, risultato:`, match.win);
+          }
+          
+          // Popola la cronologia PONG
+          recentPongMatches.forEach(match => {
+            // Gestione risultato
+            let isWin = match.win === "true" || match.win === "win";
             
             const matchItem = document.createElement("div");
             matchItem.className = "list-group-item d-flex justify-content-between align-items-center";
             
-            let resultText = isWin ? 'Win' : (isDraw ? 'Draw' : 'Loss');
-            
-            let dateDisplay = match.date;
-            if (match.date) {
-              try {
-                const dateObj = parseDate(match.date);
-                if (!isNaN(dateObj.getTime())) {
-                  dateDisplay = dateObj.toLocaleDateString('it-IT', { 
-                    day: '2-digit', 
-                    month: '2-digit', 
-                    year: 'numeric' 
-                  });
-                }
-              } catch (e) {
-                console.log("Errore nel parsing della data:", e);
-              }
-            }
-            
-            let scoreDisplay = '';
-            if (gameType === 'Pong' && match.hasOwnProperty('score')) {
-              scoreDisplay = ` (${match.score} - ${match.scoreplayer2})`;
-            }
+            let resultText = isWin ? 'Vittoria' : 'Sconfitta';
+            let dateDisplay = formatDate(match.date);
             
             matchItem.innerHTML = `
               <div>
-                <strong>${gameType}</strong> vs ${match.player2}
-                <br>
-                <small class="text-muted">${dateDisplay}</small>
+                <strong>${dateDisplay}</strong> vs ${match.player2}
               </div>
-              <span class="badge ${isWin ? 'bg-success' : (isDraw ? 'bg-warning' : 'bg-danger')} rounded-pill">
-                ${resultText}${scoreDisplay}
-              </span>
+              <div>
+                <span class="badge ${isWin ? 'bg-success' : 'bg-danger'} rounded-pill">
+                  ${resultText} (${match.score} - ${match.scoreplayer2})
+                </span>
+              </div>
             `;
             
-            matchHistory.appendChild(matchItem);
+            pongHistoryContainer.appendChild(matchItem);
           });
+          
+          // Popola la cronologia Tris
+          recentTrisMatches.forEach(match => {
+            // Gestione risultato
+            let resultText, resultClass;
+            
+            if (match.win === "draw") {
+              resultText = 'Pareggio';
+              resultClass = 'bg-warning';
+            } else if (match.win === "true" || match.win === "win") {
+              resultText = 'Vittoria';
+              resultClass = 'bg-success';
+            } else {
+              resultText = 'Sconfitta';
+              resultClass = 'bg-danger';
+            }
+            
+            const matchItem = document.createElement("div");
+            matchItem.className = "list-group-item d-flex justify-content-between align-items-center";
+            
+            let dateDisplay = formatDate(match.date);
+            
+            matchItem.innerHTML = `
+              <div>
+                <strong>${dateDisplay}</strong> vs ${match.player2}
+              </div>
+              <div>
+                <span class="badge ${resultClass} rounded-pill">
+                  ${resultText}
+                </span>
+              </div>
+            `;
+            
+            trisHistoryContainer.appendChild(matchItem);
+          });
+          
+          // Mostra un messaggio se non ci sono partite
+          if (recentPongMatches.length === 0) {
+            const noMatchesItem = document.createElement("div");
+            noMatchesItem.className = "list-group-item text-center text-muted";
+            noMatchesItem.innerText = "Nessuna partita recente";
+            pongHistoryContainer.appendChild(noMatchesItem);
+          }
+          
+          if (recentTrisMatches.length === 0) {
+            const noMatchesItem = document.createElement("div");
+            noMatchesItem.className = "list-group-item text-center text-muted";
+            noMatchesItem.innerText = "Nessuna partita recente";
+            trisHistoryContainer.appendChild(noMatchesItem);
+          }
         }
         
         // Aggiorna le statistiche quando riceviamo nuovi dati

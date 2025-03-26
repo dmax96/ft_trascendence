@@ -174,12 +174,6 @@
 								</button>
 							</div>
 							<div class="col-md-3 mb-3">
-								<button id="play-4players" class="btn btn-lg btn-info w-100 py-3">
-									<i class="fas fa-users me-2"></i><br>
-									<span class="d-block mt-2">4 Giocatori</span>
-								</button>
-							</div>
-							<div class="col-md-3 mb-3">
 								<button id="play-vs-ia" class="btn btn-lg btn-warning w-100 py-3">
 									<i class="fas fa-user me-2"></i>vs<i class="fas fa-robot ms-2"></i><br>
 									<span class="d-block mt-2">Contro IA</span>
@@ -254,7 +248,6 @@
 			
 			// Elementi dell'interfaccia
 			const play1v1Btn = document.getElementById('play-1v1');
-			const play4playersBtn = document.getElementById('play-4players');
 			const playVsIABtn = document.getElementById('play-vs-ia');
 			const playTrisBtn = document.getElementById('play-tris');
 			const playerInputContainer = document.getElementById('player-input-container');
@@ -354,46 +347,19 @@
 			// Funzioni di gestione modalità di gioco
 			play1v1Btn.addEventListener('click', function() {
 				currentGameMode = '1v1';
-				
-				// Resetta e mostra il campo di input
 				playerInputContainer.style.display = 'block';
-				player2Username.value = '';
-				player2Username.placeholder = 'Inserisci nome giocatore 2';
+				player2Username.placeholder = 'Inserisci nome avversario per 1vs1';
 				player2Username.focus();
-				
-				// Aggiungi una classe per migliorare la visibilità
-				playerInputContainer.classList.add('animate__animated', 'animate__fadeIn');
-				
-				// Messaggio di istruzioni
-				const instructionMsg = document.createElement('div');
-				instructionMsg.className = 'alert alert-info mt-2';
-				instructionMsg.innerHTML = 'Inserisci il nome del tuo avversario e clicca su "Conferma"';
-				if (!document.querySelector('.input-instruction')) {
-					instructionMsg.classList.add('input-instruction');
-					playerInputContainer.appendChild(instructionMsg);
-					
-					// Rimuovi il messaggio dopo 5 secondi
-					setTimeout(() => {
-						if (instructionMsg.parentNode) {
-							instructionMsg.parentNode.removeChild(instructionMsg);
-						}
-					}, 5000);
-				}
-			});
-			
-			play4playersBtn.addEventListener('click', function() {
-				currentGameMode = '4players';
-				playerInputContainer.style.display = 'block';
-				player2Username.placeholder = 'Inserisci nome giocatore 2';
-				player2Username.focus();
-				// Logica aggiuntiva per 4 giocatori da implementare
 			});
 			
 			playVsIABtn.addEventListener('click', function() {
-				currentGameMode = 'vs-ia';
-				opponentNameEl.textContent = 'IA';
-				opponentAvatarEl.src = 'media/ai.jpg';
-				// Preparazione per il gioco contro l'IA
+				currentGameMode = 'ai';
+				opponentNameEl.textContent = 'AI Opponent';
+				// Assicurati che il nome sia impostato e visibile
+				opponentNameEl.classList.add('animate__animated', 'animate__flash');
+				setTimeout(() => {
+					opponentNameEl.classList.remove('animate__animated', 'animate__flash');
+				}, 1000);
 				prepareGame();
 			});
 			
@@ -477,6 +443,14 @@
 			startGameBtn.addEventListener('click', function() {
 				if (!currentGameMode) {
 					alert('Seleziona prima una modalità di gioco');
+					return;
+				}
+				
+				// Verifica che l'avversario sia stato inserito per la modalità 1vs1
+				if (currentGameMode === '1v1' && opponentNameEl.textContent === 'Opponent') {
+					alert('Per favore inserisci il nome dell\'avversario prima di iniziare');
+					playerInputContainer.style.display = 'block';
+					player2Username.focus();
 					return;
 				}
 				

@@ -374,9 +374,16 @@
             // Aggiorna statistiche Tris
             document.getElementById('tris-wins').textContent = friend.wins_tictactoe;
             document.getElementById('tris-losses').textContent = friend.loses_tictactoe;
-            var trisTies = friend.matchistory_tictactoe.length - parseInt(friend.wins_tictactoe) - parseInt(friend.loses_tictactoe);
-            document.getElementById('tris-ties').textContent = trisTies;
+            document.getElementById('tris-ties').textContent = friend.draw_tictactoe || 0;
             document.getElementById('tris-winrate').textContent = parseFloat(friend.winrate_tictactoe).toFixed(2) + '%';
+            
+            // Debug per verificare i valori
+            console.log('Friend Tris Stats:', {
+              wins: friend.wins_tictactoe,
+              losses: friend.loses_tictactoe,
+              draws: friend.draw_tictactoe,
+              history_length: friend.matchistory_tictactoe.length
+            });
             
             // Aggiorna cronologia PONG
             var pongHistory = friend.matchistory_pong;
